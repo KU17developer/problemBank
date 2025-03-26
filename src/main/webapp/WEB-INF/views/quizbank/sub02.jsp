@@ -375,6 +375,18 @@
 				console.log(quiznum);
 				quiznum.value = event.target.innerText;
 			}
+
+			const quizNumSet = () =>{
+				const inputset = document.querySelectorAll(".range-type .range-wrap>.range>input");
+				const quizsum = document.querySelector(".range-type .range-wrap>.range>span.num");
+
+				let inputsum = 0;
+				inputset.forEach(input=>inputsum += (input.innerText*1));
+
+				if(inputsum==quizsum){
+					// 이건 나중에 생각해볼게
+				}
+			}
 		</script>
 </body>
 
