@@ -1,10 +1,10 @@
 package com.gd.bk.sungjune;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.gd.bk.common.quiz.model.dto.Chapter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -13,19 +13,15 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
 import java.util.Map;
 
 @Slf4j
 @Controller
-public class BaseController {
-    @RequestMapping("/")
-    public String index() {
-        return "index";
-    }
-
-    @RequestMapping("/sub01")
-    public String sub01(Model model) {
+@RequestMapping("/api")
+public class APIController {
+    @GetMapping("/chapterlist")
+    public ResponseEntity<Object> chapterlist(){
+        String response = "";
         try{
             URL url = new URL("https://tsherpa.item-factory.com/chapter/chapter-list");
             HttpsURLConnection connect = (HttpsURLConnection)url.openConnection();
@@ -44,14 +40,10 @@ public class BaseController {
             InputStreamReader isr = new InputStreamReader(is);
             int data = 0;
             StringBuilder sb = new StringBuilder();
-            while((data=isr.read())!=-1) {
-                sb.append((char) data);
+            while((data=isr.read())!=-1){
+                sb.append((char)data);
             }
-            String jsonString = sb.toString();
-
-            ObjectMapper mapper2 = new ObjectMapper();
-
-            model.addAttribute("jsonString",jsonString);
+            response = sb.toString();
         }catch(MalformedURLException e) {
             log.error("URL이 잘못되었습니다 : " + e.getMessage());
         }catch(IOException e){
@@ -59,10 +51,6 @@ public class BaseController {
         }finally{
             log.debug("해치웠나?");
         }
-
-        return "quizbank/sub01";
+        return ResponseEntity.ok().body(response);
     }
 }
-
-
-
