@@ -1,4 +1,4 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
@@ -36,10 +36,11 @@
 						<div class="paper-info">
 							<span>수학 1</span>
 							이준열(2015) 수정
+							${chapterList[0].subjectName}
 						</div>
 						<div class="btn-wrap">
 							<button class="btn-icon"><i class="edit"></i>선택한 시험지 편집하기</button>
-							<button class="btn-icon"><i class="newpaper"></i>신규 시험지 만들기</button>
+							<button class="btn-icon" onclick="location.assign('${path}/sub02')"><i class="newpaper"></i>신규 시험지 만들기</button>
 						</div>
 					</div>
 

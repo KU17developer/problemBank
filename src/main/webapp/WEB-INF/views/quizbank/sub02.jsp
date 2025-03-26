@@ -1,4 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -9,14 +11,14 @@
 	<title>T셀파 문제은행</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="../inc/css/font.css">
-	<link rel="stylesheet" href="../inc/css/reset.css">
-	<link rel="stylesheet" href="../inc/css/common.css">
+	<link rel="stylesheet" href="${path}/resources/css/font.css">
+	<link rel="stylesheet" href="${path}/resources/css/reset.css">
+	<link rel="stylesheet" href="${path}/resources/css/common.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"
 		integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-	<script src="../inc/js/common.js"></script>
+	<script src="${path}/resources/js/common.js"></script>
 </head>
 
 <body>
@@ -36,6 +38,7 @@
 						<div class="paper-info">
 							<span>국어 1-1</span>
 							노미숙(2015)
+							${chapterList[0].subjectName}
 						</div>
 					</div>
 					<div class="view-bottom">
@@ -50,86 +53,46 @@
 										</div>
 										<ul>
 											<li>
-												<div class="check-group title">
-													<div class="title-chk">
-														<input type="checkbox" id="chk01_01" class="que-allCheck depth01">
-														<label for="chk01_01">
-															<button type="button" class="dep-btn active">1. 새로운 시작</button>
-														</label>
-													</div>
-												</div>
-												<div class="depth02">
-													<div class="check-group">
-														<input type="checkbox" id="chk01_02" class="que-allCheck depth01">
-														<label for="chk01_02">
-															<button type="button" class="dep-btn active">(1) 시의 아름다움</button>
-														</label>
-													</div>
-													<div class="depth03">
-														<div class="check-group">
-															<input type="checkbox" id="chk01_03" class="que-allCheck depth01">
-															<label for="chk01_03">
-																<button type="button" class="dep-btn active">[1] 소주제</button>
+												<c:forEach var="large" items="${chapterMap.keySet()}">
+													<div class="check-group title">
+														<div class="title-chk">
+															<input type="checkbox" id="chk01_01" class="que-allCheck depth01">
+															<label for="chk01_01">
+																<button type="button" class="dep-btn active">${large}</button>
 															</label>
 														</div>
-														<div class="depth04">
-															<div class="check-group">
-																<input type="checkbox" id="chk01_04" class="que-allCheck depth01">
-																<label for="chk01_04">
-																	<button type="button" class="dep-btn active">거듭제곱</button>
-																</label>
-															</div>
-															<div class="depth05">
-																<div class="check-group">
-																	<input type="checkbox" id="chk01_05">
-																	<label for="chk01_05">
-																		<span>거듭제곱으로 표현</span>
-																	</label>
-																</div>
-															</div>
-															<div class="check-group">
-																<input type="checkbox" id="chk01_06">
-																<label for="chk01_06">
-																	<span>소수와 합성수</span>
-																</label>
-															</div>
-															<div class="check-group">
-																<input type="checkbox" id="chk01_07">
-																<label for="chk01_07">
-																	<span>소인수분해</span>
-																</label>
-															</div>
-															<div class="check-group">
-																<input type="checkbox" id="chk01_08">
-																<label for="chk01_08">
-																	<span>소인수분해를 이용하여 약수 구하기</span>
-																</label>
-															</div>
-															<div class="check-group">
-																<input type="checkbox" id="chk01_09">
-																<label for="chk01_09">
-																	<span>최대공약수와 최소공배수</span>
-																</label>
-															</div>
-														</div>
 													</div>
-													<div class="check-group">
-														<input type="checkbox" id="chk01_10">
-														<label for="chk01_10">
-															<span>(2) 산문의 향기</span>
-														</label>
+													<div class="depth02">
+														<c:forEach var="medium" items="${chapterMap[large].keySet()}">
+															<div class="check-group">
+																<input type="checkbox" id="chk01_02" class="que-allCheck depth01">
+																<label for="chk01_02">
+																	<button type="button" class="dep-btn active">${medium}</button>
+																</label>
+															</div>
+															<div class="depth03">
+																<c:forEach var="small" items="${chapterMap[large][medium].keySet()}">
+																	<div class="check-group">
+																		<input type="checkbox" id="chk01_03" class="que-allCheck depth01">
+																		<label for="chk01_03">
+																			<button type="button" class="dep-btn active">${small}</button>
+																		</label>
+																	</div>
+																	<div class="depth04">
+																		<c:forEach var="topic" items="${chapterMap[large][medium][small]}">
+																			<div class="check-group">
+																				<input type="checkbox" id="chk01_04" class="que-allCheck depth01">
+																				<label for="chk01_04">
+																					<button type="button" class="dep-btn active">${topic}</button>
+																				</label>
+																			</div>
+																		</c:forEach>
+																	</div>
+																</c:forEach>
+															</div>
+														</c:forEach>
 													</div>
-												</div>
-											</li>
-											<li>
-												<div class="check-group title">
-													<div class="title-chk">
-														<input type="checkbox" id="chk02_01" class="que-allCheck depth01">
-														<label for="chk02_01">
-															<button type="button" class="dep-btn">2. 세상과 함께 자라는 꿈 </button>
-														</label>
-													</div>
-												</div>
+												</c:forEach>
 											</li>
 										</ul>
 									</div>
@@ -236,7 +199,7 @@
 
 			</div>
 			<div class="step-btn-wrap">
-				<button type="button" class="btn-step">출제 방법 선택</button>
+				<button type="button" class="btn-step" onclick="location.assign('${path}/sub01')">출제 방법 선택</button>
 				<button type="button" class="btn-step next pop-btn" data-pop="que-pop">STEP2 문항 편집</button><!-- 230629 pop-btn 추가-->
 			</div>
 

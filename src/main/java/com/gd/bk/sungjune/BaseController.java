@@ -26,6 +26,29 @@ public class BaseController {
 
     @RequestMapping("/sub01")
     public String sub01(Model model) {
+        Map<String,Object> chapter = getChapterList();
+
+        List<Chapter> chapterList = (List<Chapter>)chapter.get("chapterList");
+        Map<String,Map<String,Map<String,List<String>>>> chapterMap = (Map<String,Map<String,Map<String,List<String>>>>)chapter.get("chapterMap");
+        model.addAttribute("chapterList",chapterList);
+        model.addAttribute("chapterMap",chapterMap);
+
+        return "quizbank/sub01";
+    }
+
+    @RequestMapping("/sub02")
+    public String sub02(Model model){
+        Map<String,Object> chapter = getChapterList();
+
+        List<Chapter> chapterList = (List<Chapter>)chapter.get("chapterList");
+        Map<String,Map<String,Map<String,List<String>>>> chapterMap = (Map<String,Map<String,Map<String,List<String>>>>)chapter.get("chapterMap");
+        model.addAttribute("chapterList",chapterList);
+        model.addAttribute("chapterMap",chapterMap);
+
+        return "quizbank/sub02";
+    }
+
+    private Map<String,Object> getChapterList(){
         try{
             URL url = new URL("https://tsherpa.item-factory.com/chapter/chapter-list");
             HttpsURLConnection connect = (HttpsURLConnection)url.openConnection();
@@ -52,7 +75,7 @@ public class BaseController {
             ObjectMapper mapper2 = new ObjectMapper();
             Map<String,Object> map = mapper.readValue(jsonString, Map.class);
 
-            model.addAttribute("map",map);
+//            model.addAttribute("map",map);
 
             System.out.println(map.get("chapterList"));
 
@@ -115,7 +138,9 @@ public class BaseController {
 
             System.out.println(chapterMap);
 
-            model.addAttribute("chapterMap",chapterMap);
+            Map<String,Object> chapter = Map.of("chapterList",chapterList,"chapterMap",chapterMap);
+//            model.addAttribute("chapterMap",chapterMap);
+            return chapter;
         }catch(MalformedURLException e) {
             log.error("URL이 잘못되었습니다 : " + e.getMessage());
         }catch(IOException e){
@@ -123,10 +148,10 @@ public class BaseController {
         }finally{
             log.debug("해치웠나?");
         }
-
-        return "quizbank/sub01";
+        return null;
     }
 
+    // 😑
     private static Long toLong(Object value) {
         if (value instanceof Integer) {
             return ((Integer) value).longValue();
