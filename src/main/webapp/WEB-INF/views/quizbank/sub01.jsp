@@ -42,439 +42,41 @@
 							<button class="btn-icon"><i class="newpaper"></i>신규 시험지 만들기</button>
 						</div>
 					</div>
+
 					<div class="view-bottom">
 						<div class="tab-list-type01 unit-acc-wrap">
 							<div class="scroll-inner">
-								<button type="button" class="acc-btn">Ⅰ. 수와 연산(대단원)</button>
-								<div class="cnt">
-									<div class="table">
-										<!-- s 230706 선택 삭제, 편집하기 추가 -->
-										<div class="fix-head">
-											<span>시험지명</span>
-											<span>미리보기</span>
-											<span>편집하기</span>
-											<span>다운로드</span>
-										</div>
-										<!-- e 230706 선택 삭제, 편집하기 추가 -->
-										<div class="tbody">
-											<div class="col">
-												<span class="tit">1. 소인수분해(중단원) > (1) 소인수분해(소단원) > 1회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-												<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
+								<c:forEach var="largeChap" items='${chapterMap.keySet()}'>
+									<button type="button" class="acc-btn">${largeChap}</button>
+									<div class="cnt">
+										<div class="table">
+											<div class="fix-head">
+												<span>시험지명</span>
+												<span>미리보기</span>
+												<span>편집하기</span>
+												<span>다운로드</span>
 											</div>
-											<div class="col">
-												<span class="tit">1. 소인수분해(중단원) > (1) 소인수분해(소단원) > 2회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-												<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-												<span class="tit">1. 소인수분해(중단원) > (2) 최대공약수(소단원) > 1회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-												<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈 > 2회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-												<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈(소단원) > 3회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-												<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈(소단원) > 4회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-												<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<button type="button" class="acc-btn">Ⅱ. 문자와 식</button>
-								<div class="cnt">
-									<div class="table">
-										<!-- s 230706 선택 삭제, 편집하기 추가 -->
-										<div class="fix-head">
-											<span>시험지명</span>
-											<span>미리보기</span>
-											<span>편집하기</span>
-											<span>다운로드</span>
-										</div>
-										<!-- e 230706 선택 삭제, 편집하기 추가 -->
-										<div class="tbody">
-											<div class="col">
-												<!--230706 checkbox 삭제-->
-												<span class="tit">1. 소인수분해(중단원) > (1) 소인수분해(소단원) > 1회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-												<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">1. 소인수분해(중단원) > (1) 소인수분해(소단원) > 2회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-												<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">1. 소인수분해(중단원) > (2) 최대공약수(소단원) > 1회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-												<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈 > 2회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
+											<!-- e 230706 선택 삭제, 편집하기 추가 -->
+											<div class="tbody">
+												<div class="col">
+													<c:forEach var="middleChap" items="${chapterMap[largeChap].keySet()}">
+														<c:forEach var="smallChap" items="${chapterMap[largeChap][middleChap].keySet()}">
+															<span class="tit">${middleChap} > ${smallChap} > 1회</span>
+															<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
+																		class="preview"></i></button></span>
 															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈(소단원) > 3회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈(소단원) > 4회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<button type="button" class="acc-btn">Ⅲ. 좌표평면과 그래프</button>
-								<div class="cnt">
-									<div class="table">
-										<!-- s 230706 선택 삭제, 편집하기 추가 -->
-										<div class="fix-head">
-											<span>시험지명</span>
-											<span>미리보기</span>
-											<span>편집하기</span>
-											<span>다운로드</span>
-										</div>
-										<!-- e 230706 선택 삭제, 편집하기 추가 -->
-										<div class="tbody">
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">1. 소인수분해(중단원) > (1) 소인수분해(소단원) > 1회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button>
+															<span>
+																<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
+																		type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
+																		+ 해설</button></div>
 															</span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">1. 소인수분해(중단원) > (1) 소인수분해(소단원) > 2회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">1. 소인수분해(중단원) > (2) 최대공약수(소단원) > 1회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈 > 2회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈(소단원) > 3회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈(소단원) > 4회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
+														</c:forEach>
+													</c:forEach>
+												</div>
 											</div>
 										</div>
 									</div>
-								</div>
-								<button type="button" class="acc-btn">Ⅳ. 도형의 기초</button>
-								<div class="cnt">
-									<div class="table">
-										<!-- s 230706 선택 삭제, 편집하기 추가 -->
-										<div class="fix-head">
-											<span>시험지명</span>
-											<span>미리보기</span>
-											<span>편집하기</span>
-											<span>다운로드</span>
-										</div>
-										<!-- e 230706 선택 삭제, 편집하기 추가 -->
-										<div class="tbody">
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">1. 소인수분해(중단원) > (1) 소인수분해(소단원) > 1회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">1. 소인수분해(중단원) > (1) 소인수분해(소단원) > 2회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">1. 소인수분해(중단원) > (2) 최대공약수(소단원) > 1회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈 > 2회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈(소단원) > 3회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈(소단원) > 4회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
-								<button type="button" class="acc-btn">Ⅴ. 도형의 성질</button>
-								<div class="cnt">
-									<div class="table">
-										<!-- s 230706 선택 삭제, 편집하기 추가 -->
-										<div class="fix-head">
-											<span>시험지명</span>
-											<span>미리보기</span>
-											<span>편집하기</span>
-											<span>다운로드</span>
-										</div>
-										<!-- e 230706 선택 삭제, 편집하기 추가 -->
-										<div class="tbody">
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">1. 소인수분해(중단원) > (1) 소인수분해(소단원) > 1회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">1. 소인수분해(중단원) > (1) 소인수분해(소단원) > 2회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">1. 소인수분해(중단원) > (2) 최대공약수(소단원) > 1회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈 > 2회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈(소단원) > 3회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-											<div class="col">
-											<!--230706 checkbox 삭제-->
-												<span class="tit">2. 정수와 유리수(중단원) > (4) 정수와 유리수의 곱셈(소단원) > 4회</span>
-												<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
-															class="preview"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
-												<span>
-													<div class="btn-wrap"><button type="button" class="btn-default">전체</button> <button
-															type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
-															+ 해설</button></div>
-												</span>
-											</div>
-										</div>
-									</div>
-								</div>
+								</c:forEach>
 							</div>
 						</div>
 					</div>
@@ -671,8 +273,9 @@
 		</div>
 	</div>
 <script>
-	let chapterList = ${jsonString};
-	const sortedChapterNameList = {};
+	// debugger;
+	// const chapterList = [];
+	// const sortedChapterNameList = {};
 	// fetch('http://localhost:9090/api/chapterlist')
 	// .then(response=>response.json())
 	// .then(data=>{
@@ -683,38 +286,39 @@
 	// });
 	// const sortChapter=function(){
 
-
-
-	chapterList.forEach(c=>{
-		const largeKey = Object.keys(sortedChapterNameList);
-		const largeChap = largeKey!=null?largeKey.find(lk => lk == c.largeChapterName):null;
-		if(largeChap!=null){
-			const mediumKey = Object.keys(sortedChapterNameList[largeChap]);
-			const mediumChap = mediumKey!=null?mediumKey.find(mk => mk == c.mediumChapterName):null;
-			if(mediumChap!=null){
-				const smallKey = Object.keys(sortedChapterNameList[largeChap][mediumChap]);
-				const smallChap = smallKey!=null?smallKey.find(sk => sk == c.smallChapterName):null;
-				if(smallChap!=null){
-					sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName].push(c.topicChapterName);
-				}
-				else{
-					sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName] = [];
-					sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName].push(c.topicChapterName);
-				}
-			}
-			else{
-				sortedChapterNameList[c.largeChapterName][c.mediumChapterName] = {};
-				sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName] = [];
-				sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName].push(c.topicChapterName);
-			}
-		}else{
-			sortedChapterNameList[c.largeChapterName] = {};
-			sortedChapterNameList[c.largeChapterName][c.mediumChapterName] = {};
-			sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName] = [];
-			sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName].push(c.topicChapterName);
-		}
-	})
-	console.log(sortedChapterNameList);
+	// console.log(chapterList);
+	//
+	// chapterList.forEach(c=>{
+	// 	debugger;
+	// 	const largeKey = Object.keys(sortedChapterNameList);
+	// 	const largeChap = largeKey!=null?largeKey.find(lk => lk == c.largeChapterName):null;
+	// 	if(largeChap!=null){
+	// 		const mediumKey = Object.keys(sortedChapterNameList[largeChap]);
+	// 		const mediumChap = mediumKey!=null?mediumKey.find(mk => mk == c.mediumChapterName):null;
+	// 		if(mediumChap!=null){
+	// 			const smallKey = Object.keys(sortedChapterNameList[largeChap][mediumChap]);
+	// 			const smallChap = smallKey!=null?smallKey.find(sk => sk == c.smallChapterName):null;
+	// 			if(smallChap!=null){
+	// 				sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName].push(c.topicChapterName);
+	// 			}
+	// 			else{
+	// 				sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName] = [];
+	// 				sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName].push(c.topicChapterName);
+	// 			}
+	// 		}
+	// 		else{
+	// 			sortedChapterNameList[c.largeChapterName][c.mediumChapterName] = {};
+	// 			sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName] = [];
+	// 			sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName].push(c.topicChapterName);
+	// 		}
+	// 	}else{
+	// 		sortedChapterNameList[c.largeChapterName] = {};
+	// 		sortedChapterNameList[c.largeChapterName][c.mediumChapterName] = {};
+	// 		sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName] = [];
+	// 		sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName].push(c.topicChapterName);
+	// 	}
+	// })
+	// console.log(sortedChapterNameList);
 	// }
 </script>
 </body>
