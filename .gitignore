@@ -18,9 +18,9 @@ src/main/resources/mappers/*.xml
 .idea/
 .idea/*
 
-src/main/webapp/WEB-INF/spring/*.xml
-src/main/webapp/WEB-INF/spring/appServlet/*.xml
-src/main/webapp/WEB-INF/web.xml
+#src/main/webapp/WEB-INF/spring/*.xml
+#src/main/webapp/WEB-INF/spring/appServlet/*.xml
+#src/main/webapp/WEB-INF/web.xml
 ##############################
 
 ### IntelliJ IDEA ###
