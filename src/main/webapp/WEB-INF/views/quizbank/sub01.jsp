@@ -58,9 +58,10 @@
 											</div>
 											<!-- e 230706 선택 삭제, 편집하기 추가 -->
 											<div class="tbody">
-												<div class="col">
-													<c:forEach var="middleChap" items="${chapterMap[largeChap].keySet()}">
-														<c:forEach var="smallChap" items="${chapterMap[largeChap][middleChap].keySet()}">
+												<c:forEach var="middleChap" items="${chapterMap[largeChap].keySet()}">
+													<c:forEach var="smallChap" items="${chapterMap[largeChap][middleChap].keySet()}">
+														<div class="col">
+
 															<span class="tit">${middleChap} > ${smallChap} > 1회</span>
 															<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
 																		class="preview"></i></button></span>
@@ -70,9 +71,9 @@
 																		type="button" class="btn-default">문제</button> <button type="button" class="btn-default">정답
 																		+ 해설</button></div>
 															</span>
-														</c:forEach>
+														</div>
 													</c:forEach>
-												</div>
+												</c:forEach>
 											</div>
 										</div>
 									</div>
