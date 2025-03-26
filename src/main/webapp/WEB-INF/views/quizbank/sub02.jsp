@@ -53,36 +53,36 @@
 										</div>
 										<ul>
 											<li>
-												<c:forEach var="large" items="${chapterMap.keySet()}">
+												<c:forEach var="large" items="${chapterMap.keySet()}" varStatus="lstatus">
 													<div class="check-group title">
 														<div class="title-chk">
-															<input type="checkbox" id="chk01_01" class="que-allCheck depth01">
-															<label for="chk01_01">
+															<input type="checkbox" id="chk${lstatus.count}" class="que-allCheck depth01">
+															<label for="chk${lstatus.count}">
 																<button type="button" class="dep-btn active">${large}</button>
 															</label>
 														</div>
 													</div>
 													<div class="depth02">
-														<c:forEach var="medium" items="${chapterMap[large].keySet()}">
+														<c:forEach var="medium" items="${chapterMap[large].keySet()}" varStatus="mstatus">
 															<div class="check-group">
-																<input type="checkbox" id="chk01_02" class="que-allCheck depth01">
-																<label for="chk01_02">
+																<input type="checkbox" id="chk${lstatus.count}_${mstatus.count}" class="que-allCheck depth01">
+																<label for="chk${lstatus.count}_${mstatus.count}">
 																	<button type="button" class="dep-btn active">${medium}</button>
 																</label>
 															</div>
 															<div class="depth03">
-																<c:forEach var="small" items="${chapterMap[large][medium].keySet()}">
+																<c:forEach var="small" items="${chapterMap[large][medium].keySet()}" varStatus="sstatus">
 																	<div class="check-group">
-																		<input type="checkbox" id="chk01_03" class="que-allCheck depth01">
-																		<label for="chk01_03">
+																		<input type="checkbox" id="chk${lstatus.count}_${mstatus.count}_${sstatus.count}" class="que-allCheck depth01">
+																		<label for="chk${lstatus.count}_${mstatus.count}_${sstatus.count}">
 																			<button type="button" class="dep-btn active">${small}</button>
 																		</label>
 																	</div>
 																	<div class="depth04">
-																		<c:forEach var="topic" items="${chapterMap[large][medium][small]}">
+																		<c:forEach var="topic" items="${chapterMap[large][medium][small]}" varStatus="tstatus">
 																			<div class="check-group">
-																				<input type="checkbox" id="chk01_04" class="que-allCheck depth01">
-																				<label for="chk01_04">
+																				<input type="checkbox" id="chk${lstatus.count}_${mstatus.count}_${sstatus.count}_${tstatus.count}" class="que-allCheck depth01">
+																				<label for="chk${lstatus.count}_${mstatus.count}_${sstatus.count}_${tstatus.count}">
 																					<button type="button" class="dep-btn active">${topic}</button>
 																				</label>
 																			</div>
