@@ -81,7 +81,7 @@ public class BaseController {
 
             }
 
-            Map<String,Map<String,Map<String,List<String>>>> chapterMap = new HashMap<>();
+            Map<String,Map<String,Map<String,List<String>>>> chapterMap = new LinkedHashMap<>();
             chapterList.forEach(c->{
                 Map<String,Map<String,List<String>>> largeChap = chapterMap.get(c.getLargeChapterName());
                 if(largeChap!=null){
@@ -96,15 +96,15 @@ public class BaseController {
                             mediumChap.put(c.getSmallChapterName(), smallChap);
                         }
                     }else{
-                        mediumChap = new HashMap<>();
+                        mediumChap = new LinkedHashMap<>();
                         List<String> smallChap = new ArrayList<>();
                         smallChap.add(c.getTopicChapterName());
                         mediumChap.put(c.getSmallChapterName(), smallChap);
                         largeChap.put(c.getMediumChapterName(), mediumChap);
                     }
                 }else{
-                    largeChap = new HashMap<>();
-                    Map<String,List<String>> mediumChap = new HashMap<>();
+                    largeChap = new LinkedHashMap<>();
+                    Map<String,List<String>> mediumChap = new LinkedHashMap<>();
                     List<String> smallChap = new ArrayList<>();
                     smallChap.add(c.getTopicChapterName());
                     mediumChap.put(c.getSmallChapterName(), smallChap);
@@ -112,6 +112,8 @@ public class BaseController {
                     chapterMap.put(c.getLargeChapterName(), largeChap);
                 }
             });
+
+            System.out.println(chapterMap);
 
             model.addAttribute("chapterMap",chapterMap);
         }catch(MalformedURLException e) {
