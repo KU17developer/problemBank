@@ -850,9 +850,9 @@ label {
   font-weight: 500;
   color: #333; }
 .quick_menu .quick_lst.go_tbag .lst01 i {
-  background-image: url(/resource/midhigh/assets/img/home/icon_quick_tsherpa-95fddbd3cd5927e9098b54892587b009.png); }
+  background-image: url(../../images/sub00img/icon_quick_tsherpa-95fddbd3cd5927e9098b54892587b009.png); }
 .quick_menu .quick_lst.go_tbag .lst02 i {
-  background-image: url(/resource/midhigh/assets/img/home/icon_quick_notice-d94a2b0e09437b68de9156c4b58be607.png); }
+  background-image: url(../../images/sub00img/icon_quick_notice-d94a2b0e09437b68de9156c4b58be607.png); }
 .quick_menu .quick_lst.go_tbag .lst03 i {
   background-image: url(/resource/midhigh/assets/img/home/icon_quick_writing-8d9969616c40cc59959ddd6699e91dcb.png); }
 .quick_menu .quick_lst.go_tbag .lst04 i {
@@ -862,16 +862,16 @@ label {
 .quick_menu .quick_lst.go_tbag .lst06 i {
   background-image: url(/resource/midhigh/assets/img/home/icon_quick_sun-d342b22b864c08afe96c95ada7c1c5d7.png); }
 .quick_menu .quick_lst.go_tbag .lst07 i {
-  background-image: url(/resource/midhigh/assets/img/home/icon_quick_helper-09b544c600dc3b785a7022db9583687f.png); }
+  background-image: url(../../images/sub00img/icon_quick_helper-09b544c600dc3b785a7022db9583687f.png); }
 .quick_menu .quick_lst.go_tbag .lst08 i {
-  background-image: url(/resource/midhigh/assets/img/home/icon_quick_timer-1686e1912b0b1307ce7a83d2a378e6e2.png); }
+  background-image: url(../../images/sub00img/icon_quick_timer-1686e1912b0b1307ce7a83d2a378e6e2.png); }
 .quick_menu .quick_lst.go_tbag .lst09 i {
-  background-image: url(/resource/midhigh/assets/img/home/icon_quick_link-b9aecacf99f01f7cd0d03ce3269d2dca.png); }
+  background-image: url(../../images/sub00img/icon_quick_link-b9aecacf99f01f7cd0d03ce3269d2dca.png); }
 .quick_menu .quick_lst.go_tbag .lst10 i {
   background-image: url(/resource/midhigh/assets/img/home/icon_quick_diary-f37d6efa6353e10440e6bc2c489d81c2.png);
   margin-left: 2px; }
 .quick_menu .quick_lst.go_tbag .lst11 i {
-  background-image: url(/resource/midhigh/assets/img/home/icon_quick_board2-8dde792974d13c80a83799e937c2da5c.png); }
+  background-image: url(../../images/sub00img/icon_quick_board2-8dde792974d13c80a83799e937c2da5c.png); }
 .quick_menu .btn_top {
   display: block;
   width: 100%;
@@ -1242,7 +1242,7 @@ label {
   width: 9px;
   height: 13px;
   margin: -2px 0 0 3px;
-  background: url(/resource/midhigh/assets/img/home/quick_arr_open_v2_1-863324b6914ba5b9de6c8ae1522030c2.png) no-repeat 50% 50%; }
+  background: url(../../images/sub00img/quick_arr_open_v2_1-863324b6914ba5b9de6c8ae1522030c2.png) no-repeat 50% 50%; }
 .quick_menu.v2_1.active {
   width: 63px;
   padding: 0 10px; }
