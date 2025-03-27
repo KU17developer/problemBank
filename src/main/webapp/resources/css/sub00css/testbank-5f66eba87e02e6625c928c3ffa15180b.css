@@ -138,7 +138,7 @@
             height: 44px;
             font-size: 0;
             color: transparent;
-            background: url("/resource/midhigh/assets/img/testbank_2023/icon_new-ffd13b35213655dbb332a5e1d2bd1277.png") 0 0 no-repeat; }
+            background: url("../../images/sub00img/icon_new-ffd13b35213655dbb332a5e1d2bd1277.png") 0 0 no-repeat; }
         .testbank_body .content-section .data-details__content .tb-container__body .columns .item .tooltip-mark {
           overflow: hidden;
           display: block;
@@ -147,7 +147,7 @@
           height: 44px;
           font-size: 0;
           color: transparent;
-          background: url("/resource/midhigh/assets/img/testbank_2023/sprites02-b775e230c988260ef8fa7bcdbdf11d12.png") no-repeat -2px -50px; }
+          background: url("../../images/sub00img/sprites02-b775e230c988260ef8fa7bcdbdf11d12.png") no-repeat -2px -50px; }
           .testbank_body .content-section .data-details__content .tb-container__body .columns .item .tooltip-mark.add-bookmark {
             background: url("/resource/midhigh/assets/img/testbank_2023/sprites02-b775e230c988260ef8fa7bcdbdf11d12.png") no-repeat -2px -2px; }
         .testbank_body .content-section .data-details__content .tb-container__body .columns .item-image {

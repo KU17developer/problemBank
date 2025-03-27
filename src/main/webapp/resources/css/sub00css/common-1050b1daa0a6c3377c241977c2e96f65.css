@@ -7270,56 +7270,56 @@ a.text-dark:hover, a.text-dark:focus {
   font-style: normal;
   font-weight: 100;
   font-display: swap;
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-Thin-5b87b6725168ebf12d4837da4848962b.woff2) format("woff2");
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-Thin-7adb7d46ce6f8afd982e430b90c52619.woff) format("woff"); }
+  src: url(NotoSans-Thin-5b87b6725168ebf12d4837da4848962b.woff2) format("woff2");
+  src: url(NotoSans-Thin-7adb7d46ce6f8afd982e430b90c52619.woff) format("woff"); }
 
 @font-face {
   font-family: 'NotoSansKR';
   font-style: normal;
   font-weight: 200;
   font-display: swap;
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-Light-e67b35e51331f8ea136fa956fa4b594c.woff2) format("woff2");
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-Light-d04dd8702c5cc108a75e99f43ba7fcbb.woff) format("woff"); }
+  src: url(NotoSans-Light-e67b35e51331f8ea136fa956fa4b594c.woff2) format("woff2");
+  src: url(NotoSans-Light-d04dd8702c5cc108a75e99f43ba7fcbb.woff) format("woff"); }
 
 @font-face {
   font-family: 'NotoSansKR';
   font-style: normal;
   font-weight: 300;
   font-display: swap;
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-DemiLight-01d4df1243276135ff8c79dbdc178f2e.woff2) format("woff2");
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-DemiLight-0cebeac099c6b89e86bdc5a41622181a.woff) format("woff"); }
+  src: url(NotoSans-DemiLight-01d4df1243276135ff8c79dbdc178f2e.woff2) format("woff2");
+  src: url(NotoSans-DemiLight-0cebeac099c6b89e86bdc5a41622181a.woff) format("woff"); }
 
 @font-face {
   font-family: 'NotoSansKR';
   font-style: normal;
   font-weight: 350;
   font-display: swap;
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-Regular-4e2910267e88d635a5b26172ee62786a.woff2) format("woff2");
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-Regular-53e1309e4fc9372afba4fd8f872a7aa5.woff) format("woff"); }
+  src: url(NotoSans-Regular-4e2910267e88d635a5b26172ee62786a.woff2) format("woff2");
+  src: url(NotoSans-Regular-53e1309e4fc9372afba4fd8f872a7aa5.woff) format("woff"); }
 
 @font-face {
   font-family: 'NotoSansKR';
   font-style: normal;
   font-weight: 450;
   font-display: swap;
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-Medium-eb76c0603e9bb040d829fe315211423b.woff2) format("woff2");
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-Medium-024dc32a28bc99fe1a3e5f7628989a65.woff) format("woff"); }
+  src: url(NotoSans-Medium-eb76c0603e9bb040d829fe315211423b.woff2) format("woff2");
+  src: url(NotoSans-Medium-024dc32a28bc99fe1a3e5f7628989a65.woff) format("woff"); }
 
 @font-face {
   font-family: 'NotoSansKR';
   font-style: normal;
   font-weight: 550;
   font-display: swap;
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-Bold-c18403ddf95b7cb8dd61b1f2539b11dd.woff2) format("woff2");
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-Bold-a123e4ed0d51aa4487d91274a452a981.woff) format("woff"); }
+  src: url(NotoSans-Bold-c18403ddf95b7cb8dd61b1f2539b11dd.woff2) format("woff2");
+  src: url(NotoSans-Bold-a123e4ed0d51aa4487d91274a452a981.woff) format("woff"); }
 
 @font-face {
   font-family: 'NotoSansKR';
   font-style: normal;
   font-weight: 700;
   font-display: swap;
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-Black-4e7476a09ed213f08995035ddd27ddcb.woff2) format("woff2");
-  src: url(/resource/midhigh/assets/fonts/NotoSansKR/NotoSans-Black-0961c58cc3d39491087853f7cfb259a2.woff) format("woff"); }
+  src: url(NotoSans-Black-4e7476a09ed213f08995035ddd27ddcb.woff2) format("woff2");
+  src: url(NotoSans-Black-0961c58cc3d39491087853f7cfb259a2.woff) format("woff"); }
 
 @font-face {
   font-family: 'Montserrat';
@@ -9671,7 +9671,8 @@ textarea.form-control {
   background-image: url("/resource/midhigh/assets/img/common/ico-arrow-right-lightgray-be9f853dcb61f4d5e1e8feccecd7bc2e.png"); }
 
 .icon-arrow-right-white {
-  background-image: url("/resources/css/sub00css/ico-arrow-right-white-4acde374c15091e056c02f1eb8e08e84.png"); }
+  background-image: url("../../images/sub00img/ico-arrow-right-white-4acde374c15091e056c02f1eb8e08e84.png"); }
+/*background-image: url("/resources/css/sub00css/ico-arrow-right-white-4acde374c15091e056c02f1eb8e08e84.png"); }*/
 
 .icon-arrow-top-darkgray {
   background-image: url("/resource/midhigh/assets/img/common/ico-arrow-top-darkgray-4b4a7f2f499b69029db8335906389695.png"); }
@@ -9732,7 +9733,7 @@ textarea.form-control {
   background-image: url("/resource/midhigh/assets/img/common/ico-book-1d74d8e8191e61cc5185f963eee0641a.png"); }
 
 .icon-memo-center {
-  background-image: url("/resource/midhigh/assets/img/common/ico-memo-center-e575bd015d4d3fcbe5da0c1ff2474f2c.png"); }
+  background-image: url("../../images/sub00img/ico-memo-center-e575bd015d4d3fcbe5da0c1ff2474f2c.png"); }
 
 .icon-memo-center-blue {
   background-image: url("/resource/midhigh/assets/img/common/ico-memo-center-blue-8256c729774e34d001631fcab0d2e576.png"); }
@@ -9753,7 +9754,7 @@ textarea.form-control {
   background-image: url("/resource/midhigh/assets/img/common/ico-newly-87ba7576efdeffe2b4ae7fcf823a1446.png"); }
 
 .icon-new {
-  background-image: url("/resource/midhigh/assets/img/common/ico-new-8181c2a560b75ebe4b9ca98d770f8ca8.png"); }
+  background-image: url("../../images/sub00img/ico-new-8181c2a560b75ebe4b9ca98d770f8ca8.png"); }
 
 .icon-badge-new {
   background-image: url("/resource/midhigh/assets/img/common/ico-badge-new-9683b932df68aafc9dd714224f96cb14.png");
@@ -10025,7 +10026,7 @@ textarea.form-control {
   .mobile .icon-folder-white {
     background-image: url("/resource/midhigh/assets/img/m-common/ico-folder-white-c75b1c456217a3586ff33786728a0dff.png"); }
   .mobile .icon-memo-center {
-    background-image: url("/resource/midhigh/assets/img/m-common/ico-memo-center-4f143e3869c3db5d28f8bdeeb7d30e8c.png"); }
+    background-image: url("../../images/sub00img/ico-memo-center-e575bd015d4d3fcbe5da0c1ff2474f2c.png"); }
   .mobile .icon-memo-center-blue {
     background-image: url("/resource/midhigh/assets/img/m-common/ico-memo-center-blue-0ab655b6796b67cb246d1d9b7425f211.png"); }
   .mobile .icon-memo-left {

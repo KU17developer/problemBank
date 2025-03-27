@@ -1285,7 +1285,7 @@ label {
     padding: 20px 20px 20px 181px;
     border: 1px solid #ccc;
     border-radius: 6px;
-    background: #fcfcfc url(/resources/css/images/sub00img/ico-caution-5be05150240ccaf87eafbec34e4ae3de.png) no-repeat 61px 50%;
+    background: #fcfcfc url(../../images/sub00img/ico-caution-5be05150240ccaf87eafbec34e4ae3de.png) no-repeat 61px 50%;
     /*유출사례보기 버튼*/ }
     .middle-wrapper .caution-box .caution1 {
       font-weight: 450;
@@ -2162,7 +2162,7 @@ label {
     margin-top: 40px;
     padding: 100px 17px 28.5px 17px;
     text-align: center;
-    background: #f7f7f7 url(/resources/css/sub00css/ico-caution-f7f5ba551bd6aa14ba3cc5fffaee2068.png) no-repeat center 30px;
+    background: #f7f7f7 url(../../images/sub00img/ico-caution-5be05150240ccaf87eafbec34e4ae3de.png) no-repeat center 30px;
     background-size: 58px;
     /*유출사례보기 버튼*/ }
     .mobile .middle-wrapper .caution-box .caution1 {

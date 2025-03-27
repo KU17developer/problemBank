@@ -96,20 +96,7 @@
     <script src="<%= request.getContextPath() %>/resources/css/sub00js/queryencrypt-latest.min.js"></script>
     <script src="<%= request.getContextPath() %>/resources/css/sub00js/legacy_common-d2d7d5cb7969edb323cd785fc9c44390.js"></script>
     <script src="<%= request.getContextPath() %>/resources/css/sub00js/common-635a3dfdd0d391c3f5ed081913381970.js"></script>
-    <style>
-        @font-face {
-            font-family: 'NotoSans-Medium';
-            src: url('<%= request.getContextPath() %>/resources/css/sub00css/NotoSans-Medium-024dc32a28bc99fe1a3e5f7628989a65.woff') format('woff');
-        }
-        @font-face {
-            font-family: 'NotoSans-Bold';
-            src: url('<%= request.getContextPath() %>/resources/css/sub00css/NotoSans-Bold-a123e4ed0d51aa4487d91274a452a981.woff') format('woff');
-        }
-        @font-face {
-            font-family: 'NotoSans-Regular';
-            src: url('<%= request.getContextPath() %>/resources/css/sub00css/NotoSans-Regular-53e1309e4fc9372afba4fd8f872a7aa5.woff') format('woff');
-        }
-    </style>
+
     <script>
         var currentDevice = 'DESKTOP';
         var downloadServerUrl = 'https://bfile.tsherpa.co.kr/popup/downfile_multi_new_dext5.aspx';
