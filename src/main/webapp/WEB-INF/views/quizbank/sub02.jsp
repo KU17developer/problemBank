@@ -139,15 +139,15 @@
 											<div class="right-area">
 											</div>
 										</div>
-										<div class="btn-wrap multi">
-											<button type="button" class="btn-line">자료 해석</button>
-											<button type="button" class="btn-line">이해</button>
-											<button type="button" class="btn-line">적용</button>
-										</div>
-										<div class="btn-wrap multi">
-											<button type="button" class="btn-line">지식</button>
-											<button type="button" class="btn-line">결론도출</button>
-										</div>
+										<c:forEach var="eval" items="${evaluation}" varStatus="status">
+											<c:if test="${status.index%3==0}">
+												<div class="btn-wrap multi">
+											</c:if>
+											<button type="button" id="${eval.domainid}" class="btn-line">${eval.domainName}</button>
+											<c:if test="${status.index%3==2} || ${status.index+1}==${evaluation}.length">
+												</div>
+											</c:if>
+										</c:forEach>
 									</div>
 									<div class="box">
 										<div class="title-wrap">
@@ -156,8 +156,8 @@
 											</div>
 										</div>
 										<div class="btn-wrap multi">
-											<button type="button" class="btn-line">객관식</button>
-											<button type="button" class="btn-line">주관식</button>
+											<button type="button" id="multiple" class="btn-line">객관식</button>
+											<button type="button" id="subjective" class="btn-line">주관식</button>
 										</div>
 									</div>
 									<div class="box">
@@ -369,10 +369,10 @@
 
 				queChkAll.on('click', queCheckFunc);
 
-
 				// $(".type-box .box .range").hide();
 				$(".pop-content .range-wrap .range").hide();
 				$(".pop-content .range-wrap .range.total").show();
+
 				let stepBtn = $('.step-wrap .btn-line');
 
 				function stepFunc() {
@@ -380,6 +380,12 @@
 					let stepData = _this.data('step');
 
 					_this.toggleClass('active');
+
+					let activeRange = $(".box .range-wrap>.range.active");
+					let quiznum = $(".input-area>.num>input");
+					activeRange.forEach(range=>{
+						range.innerText = range.innerText.slice(0,-2) + (quiznum/activeRange.length) + ')';
+					})
 
 					if (_this.hasClass('active')) {
 						$(".range[data-step='" + stepData + "']").show();
@@ -418,9 +424,14 @@
 					const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);
 					console.log(getTopic);
 					// fetch 써야 함? 기능 만들기 귀찮은데
-					// fetch('http://localhost:8080/api/itemlist')
-					//     .then(response=>response.json())
-					//     .then(data=>console.log(data));
+					fetch('http://localhost:9090/api/itemlist',{
+						method:'POST',
+						headers:{
+							'Content-Type':'application/json',
+						},
+						body:getTopic,
+					}).then(response=>response.json())
+					    .then(data=>console.log(data));
 				});
 			}
 		</script>

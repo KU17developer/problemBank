@@ -3,6 +3,7 @@ package com.gd.bk.sungjune;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gd.bk.common.quiz.model.dto.Chapter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -39,13 +40,21 @@ public class BaseController {
     @RequestMapping("/sub02")
     public String sub02(Model model){
         Map<String,Object> chapter = getChapterList();
+        Object eTemp = evaluationlist();
 
         String sb = chapter.get("sb").toString();
         List<Chapter> chapterList = (List<Chapter>)chapter.get("chapterList");
         Map<String,Map<String,Map<String,List<String>>>> chapterMap = (Map<String,Map<String,Map<String,List<String>>>>)chapter.get("chapterMap");
+
+        List<Object> evaluation = null;
+        if(eTemp instanceof List){
+            evaluation = (List<Object>)eTemp;
+        }
+
         model.addAttribute("sb",sb);
         model.addAttribute("chapterList",chapterList);
         model.addAttribute("chapterMap",chapterMap);
+        model.addAttribute("evaluation",evaluation);
 
         return "quizbank/sub02";
     }
@@ -150,6 +159,52 @@ public class BaseController {
         }finally{
             log.debug("해치웠나?");
         }
+        return null;
+    }
+
+    public Object evaluationlist(){
+        String response = "";
+        try{
+            URL url = new URL("https://tsherpa.item-factory.com/chapter/evaluation-list");
+            HttpsURLConnection connect = (HttpsURLConnection)url.openConnection();
+
+            connect.setRequestMethod("POST");
+            connect.setDoOutput(true);
+            connect.setRequestProperty("Content-Type", "application/json");
+
+            Map<String, Object> params = Map.of("subjectId","1136");    // 이거 바꿔야됨
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(params);
+            byte[] input = json.getBytes();
+            connect.getOutputStream().write(input);
+
+            InputStream is = connect.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            int data = 0;
+            StringBuilder sb = new StringBuilder();
+            while((data=isr.read())!=-1){
+                sb.append((char)data);
+            }
+            String jsonString = sb.toString();
+
+            ObjectMapper mapper2 = new ObjectMapper();
+            Map<String,Object> map = mapper.readValue(jsonString, Map.class);
+
+//            model.addAttribute("map",map);
+
+            System.out.println(map.get("evaluationList"));
+
+            Object evaluationObject = map.get("evaluationList");
+
+            return evaluationObject;
+        }catch(MalformedURLException e) {
+            log.error("URL이 잘못되었습니다 : " + e.getMessage());
+        }catch(IOException e){
+            log.error("Connection 에러 : " + e.getMessage());
+        }finally{
+            log.debug("해치웠나?");
+        }
+
         return null;
     }
 
