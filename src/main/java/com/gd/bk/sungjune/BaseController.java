@@ -19,6 +19,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Controller
 public class BaseController {
+    // branch test
     @RequestMapping("/")
     public String index() {
         return "index";
