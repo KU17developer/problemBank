@@ -1239,6 +1239,30 @@
                                     </div>
                                 </div>
                                 <!-- // item -->
+                                <!-- item -->
+                                <div class="item">
+                                    <div class="item-mark">
+                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305" onclick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+                                        <a class="tooltip-mark" href="javascript:;" id="del_960305" onclick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+                                        <mark>NEW</mark>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="item-image">
+                                            <figure class="image is-thumnail">
+                                                <img alt="교과서 이미지" src="https://i.namu.wiki/i/6-0dD7RxiZQdaahJSxuU0v6J0fHZS1pzismraaB6yLBTolEPdsT-rlx5g2QCjXoA8LtCJwpC8XpNnJFJzxPISw.webp">
+                                                </img></figure>
+                                        </div>
+                                        <div class="item-info">
+                                            <p class="data_title">커비 1-1 (양커비)</p>
+                                            <div class="data_buttons">
+                                                <a class="button" href="javascript:;" onclick="customExamPopup('6804');" title="새창 열림">
+                                                    <i class="icon icon-memo-center"></i>시험지 만들기
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- // item -->
                             </div>
                         </div>
                     </div>
@@ -1756,28 +1780,32 @@
                         }
 
                         function customExamPopup(subjectId) {
-                            if (!checkUserLoggedIn(location.href)) {
-                                return false;
+                            if(subjectId!=6804){
+                                if (!checkUserLoggedIn(location.href)) {
+                                    return false;
+                                }
+                                //새창으로 열기
+                                let pop_title = "win_pop";
+                                let url = 'https://testbank.tsherpa.co.kr/customExam/step0';
+
+                                window.open("",pop_title,'width=1400,height=1024,status=no,toolbar=no,scrollbars=no, left=500, top=0');
+
+                                //form
+                                let new_form = document.createElement("form");
+                                new_form.attr("name", "new_form");
+                                new_form.attr("charset", "UTF-8");
+                                new_form.attr("method", "post");
+                                new_form.attr("action", url);
+                                new_form.attr("target", pop_title);
+
+                                //step0 세팅지 리스트를 위한 교재정보 - 문항통합에서 교재정보 컬럼명 = subjectId
+                                new_form.append($('<input/>', {type: 'hidden', name: 'subjectId', value: subjectId}));
+
+                                new_form.appendTo('body');
+                                new_form.submit();
+                            }else{
+                                window.open('http://localhost:9090/problembank/sub01','_blank','width=1600,height=900')
                             }
-                            //새창으로 열기
-                            let pop_title = "win_pop";
-                            let url = 'https://testbank.tsherpa.co.kr/customExam/step0';
-
-                            window.open("",pop_title,'width=1400,height=1024,status=no,toolbar=no,scrollbars=no, left=500, top=0');
-
-                            //form
-                            let new_form = document.createElement("form");
-                            new_form.attr("name", "new_form");
-                            new_form.attr("charset", "UTF-8");
-                            new_form.attr("method", "post");
-                            new_form.attr("action", url);
-                            new_form.attr("target", pop_title);
-
-                            //step0 세팅지 리스트를 위한 교재정보 - 문항통합에서 교재정보 컬럼명 = subjectId
-                            new_form.append($('<input/>', {type: 'hidden', name: 'subjectId', value: subjectId}));
-
-                            new_form.appendTo('body');
-                            new_form.submit();
                         }
                     </script> </div>
                 <!-- ‘T셀파 교수자료 무단 배포 주의사항 안내’ 노출 화면 -->

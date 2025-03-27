@@ -28,7 +28,7 @@
 				<ul class="title">
 					<li class="active"><img src="${path}/resources/images/common/ico_step_active.png" alt="">출제 방법 선택</li>
 				</ul>
-				<button type="button" class="del-btn"></button>
+				<button type="button" class="del-btn" onclick="window.close()"></button>
 			</div>
 			<div class="pop-content">
 				<div class="view-box">
