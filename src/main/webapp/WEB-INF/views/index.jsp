@@ -360,7 +360,7 @@
         <div class="header_nav">
             <div class="btn btn_allMenu">
                 <button type="button">
-                    <span>전체메뉴22</span>
+                    <span>전체메뉴</span>
                 </button>
             </div>
             <!-- 1뎁스 -->
