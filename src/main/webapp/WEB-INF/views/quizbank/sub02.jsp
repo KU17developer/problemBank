@@ -81,9 +81,9 @@
 																	<div class="depth04">
 																		<c:forEach var="topic" items="${chapterMap[large][medium][small]}" varStatus="tstatus">
 																			<div class="check-group">
-																				<input type="checkbox" id="chk${lstatus.count}_${mstatus.count}_${sstatus.count}_${tstatus.count}" class="que-allCheck depth01">
+																				<input type="checkbox" id="chk${lstatus.count}_${mstatus.count}_${sstatus.count}_${tstatus.count}">
 																				<label for="chk${lstatus.count}_${mstatus.count}_${sstatus.count}_${tstatus.count}">
-																					<button type="button" class="dep-btn active">${topic}</button>
+																					<span>${topic}</span>
 																				</label>
 																			</div>
 																		</c:forEach>
@@ -200,7 +200,7 @@
 			</div>
 			<div class="step-btn-wrap">
 				<button type="button" class="btn-step" onclick="location.assign('${path}/sub01')">출제 방법 선택</button>
-				<button type="button" class="btn-step next pop-btn" data-pop="que-pop">STEP2 문항 편집</button><!-- 230629 pop-btn 추가-->
+				<button type="button" class="btn-step next pop-btn" data-pop="que-pop" onclick="editQuiz()">STEP2 문항 편집</button><!-- 230629 pop-btn 추가-->
 			</div>
 
 
@@ -218,23 +218,23 @@
 					<span class="txt">문제 수를 입력하여<br> 난이도별 문제 수를 조정하세요.</span>
 					<div class="range-wrap">
 						<!-- S: 문제 수 맞지 않을 시 .fail 클래스 추가 -->
-						<div class="range color01 fail">
+						<div class="range color01 fail" data-step="stap1">
 							<span class="color01">최하</span>
 							<input type="number">
 						</div>
-						<div class="range color02">
+						<div class="range color02" data-step="stap2">
 							<span class="color02">하</span>
 							<input type="number">
 						</div>
-						<div class="range color03">
+						<div class="range color03" data-step="stap3">
 							<span class="color03">중</span>
 							<input type="number">
 						</div>
-						<div class="range color04">
+						<div class="range color04" data-step="stap4">
 							<span class="color04">상</span>
 							<input type="number">
 						</div>
-						<div class="range color05">
+						<div class="range color05" data-step="stap5">
 							<span class="color05">최상</span>
 							<input type="number">
 						</div>
@@ -262,23 +262,23 @@
 				<div class="pop-content">
 					<span class="txt">사용자가 원하는 문항 구성을 할 수 없어<br>문항 구성이 자동으로 변경되었습니다.</span>
 					<div class="range-wrap">
-						<div class="range">
+						<div class="range" data-step="stap1">
 							<span class="color01">최하</span>
 							<span class="num">2</span>
 						</div>
-						<div class="range">
+						<div class="range" data-step="stap2">
 							<span class="color02">하</span>
 							<span class="num">5</span>
 						</div>
-						<div class="range">
+						<div class="range" data-step="stap3">
 							<span class="color03">중</span>
 							<span class="num">6</span>
 						</div>
-						<div class="range">
+						<div class="range" data-step="stap4">
 							<span class="color04">상</span>
 							<span class="num">5</span>
 						</div>
-						<div class="range">
+						<div class="range" data-step="stap5">
 							<span class="color05">최상</span>
 							<span class="num">2</span>
 						</div>
@@ -326,8 +326,19 @@
 				function queCheckFunc() {
 					let _this = $(this);
 
+					let checkedbox = $('.unit-cnt>ul').find('input[type=checkbox]:checked');
+
+					console.log(checkedbox);
+
+					if(checkedbox.length<=1){
+						$(".btn-wrap.multi .btn-line").addClass('active');
+						$(".step-wrap .btn-line").addClass('active');
+						$(".range-wrap .range").show();
+					}
+
 					if (_this.prop('checked')) {
 						_this.parents().next('ul').find('input[type=checkbox]').prop('checked', true);
+
 					} else {
 						_this.parents().next('ul').find('input[type=checkbox]').prop('checked', false);
 					}
@@ -344,12 +355,23 @@
 						_this.parents('table').find('input[type=checkbox]').prop('checked', false);
 					}
 
+					checkedbox = $('.unit-cnt>ul').find('input[type=checkbox]:checked');
+
+					console.log(checkedbox);
+
+					if(checkedbox.length<=1){
+						$(".btn-wrap.multi .btn-line").removeClass('active');
+						$(".step-wrap .btn-line").removeClass('active');
+						$(".range-wrap .range").hide();
+					}
 				}
 
 				queChkAll.on('click', queCheckFunc);
 
 
-				$(".type-box .box .range").hide();
+				// $(".type-box .box .range").hide();
+				$(".pop-content .range-wrap .range").hide();
+				$(".pop-content .range-wrap .range.total").show();
 				let stepBtn = $('.step-wrap .btn-line');
 
 				function stepFunc() {
@@ -363,7 +385,7 @@
 					} else {
 						$(".range[data-step='" + stepData + "']").hide();
 					}
-
+					console.log("click!");
 				}
 
 				stepBtn.on('click', stepFunc);
@@ -386,6 +408,14 @@
 				if(inputsum==quizsum){
 					// 이건 나중에 생각해볼게
 				}
+			}
+
+			const editQuiz = () =>{
+				const chapterList = "${chapterList}";
+
+				$(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{
+					chapterList.find(chapter=>console.log(chapter.topicChapterName==span.innerText));
+				});
 			}
 		</script>
 </body>
