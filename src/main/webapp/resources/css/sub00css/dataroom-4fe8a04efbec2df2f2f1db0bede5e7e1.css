@@ -1,0 +1,759 @@
+@charset "UTF-8";
+.dataroom_body .content-section {
+  width: 1300px;
+  margin: 0 auto;
+  margin-bottom: 110px;
+  margin-top: 52px; }
+  .dataroom_body .content-section .columns {
+    display: flex; }
+  .dataroom_body .content-section .dataroom-list {
+    /* 자료실 리스트 */ }
+    .dataroom_body .content-section .dataroom-list .tabs__list {
+      display: flex;
+      justify-content: flex-start;
+      gap: 10px; }
+    .dataroom_body .content-section .dataroom-list .tabs__item {
+      display: flex;
+      align-items: center; }
+      .dataroom_body .content-section .dataroom-list .tabs__item a {
+        flex-basis: 95px;
+        padding: 15px 32px;
+        height: 50px;
+        line-height: 20px;
+        font-size: 17px;
+        color: #333;
+        text-align: center;
+        border-radius: 25px;
+        background: #f5f6f9; }
+        .dataroom_body .content-section .dataroom-list .tabs__item a:hover {
+          color: #fff;
+          background: #5670dc; }
+      .dataroom_body .content-section .dataroom-list .tabs__item--active a {
+        color: #fff;
+        background: #5670dc; }
+    .dataroom_body .content-section .dataroom-list--title {
+      display: flex;
+      gap: 21px;
+      padding: 0 0 25px 0;
+      align-items: flex-end; }
+      .dataroom_body .content-section .dataroom-list--title > h3 {
+        margin: 0;
+        font-size: 35px;
+        line-height: 1.2;
+        color: #000;
+        font-weight: 550; }
+      .dataroom_body .content-section .dataroom-list--title > p {
+        font-size: 17px;
+        letter-spacing: -0.51px;
+        line-height: 1.5;
+        color: #666; }
+    .dataroom_body .content-section .dataroom-list .dataroom__list {
+      display: flex;
+      flex-wrap: wrap;
+      padding: 40px 0 10px 0;
+      justify-content: left;
+      gap: 0; }
+      .dataroom_body .content-section .dataroom-list .dataroom__list > li {
+        position: relative;
+        z-index: 1;
+        margin-bottom: 21px;
+        border: 4px solid transparent;
+        border-radius: 12px;
+        margin-right: 21px; }
+        .dataroom_body .content-section .dataroom-list .dataroom__list > li:hover {
+          border-color: #5670dc; }
+        .dataroom_body .content-section .dataroom-list .dataroom__list > li:nth-of-type(3n) {
+          margin-right: 0; }
+      .dataroom_body .content-section .dataroom-list .dataroom__list__linkImg {
+        position: relative;
+        z-index: 1;
+        display: block;
+        width: 100%;
+        border-radius: 6px;
+        overflow: hidden; }
+        .dataroom_body .content-section .dataroom-list .dataroom__list__linkImg > img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          transform: scale(1);
+          transition: 0.3s;
+          border-radius: 0; }
+        .dataroom_body .content-section .dataroom-list .dataroom__list__linkImg:hover > img {
+          transform: scale(1.2, 1.2); }
+        .dataroom_body .content-section .dataroom-list .dataroom__list__linkImg:hover::after {
+          content: '';
+          position: absolute;
+          z-index: 2;
+          top: 0;
+          left: 0;
+          display: block;
+          width: 100%;
+          height: 100%;
+          background: linear-gradient(to bottom, transparent, #5670dc 70%); }
+        .dataroom_body .content-section .dataroom-list .dataroom__list__linkImg:hover > mark {
+          animation: moveMark 0.3s forwards; }
+        .dataroom_body .content-section .dataroom-list .dataroom__list__linkImg:hover .dataroom__list__text__black > h4 {
+          color: #fff; }
+        .dataroom_body .content-section .dataroom-list .dataroom__list__linkImg:hover .dataroom__list__text__black > p {
+          color: #fff; }
+      .dataroom_body .content-section .dataroom-list .dataroom__list--mark {
+        transform: translateX(0) translateY(0);
+        position: absolute;
+        z-index: 3;
+        top: 21px;
+        left: 21px;
+        flex: 1;
+        min-width: 35px;
+        height: 35px;
+        padding: 0;
+        line-height: 35px;
+        font-size: 13px;
+        text-align: center;
+        color: #fff;
+        background: #5670dc;
+        border-radius: 13px; }
+      .dataroom_body .content-section .dataroom-list .dataroom__list__text {
+        position: absolute;
+        z-index: 3;
+        left: 27px;
+        bottom: 26px;
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+        width: calc(100% - 27px); }
+        .dataroom_body .content-section .dataroom-list .dataroom__list__text > h4 {
+          margin: 0;
+          line-height: 26px;
+          font-size: 25px;
+          color: #fff;
+          font-weight: 500; }
+        .dataroom_body .content-section .dataroom-list .dataroom__list__text > p {
+          line-height: 19px;
+          font-size: 15px;
+          color: #fff;
+          font-weight: 300; }
+        .dataroom_body .content-section .dataroom-list .dataroom__list__text__black > h4 {
+          color: #000; }
+        .dataroom_body .content-section .dataroom-list .dataroom__list__text__black > p {
+          color: #000; }
+
+@keyframes moveMark {
+  0% {
+    transform: translateX(0) translateY(0) scale(0);
+    background: #5670dc;
+    font-size: 13px; }
+  100% {
+    transform: translateX(160px) translateY(50px) scale(1.8571);
+    background: #279bfe;
+    font-size: 13px; } }
+
+.edutech-landing {
+  flex: 1 1 0;
+  width: calc(100% - 245px);
+  margin: 0 auto; }
+  .edutech-landing .f-box {
+    display: flex; }
+  .edutech-landing .section__content {
+    width: 100%;
+    padding: 0 0 0 35px; }
+    .edutech-landing .section__content .cont-wrap {
+      margin-bottom: 9px; }
+      .edutech-landing .section__content .cont-wrap > div {
+        flex-wrap: wrap;
+        justify-content: space-between; }
+      .edutech-landing .section__content .cont-wrap h3.wrap-tit {
+        font-size: 19px;
+        font-weight: 450;
+        letter-spacing: -0.57px;
+        margin-bottom: 14px; }
+      .edutech-landing .section__content .cont-wrap article {
+        position: relative;
+        overflow: hidden; }
+        .edutech-landing .section__content .cont-wrap article.one-third {
+          width: 333px; }
+        .edutech-landing .section__content .cont-wrap article.three-third {
+          width: 100%; }
+        .edutech-landing .section__content .cont-wrap article .item {
+          width: 100%;
+          height: 103px;
+          box-sizing: border-box;
+          border: 1px solid transparent;
+          border-radius: 6px;
+          margin-bottom: 14px;
+          overflow: auto; }
+          .edutech-landing .section__content .cont-wrap article .item a {
+            border: 1px solid #e0e0e0;
+            display: block;
+            width: 100%;
+            height: 100%;
+            border-radius: 5px; }
+          .edutech-landing .section__content .cont-wrap article .item .item-tag {
+            display: inline-block;
+            position: absolute;
+            left: 13px;
+            top: 1px;
+            background: #000;
+            color: #fff;
+            border-radius: 0 0 4px 4px;
+            width: 40px;
+            height: 19px;
+            line-height: 19px;
+            text-align: center;
+            font-size: 12px; }
+          .edutech-landing .section__content .cont-wrap article .item .item-tit {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 17px 0 0 121px;
+            font-size: 15px;
+            line-height: 18px;
+            letter-spacing: -0.38px; }
+            .edutech-landing .section__content .cont-wrap article .item .item-tit p {
+              font-weight: 350; }
+            .edutech-landing .section__content .cont-wrap article .item .item-tit b {
+              font-weight: 550; }
+          .edutech-landing .section__content .cont-wrap article .item .item-button {
+            display: block;
+            width: 68px;
+            height: 18px;
+            border-radius: 6px;
+            background: #edf0f2 url("/resource/midhigh/assets/img/edu_tech/landing/202403/icon-arrow-1525d2a4b8a0c7d6534e52eb1bc8b7af.png") 52px 4px no-repeat;
+            padding-left: 10px;
+            font-size: 11px;
+            letter-spacing: -0.28px;
+            line-height: 18px;
+            color: #7a7f83;
+            margin: 8px 0 0 2px; }
+          .edutech-landing .section__content .cont-wrap article .item.chEdutech {
+            background: #f2fbff url("/resource/midhigh/assets/img/edu_tech/landing/202403/bg-chEdutech-568160d2f7132d42e6468044f1c21fbc.png") 0 0 no-repeat;
+            width: 100%;
+            height: 122px; }
+            .edutech-landing .section__content .cont-wrap article .item.chEdutech a {
+              background: url("/resource/midhigh/assets/img/edu_tech/landing/202403/icon-chEdutech-fd8d4dcc9c10943069a8e80fd6f94509.png") 80px 18px no-repeat;
+              height: 100%; }
+            .edutech-landing .section__content .cont-wrap article .item.chEdutech .item-tit {
+              padding: 24px 0 0 176px;
+              font-size: 17px;
+              line-height: 20px;
+              letter-spacing: -0.43px; }
+            .edutech-landing .section__content .cont-wrap article .item.chEdutech .item-tit p {
+              font-weight: 450; }
+            .edutech-landing .section__content .cont-wrap article .item.chEdutech .item-tit b {
+              color: #0578da; }
+          .edutech-landing .section__content .cont-wrap article .item.allSubjects a {
+            background: #f2fbff url("/resource/midhigh/assets/img/edu_tech/landing/202403/icon-allSubjects-3bb53f669fc78fe74c4fd259c8c8654b.png") 38px 21px no-repeat; }
+          .edutech-landing .section__content .cont-wrap article .item.allSubjects .item-tag {
+            background: #319ffd; }
+          .edutech-landing .section__content .cont-wrap article .item.allSubjects .item-tit b {
+            color: #319ffd; }
+          .edutech-landing .section__content .cont-wrap article .item.kor a {
+            background: #fffaf4 url("/resource/midhigh/assets/img/edu_tech/landing/202403/icon-kor-010b0490c9990e73361ce574fa6c8439.png") 38px 21px no-repeat; }
+          .edutech-landing .section__content .cont-wrap article .item.kor .item-tag {
+            background: #ff8548; }
+          .edutech-landing .section__content .cont-wrap article .item.kor .item-tit b {
+            color: #ff8548; }
+          .edutech-landing .section__content .cont-wrap article .item.eng a {
+            background: #fffaf4 url("/resource/midhigh/assets/img/edu_tech/landing/202403/icon-eng-fcbbf2964da6902d4f45018659b6f7cf.png") 38px 21px no-repeat; }
+          .edutech-landing .section__content .cont-wrap article .item.eng .item-tag {
+            background: #ff8548; }
+          .edutech-landing .section__content .cont-wrap article .item.eng .item-tit b {
+            color: #ff8548; }
+          .edutech-landing .section__content .cont-wrap article .item.math a {
+            background: #fffaf4 url("/resource/midhigh/assets/img/edu_tech/landing/202403/icon-math-84f7f48a3c061f3656b8e415bfe0c5bd.png") 38px 21px no-repeat; }
+          .edutech-landing .section__content .cont-wrap article .item.math .item-tag {
+            background: #ff8548; }
+          .edutech-landing .section__content .cont-wrap article .item.math .item-tit b {
+            color: #ff8548; }
+          .edutech-landing .section__content .cont-wrap article .item.soc a {
+            background: #fffaf4 url("/resource/midhigh/assets/img/edu_tech/landing/202403/icon-soc-44a34320a1bfd603aac60e8cff081be2.png") 38px 21px no-repeat; }
+          .edutech-landing .section__content .cont-wrap article .item.soc .item-tag {
+            background: #ff8548; }
+          .edutech-landing .section__content .cont-wrap article .item.soc .item-tit b {
+            color: #ff8548; }
+          .edutech-landing .section__content .cont-wrap article .item.sci a {
+            background: #fffaf4 url("/resource/midhigh/assets/img/edu_tech/landing/202403/icon-sci-e657de3334551415be079504f7cd2a2f.png") 38px 21px no-repeat; }
+          .edutech-landing .section__content .cont-wrap article .item.sci .item-tag {
+            background: #ff8548; }
+          .edutech-landing .section__content .cont-wrap article .item.sci .item-tit b {
+            color: #ff8548; }
+          .edutech-landing .section__content .cont-wrap article .item.mus {
+            background: #f2fbff url("/resource/midhigh/assets/img/edu_tech/landing/202403/bg-music-62ec86b6cd2ec8e25ae54692837abe2b.png") 0 0/cover no-repeat;
+            width: 100%;
+            height: 126px; }
+            .edutech-landing .section__content .cont-wrap article .item.mus a {
+              background: url("/resource/midhigh/assets/img/edu_tech/landing/202403/icon-mus-8d93e5232dcf59f31c62459431df8917.png") 38px 34px no-repeat;
+              height: 100%; }
+            .edutech-landing .section__content .cont-wrap article .item.mus .item-tag {
+              background: #686cf5; }
+            .edutech-landing .section__content .cont-wrap article .item.mus .item-tit {
+              padding-top: 30px;
+              font-size: 16px;
+              letter-spacing: -0.4px;
+              line-height: 20px; }
+            .edutech-landing .section__content .cont-wrap article .item.mus .item-tit b {
+              color: #686cf5; }
+            .edutech-landing .section__content .cont-wrap article .item.mus .txt-box {
+              position: absolute;
+              right: 31px;
+              top: 41px;
+              width: 532px;
+              height: 79px; }
+              .edutech-landing .section__content .cont-wrap article .item.mus .txt-box p {
+                font-size: 15px;
+                letter-spacing: -0.38px;
+                line-height: 20px;
+                color: #2f2e32;
+                font-weight: 450; }
+          .edutech-landing .section__content .cont-wrap article .item.art a {
+            background: #fefaff url("/resource/midhigh/assets/img/edu_tech/landing/202403/icon-art-c36d394c3e3d2485de8d1d62e419f353.png") 38px 21px no-repeat; }
+          .edutech-landing .section__content .cont-wrap article .item.art .item-tag {
+            background: #ff6ea1; }
+          .edutech-landing .section__content .cont-wrap article .item.art .item-tit b {
+            color: #ff6ea1; }
+          .edutech-landing .section__content .cont-wrap article .item.phyEdu a {
+            background: #f2fcfc url("/resource/midhigh/assets/img/edu_tech/landing/202403/icon-phyEdu-83122a92642245f78bdf181b6fabb116.png") 38px 21px no-repeat; }
+          .edutech-landing .section__content .cont-wrap article .item.phyEdu .item-tag {
+            background: #0abeb8; }
+          .edutech-landing .section__content .cont-wrap article .item.phyEdu .item-tit b {
+            color: #0abeb8; }
+          .edutech-landing .section__content .cont-wrap article .item.cod a {
+            background: #f2fcf4 url("/resource/midhigh/assets/img/edu_tech/landing/202403/icon-cod-b0ef2a6bfd4933cd4c1bd434f22712ce.png") 38px 21px no-repeat; }
+          .edutech-landing .section__content .cont-wrap article .item.cod .item-tag {
+            background: #66cc42; }
+          .edutech-landing .section__content .cont-wrap article .item.cod .item-tit b {
+            color: #66cc42; }
+          .edutech-landing .section__content .cont-wrap article .item:hover {
+            border: 1px solid #5670dc; }
+            .edutech-landing .section__content .cont-wrap article .item:hover a {
+              border: 1px solid #5670dc; }
+
+.edutech-subject {
+  flex: 1 1 0;
+  width: calc(100% - 245px);
+  margin: 0 auto; }
+  .edutech-subject .f-box {
+    display: flex; }
+  .edutech-subject .section__content {
+    width: 100%;
+    padding: 0 0 0 35px; }
+    .edutech-subject .section__content .thumnail_area .data-contents .search_bar {
+      border-bottom: 1px solid #e0e0e0;
+      padding-bottom: 15px; }
+      .edutech-subject .section__content .thumnail_area .data-contents .search_bar .bd_total {
+        position: absolute;
+        left: 0;
+        top: 6px;
+        font-size: 16px;
+        font-weight: 350;
+        color: #000000;
+        letter-spacing: -0.1px; }
+        .edutech-subject .section__content .thumnail_area .data-contents .search_bar .bd_total strong {
+          color: #5670dc;
+          font-weight: 550; }
+    .edutech-subject .section__content .thumnail_area .data-contents .data-list {
+      display: flex;
+      justify-content: left;
+      flex-wrap: wrap;
+      overflow: hidden;
+      width: 1200px;
+      margin-top: 17px; }
+      .edutech-subject .section__content .thumnail_area .data-contents .data-list li {
+        border: 1px solid transparent;
+        margin-right: 17px;
+        margin-bottom: 20px;
+        border-radius: 6px;
+        overflow: hidden; }
+        .edutech-subject .section__content .thumnail_area .data-contents .data-list li:nth-child(4n) {
+          margin-right: 0; }
+        .edutech-subject .section__content .thumnail_area .data-contents .data-list li .tip-button {
+          position: absolute;
+          top: 8px;
+          right: 7px;
+          width: 68px;
+          height: 22px;
+          z-index: 10;
+          background: url("/resource/midhigh/assets/img/edu_tech/landing/202403/tip-fe590e9fb56bef0da70ce300398b7ff1.png") 0 0 no-repeat; }
+        .edutech-subject .section__content .thumnail_area .data-contents .data-list li .box {
+          position: relative;
+          width: 240px;
+          height: 242px;
+          float: left;
+          box-sizing: unset;
+          border: 1px solid #e0e0e0;
+          border-radius: 6px;
+          overflow: hidden; }
+        .edutech-subject .section__content .thumnail_area .data-contents .data-list li .thumb_area {
+          position: relative;
+          width: 100%;
+          height: 145px;
+          overflow: hidden; }
+          .edutech-subject .section__content .thumnail_area .data-contents .data-list li .thumb_area img {
+            width: 100%;
+            height: 100%;
+            transition: all .25s ease;
+            transform: scale(1); }
+        .edutech-subject .section__content .thumnail_area .data-contents .data-list li:hover {
+          border: 1px solid #5670dc; }
+          .edutech-subject .section__content .thumnail_area .data-contents .data-list li:hover .box {
+            border: 1px solid #5670dc; }
+          .edutech-subject .section__content .thumnail_area .data-contents .data-list li:hover .thumb_area img {
+            transform: scale(1.1); }
+          .edutech-subject .section__content .thumnail_area .data-contents .data-list li:hover .thumb_area .dim {
+            opacity: 1; }
+        .edutech-subject .section__content .thumnail_area .data-contents .data-list li .title_area .tinner {
+          padding: 17px 15px 0 16px; }
+          .edutech-subject .section__content .thumnail_area .data-contents .data-list li .title_area .tinner .t1 {
+            font-size: 15px;
+            font-weight: 500;
+            line-height: 1.38;
+            letter-spacing: -0.4px;
+            color: #5670dc;
+            word-break: break-all !important;
+            display: block;
+            overflow: hidden;
+            white-space: nowrap;
+            text-overflow: ellipsis;
+            margin-bottom: 8px; }
+          .edutech-subject .section__content .thumnail_area .data-contents .data-list li .title_area .tinner .t2 {
+            word-break: break-all !important;
+            font-size: 14px;
+            line-height: 1.14;
+            letter-spacing: -0.35px;
+            color: #666666;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical; }
+    .edutech-subject .section__content .thumnail_area .data .no_data {
+      position: relative;
+      width: 100%;
+      height: 291px;
+      margin-top: 34px;
+      background: url(../../img/zep_metabus/icon_nodata.png) no-repeat center 102px;
+      text-align: center; }
+      .edutech-subject .section__content .thumnail_area .data .no_data .nd_msg {
+        padding-top: 174px; }
+        .edutech-subject .section__content .thumnail_area .data .no_data .nd_msg p {
+          font-size: 18px;
+          color: #919191;
+          font-weight: 250; }
+        .edutech-subject .section__content .thumnail_area .data .no_data .nd_msg a {
+          margin-top: 52px;
+          display: inline-flex;
+          justify-content: center;
+          align-items: center;
+          width: 66px;
+          height: 40px;
+          background-color: #6758ff;
+          color: #fff;
+          font-size: 15px;
+          font-weight: 250;
+          border-radius: 6px; }
+
+.m-edutech-landing .inner {
+  max-width: 320px;
+  margin: 0 auto 8px; }
+
+.m-edutech-landing .cont-wrap h2 {
+  font-size: 14px;
+  font-weight: 550;
+  letter-spacing: -0.42px;
+  color: #000;
+  margin-bottom: 7px; }
+
+.m-edutech-landing .cont-wrap article {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap; }
+  .m-edutech-landing .cont-wrap article .item {
+    position: relative;
+    box-sizing: border-box;
+    outline: 1px solid #e0e0e0;
+    border-radius: 10px;
+    margin-bottom: 20px; }
+    .m-edutech-landing .cont-wrap article .item .all-link {
+      display: block;
+      width: 100%;
+      height: 100%; }
+      .m-edutech-landing .cont-wrap article .item .all-link .link-btn {
+        position: absolute;
+        top: 0;
+        right: 0;
+        width: 26px;
+        height: 23px;
+        background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/button-f3e5e0db0aa3114e94f1ee176709737b.png") left bottom/12px 10.5px; }
+    .m-edutech-landing .cont-wrap article .item .tip-button {
+      display: inline-block;
+      position: absolute;
+      top: 9px;
+      left: 9px;
+      width: auto;
+      height: 20px;
+      border-radius: 10px;
+      background: #899ef7;
+      text-align: center;
+      line-height: 18px;
+      box-shadow: 0px 3px 3.5px 0 rgba(0, 0, 0, 0.06);
+      font-weight: 250;
+      z-index: 5;
+      padding: 0 10px; }
+      .m-edutech-landing .cont-wrap article .item .tip-button span {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        letter-spacing: -0.11px;
+        font-size: 11px;
+        color: #fff; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.edu-i01 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/edu-i01-78b8f07aa2b0180b35b67816ad68e5f8.png") center bottom 15px;
+      width: 150px;
+      height: 65px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.edu-i02 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/edu-i02-60a5db5d16cdab3ecd43a742416728b8.png") center bottom 15px;
+      width: 150px;
+      height: 65px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.edu-i03 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/edu-i03-101f846a3aafd409d30f970aa6b08d76.png") center bottom 15px;
+      width: 150px;
+      height: 65px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.edu-i04 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/edu-i04-57eeaf2dab299b1ad9519c7bc8baac5e.png") center bottom 15px;
+      width: 150px;
+      height: 65px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.edu-i05 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/edu-i05-0b7ba8ef1c0c4624bc03ebc99ae262c2.png") center bottom 15px;
+      width: 150px;
+      height: 65px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.edu-i06 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/edu-i06-878dcd66c9f8c4fbe326871fbb6d2035.png") center bottom 15px;
+      width: 150px;
+      height: 65px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.all-i01 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-1-edu-9bc5a13f78c1fd5f221d08d6efb979da.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.all-i02 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-2-edu-644c839efeec713b9592e26bd1d2929c.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.all-i03 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-3-edu-69efff79bc09999eae4c97e4f47e74e2.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.all-i04 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-4-edu-8169ef9024577c1a858e69b066d28f8a.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.all-i05 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-5-edu-b67d7dfff3e6f480187c3b9c8c43984b.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.all-i06 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-6-edu-efec15f85cfd04bd898540e3250f0adf.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.all-i07 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-7-edu-8598f2fd6a08e47f45f8d13069b0de6a.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.ko-i {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-8-edu-3408edc194e2055e126a7be38ab02fd2.png") 0 0;
+      width: 36px;
+      height: 34px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.en-i {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-9-edu-8e66593e1c7d3228b3bc9cbca104545f.png") 0 0;
+      width: 42px;
+      height: 29px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.so-i {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-10-edu-fa65102dea9bca28ffc3e492060754dc.png") center top 19px;
+      width: 44px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.sc-i {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-11-edu-6e4c3c0bdd9fc3a92ad79bb7e1d0413f.png") 0 0;
+      width: 36px;
+      height: 35px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.art-i {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-12-edu-c969e97636c409ff011af56bd79446bf.png") 0 0;
+      width: 26px;
+      height: 37px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i01 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-13-edu-b78c17732a136d025dd9dc9f8d0ff59c.png") 0 0;
+      width: 38px;
+      height: 32px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i02 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-14-edu-c388fa0fa01629611b98fe26904e79a7.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i03 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-15-edu-6ff6b8d1eacb27286279dfb6d5b6ff94.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i04 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-16-edu-536d4de00d23e81607acfb7575076181.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i05 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-17-edu-206b9d656793ac0ce27955f5a007cbbb.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i06 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-18-edu-f049025bde0ae56e6ddd29af413306f3.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i07 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-19-edu-35c0a9d52d29ff8cad197221c3061cb3.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i08 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-20-edu-1dcf2cffbfbd9cbbc7c7351263796987.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i09 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-21-edu-f2a60f9c53eba090eded6bf1e9a79ae7.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i10 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-22-edu-a794dedfa8cedd24a803a0dc2dcbdc6d.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i11 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-23-edu-da16212d69cc1c875dbb5cfe858c4b52.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i12 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-24-edu-27d5bc62b560b108dae951905dd9e780.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i13 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-25-edu-68906f19eff44c67bd847371a593a390.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i14 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-26-edu-a6dc3d4a5bfa3da047f914ea79a31901.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i15 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-27-edu-41706becd0102858331bd5e7135ce1f1.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i16 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-28-edu-97ce6b7ca82a7c38fb3bd16f54889861.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i17 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-29-edu-685b765818ecd9df32c2eea88cff7285.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i18 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-30-edu-955afd324e3b0c60619c52bebcb4fc3e.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.mu-i19 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-31-edu-beafd4a2d1d15f5dc4f95e77020873d1.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.pe-i01 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-32-edu-3cec68928eac2eed6920f99682261290.png") 0 0;
+      width: 35px;
+      height: 30px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.pe-i02 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-33-edu-3421d41e43675106ceec759450797b6f.png") 0 0;
+      width: 32px;
+      height: 30px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.co-i01 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-34-edu-313eb33ce55825919d768f5d80c15bd6.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.co-i02 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-35-edu-f435515be68162d9c62b860d725c52a5.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.co-i03 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-36-edu-a3cd7b49c8a562002fb2d7434ce71da7.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .icon.co-i04 {
+      background: no-repeat url("/resource/midhigh/assets/img/edu_tech/mobile/icon-37-edu-fc2aa6d39ca0f94db15ac55b247d58ba.png") center top 19px;
+      width: 150px;
+      height: 67px; }
+    .m-edutech-landing .cont-wrap article .item-cont .text .title {
+      font-size: 18px;
+      font-weight: 550;
+      color: #000;
+      letter-spacing: -0.46px;
+      line-height: 1.5; }
+      .m-edutech-landing .cont-wrap article .item-cont .text .title.fz16 {
+        font-size: 16px;
+        letter-spacing: -0.48px; }
+    .m-edutech-landing .cont-wrap article .item-cont .text .subtitle {
+      font-size: 13px;
+      color: #666;
+      letter-spacing: -0.13px;
+      line-height: 1.2; }
+    .m-edutech-landing .cont-wrap article .item.on {
+      outline: solid 2px #5670dc; }
+  .m-edutech-landing .cont-wrap article.type01 .item {
+    width: calc(100% / 2 - 10px);
+    height: 140px; }
+    .m-edutech-landing .cont-wrap article.type01 .item-cont {
+      display: flex;
+      align-items: center;
+      flex-direction: column; }
+      .m-edutech-landing .cont-wrap article.type01 .item-cont .text {
+        text-align: center; }
+        .m-edutech-landing .cont-wrap article.type01 .item-cont .text .title {
+          width: 100%;
+          line-height: 1;
+          margin-top: 14px; }
+        .m-edutech-landing .cont-wrap article.type01 .item-cont .text .subtitle {
+          width: 100%;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column; }
+  .m-edutech-landing .cont-wrap article.type02 .item {
+    width: 100%;
+    height: 95px;
+    padding-bottom: 20px;
+    padding: 0 22px 15px 18px; }
+    .m-edutech-landing .cont-wrap article.type02 .item.h142 {
+      height: 142px; }
+    .m-edutech-landing .cont-wrap article.type02 .item .tip-button {
+      top: 15px;
+      left: 15px; }
+    .m-edutech-landing .cont-wrap article.type02 .item-cont {
+      height: 100%;
+      display: flex;
+      align-items: flex-end;
+      justify-content: space-between; }
+      .m-edutech-landing .cont-wrap article.type02 .item-cont .i-box {
+        margin-bottom: 5px; }
+  .m-edutech-landing .cont-wrap article.type03 .item {
+    width: calc(100% / 2 - 10px);
+    height: 142px; }
+    .m-edutech-landing .cont-wrap article.type03 .item-cont {
+      display: flex;
+      align-items: center;
+      flex-direction: column; }
+      .m-edutech-landing .cont-wrap article.type03 .item-cont .text {
+        text-align: center; }
+        .m-edutech-landing .cont-wrap article.type03 .item-cont .text .title {
+          width: 100%;
+          line-height: 1;
+          margin-top: 39px;
+          height: 37px;
+          line-height: 20px; }
+        .m-edutech-landing .cont-wrap article.type03 .item-cont .text .subtitle {
+          margin-top: 10px;
+          width: 100%;
+          height: 30px;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          flex-direction: column; }
