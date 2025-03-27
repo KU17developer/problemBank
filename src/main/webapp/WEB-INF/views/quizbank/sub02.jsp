@@ -1,4 +1,6 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ page contentType="text/html;charset=UTF-8" language="java" pageEncoding="UTF-8" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -9,14 +11,14 @@
 	<title>T셀파 문제은행</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="../inc/css/font.css">
-	<link rel="stylesheet" href="../inc/css/reset.css">
-	<link rel="stylesheet" href="../inc/css/common.css">
+	<link rel="stylesheet" href="${path}/resources/css/font.css">
+	<link rel="stylesheet" href="${path}/resources/css/reset.css">
+	<link rel="stylesheet" href="${path}/resources/css/common.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"
 		integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-	<script src="../inc/js/common.js"></script>
+	<script src="${path}/resources/js/common.js"></script>
 </head>
 
 <body>
@@ -36,6 +38,7 @@
 						<div class="paper-info">
 							<span>국어 1-1</span>
 							노미숙(2015)
+							${chapterList[0].subjectName}
 						</div>
 					</div>
 					<div class="view-bottom">
@@ -50,86 +53,46 @@
 										</div>
 										<ul>
 											<li>
-												<div class="check-group title">
-													<div class="title-chk">
-														<input type="checkbox" id="chk01_01" class="que-allCheck depth01">
-														<label for="chk01_01">
-															<button type="button" class="dep-btn active">1. 새로운 시작</button>
-														</label>
-													</div>
-												</div>
-												<div class="depth02">
-													<div class="check-group">
-														<input type="checkbox" id="chk01_02" class="que-allCheck depth01">
-														<label for="chk01_02">
-															<button type="button" class="dep-btn active">(1) 시의 아름다움</button>
-														</label>
-													</div>
-													<div class="depth03">
-														<div class="check-group">
-															<input type="checkbox" id="chk01_03" class="que-allCheck depth01">
-															<label for="chk01_03">
-																<button type="button" class="dep-btn active">[1] 소주제</button>
+												<c:forEach var="large" items="${chapterMap.keySet()}" varStatus="lstatus">
+													<div class="check-group title">
+														<div class="title-chk">
+															<input type="checkbox" id="chk${lstatus.count}" class="que-allCheck depth01">
+															<label for="chk${lstatus.count}">
+																<button type="button" class="dep-btn active">${large}</button>
 															</label>
 														</div>
-														<div class="depth04">
-															<div class="check-group">
-																<input type="checkbox" id="chk01_04" class="que-allCheck depth01">
-																<label for="chk01_04">
-																	<button type="button" class="dep-btn active">거듭제곱</button>
-																</label>
-															</div>
-															<div class="depth05">
-																<div class="check-group">
-																	<input type="checkbox" id="chk01_05">
-																	<label for="chk01_05">
-																		<span>거듭제곱으로 표현</span>
-																	</label>
-																</div>
-															</div>
-															<div class="check-group">
-																<input type="checkbox" id="chk01_06">
-																<label for="chk01_06">
-																	<span>소수와 합성수</span>
-																</label>
-															</div>
-															<div class="check-group">
-																<input type="checkbox" id="chk01_07">
-																<label for="chk01_07">
-																	<span>소인수분해</span>
-																</label>
-															</div>
-															<div class="check-group">
-																<input type="checkbox" id="chk01_08">
-																<label for="chk01_08">
-																	<span>소인수분해를 이용하여 약수 구하기</span>
-																</label>
-															</div>
-															<div class="check-group">
-																<input type="checkbox" id="chk01_09">
-																<label for="chk01_09">
-																	<span>최대공약수와 최소공배수</span>
-																</label>
-															</div>
-														</div>
 													</div>
-													<div class="check-group">
-														<input type="checkbox" id="chk01_10">
-														<label for="chk01_10">
-															<span>(2) 산문의 향기</span>
-														</label>
+													<div class="depth02">
+														<c:forEach var="medium" items="${chapterMap[large].keySet()}" varStatus="mstatus">
+															<div class="check-group">
+																<input type="checkbox" id="chk${lstatus.count}_${mstatus.count}" class="que-allCheck depth01">
+																<label for="chk${lstatus.count}_${mstatus.count}">
+																	<button type="button" class="dep-btn active">${medium}</button>
+																</label>
+															</div>
+															<div class="depth03">
+																<c:forEach var="small" items="${chapterMap[large][medium].keySet()}" varStatus="sstatus">
+																	<div class="check-group">
+																		<input type="checkbox" id="chk${lstatus.count}_${mstatus.count}_${sstatus.count}" class="que-allCheck depth01">
+																		<label for="chk${lstatus.count}_${mstatus.count}_${sstatus.count}">
+																			<button type="button" class="dep-btn active">${small}</button>
+																		</label>
+																	</div>
+																	<div class="depth04">
+																		<c:forEach var="topic" items="${chapterMap[large][medium][small]}" varStatus="tstatus">
+																			<div class="check-group">
+																				<input type="checkbox" id="chk${lstatus.count}_${mstatus.count}_${sstatus.count}_${tstatus.count}">
+																				<label for="chk${lstatus.count}_${mstatus.count}_${sstatus.count}_${tstatus.count}">
+																					<span>${topic}</span>
+																				</label>
+																			</div>
+																		</c:forEach>
+																	</div>
+																</c:forEach>
+															</div>
+														</c:forEach>
 													</div>
-												</div>
-											</li>
-											<li>
-												<div class="check-group title">
-													<div class="title-chk">
-														<input type="checkbox" id="chk02_01" class="que-allCheck depth01">
-														<label for="chk02_01">
-															<button type="button" class="dep-btn">2. 세상과 함께 자라는 꿈 </button>
-														</label>
-													</div>
-												</div>
+												</c:forEach>
 											</li>
 										</ul>
 									</div>
@@ -146,11 +109,11 @@
 										</div>
 										<div class="count-area">
 											<div class="btn-wrap">
-												<button type="button" class="btn-line">10</button>
-												<button type="button" class="btn-line">15</button>
-												<button type="button" class="btn-line">20</button>
-												<button type="button" class="btn-line">25</button>
-												<button type="button" class="btn-line active">30</button>
+												<button type="button" class="btn-line" onclick="quizNumChange(event)">10</button>
+												<button type="button" class="btn-line" onclick="quizNumChange(event)">15</button>
+												<button type="button" class="btn-line" onclick="quizNumChange(event)">20</button>
+												<button type="button" class="btn-line" onclick="quizNumChange(event)">25</button>
+												<button type="button" class="btn-line active" onclick="quizNumChange(event)">30</button>
 											</div>
 											<div class="input-area">
 												<span class="num">총 <input type="text" value="30"> 문제</span>
@@ -176,15 +139,15 @@
 											<div class="right-area">
 											</div>
 										</div>
-										<div class="btn-wrap multi">
-											<button type="button" class="btn-line">자료 해석</button>
-											<button type="button" class="btn-line">이해</button>
-											<button type="button" class="btn-line">적용</button>
-										</div>
-										<div class="btn-wrap multi">
-											<button type="button" class="btn-line">지식</button>
-											<button type="button" class="btn-line">결론도출</button>
-										</div>
+										<c:forEach var="eval" items="${evaluation}" varStatus="status">
+											<c:if test="${status.index%3==0}">
+												<div class="btn-wrap multi">
+											</c:if>
+											<button type="button" id="${eval.domainid}" class="btn-line">${eval.domainName}</button>
+											<c:if test="${status.index%3==2} || ${status.index+1}==${evaluation}.length">
+												</div>
+											</c:if>
+										</c:forEach>
 									</div>
 									<div class="box">
 										<div class="title-wrap">
@@ -193,8 +156,8 @@
 											</div>
 										</div>
 										<div class="btn-wrap multi">
-											<button type="button" class="btn-line">객관식</button>
-											<button type="button" class="btn-line">주관식</button>
+											<button type="button" id="multiple" class="btn-line">객관식</button>
+											<button type="button" id="subjective" class="btn-line">주관식</button>
 										</div>
 									</div>
 									<div class="box">
@@ -236,8 +199,8 @@
 
 			</div>
 			<div class="step-btn-wrap">
-				<button type="button" class="btn-step">출제 방법 선택</button>
-				<button type="button" class="btn-step next pop-btn" data-pop="que-pop">STEP2 문항 편집</button><!-- 230629 pop-btn 추가-->
+				<button type="button" class="btn-step" onclick="location.assign('${path}/sub01')">출제 방법 선택</button>
+				<button type="button" class="btn-step next pop-btn" data-pop="que-pop" onclick="editQuiz()">STEP2 문항 편집</button><!-- 230629 pop-btn 추가-->
 			</div>
 
 
@@ -255,23 +218,23 @@
 					<span class="txt">문제 수를 입력하여<br> 난이도별 문제 수를 조정하세요.</span>
 					<div class="range-wrap">
 						<!-- S: 문제 수 맞지 않을 시 .fail 클래스 추가 -->
-						<div class="range color01 fail">
+						<div class="range color01 fail" data-step="stap1">
 							<span class="color01">최하</span>
 							<input type="number">
 						</div>
-						<div class="range color02">
+						<div class="range color02" data-step="stap2">
 							<span class="color02">하</span>
 							<input type="number">
 						</div>
-						<div class="range color03">
+						<div class="range color03" data-step="stap3">
 							<span class="color03">중</span>
 							<input type="number">
 						</div>
-						<div class="range color04">
+						<div class="range color04" data-step="stap4">
 							<span class="color04">상</span>
 							<input type="number">
 						</div>
-						<div class="range color05">
+						<div class="range color05" data-step="stap5">
 							<span class="color05">최상</span>
 							<input type="number">
 						</div>
@@ -299,23 +262,23 @@
 				<div class="pop-content">
 					<span class="txt">사용자가 원하는 문항 구성을 할 수 없어<br>문항 구성이 자동으로 변경되었습니다.</span>
 					<div class="range-wrap">
-						<div class="range">
+						<div class="range" data-step="stap1">
 							<span class="color01">최하</span>
 							<span class="num">2</span>
 						</div>
-						<div class="range">
+						<div class="range" data-step="stap2">
 							<span class="color02">하</span>
 							<span class="num">5</span>
 						</div>
-						<div class="range">
+						<div class="range" data-step="stap3">
 							<span class="color03">중</span>
 							<span class="num">6</span>
 						</div>
-						<div class="range">
+						<div class="range" data-step="stap4">
 							<span class="color04">상</span>
 							<span class="num">5</span>
 						</div>
-						<div class="range">
+						<div class="range" data-step="stap5">
 							<span class="color05">최상</span>
 							<span class="num">2</span>
 						</div>
@@ -363,8 +326,19 @@
 				function queCheckFunc() {
 					let _this = $(this);
 
+					let checkedbox = $('.unit-cnt>ul').find('input[type=checkbox]:checked');
+
+					console.log(checkedbox);
+
+					if(checkedbox.length<=1){
+						$(".btn-wrap.multi .btn-line").addClass('active');
+						$(".step-wrap .btn-line").addClass('active');
+						$(".range-wrap .range").show();
+					}
+
 					if (_this.prop('checked')) {
 						_this.parents().next('ul').find('input[type=checkbox]').prop('checked', true);
+
 					} else {
 						_this.parents().next('ul').find('input[type=checkbox]').prop('checked', false);
 					}
@@ -381,12 +355,24 @@
 						_this.parents('table').find('input[type=checkbox]').prop('checked', false);
 					}
 
+					checkedbox = $('.unit-cnt>ul').find('input[type=checkbox]:checked');
+
+					console.log(checkedbox);
+
+					if(checkedbox.length<=1){
+						$(".btn-wrap.multi .btn-line").removeClass('active');
+						$(".step-wrap .btn-line").removeClass('active');
+						$(".range-wrap .range").hide();
+						$(".range-wrap .range.total").show();
+					}
 				}
 
 				queChkAll.on('click', queCheckFunc);
 
+				// $(".type-box .box .range").hide();
+				$(".pop-content .range-wrap .range").hide();
+				$(".pop-content .range-wrap .range.total").show();
 
-				$(".type-box .box .range").hide();
 				let stepBtn = $('.step-wrap .btn-line');
 
 				function stepFunc() {
@@ -395,16 +381,64 @@
 
 					_this.toggleClass('active');
 
+					let activeStep = $(".box .step-wrap .btn-line.active");
+					console.log(activeStep);
+					let quiznum = $(".input-area>.num>input").val();
+					activeStep.toArray().forEach(step=>{
+						let data = step.getAttribute('data-step');
+						console.log("몇 번 실행됨?");
+						console.log(step.innerText + Math.floor(quiznum*1/activeStep.toArray().length*1));
+						$("span.range[data-step='" + data + "']").text(step.innerText + '(' + Math.floor(quiznum*1/activeStep.toArray().length*1) + ')');
+						$(".range[data-step='" + data + "']>input").val(Math.floor(quiznum*1/activeStep.toArray().length*1));
+					})
+
 					if (_this.hasClass('active')) {
 						$(".range[data-step='" + stepData + "']").show();
 					} else {
 						$(".range[data-step='" + stepData + "']").hide();
 					}
-
+					console.log("click!");
 				}
 
 				stepBtn.on('click', stepFunc);
 			});
+
+			const quizNumChange = (event) => {
+				console.log(event);
+				const quiznum = document.querySelector(".input-area>.num>input");
+				console.log(quiznum);
+				quiznum.value = event.target.innerText;
+			}
+
+			const quizNumSet = () =>{
+				const inputset = document.querySelectorAll(".range-type .range-wrap>.range>input");
+				const quizsum = document.querySelector(".range-type .range-wrap>.range>span.num");
+
+				let inputsum = 0;
+				inputset.forEach(input=>inputsum += (input.innerText*1));
+
+				if(inputsum==quizsum){
+					// 이건 나중에 생각해볼게
+				}
+			}
+
+			const editQuiz = () =>{
+				const chapterList = JSON.parse('${sb}').chapterList;
+
+				$(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{
+					const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);
+					console.log(getTopic);
+					// fetch 써야 함? 기능 만들기 귀찮은데
+					// fetch('http://localhost:9090/api/itemlist',{
+					// 	method:'POST',
+					// 	headers:{
+					// 		'Content-Type':'application/json',
+					// 	},
+					// 	body:getTopic,
+					// }).then(response=>response.json())
+					//     .then(data=>console.log(data));
+				});
+			}
 		</script>
 </body>
 

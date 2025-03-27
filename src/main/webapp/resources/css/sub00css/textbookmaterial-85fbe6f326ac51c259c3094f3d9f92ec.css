@@ -1,0 +1,66 @@
+.textbook_body .content-section {
+  width: 1290px;
+  margin: 0 auto;
+  margin-bottom: 110px;
+  margin-top: 52px; }
+  .textbook_body .content-section .columns {
+    display: flex; }
+  .textbook_body .content-section .data-body {
+    width: 1047px;
+    box-sizing: border-box; }
+  .textbook_body .content-section .data-details__content {
+    padding-left: 30px; }
+    .textbook_body .content-section .data-details__content .notice-banner {
+      margin-top: 16px;
+      background: #edf1ff;
+      border-radius: 6px;
+      padding: 0px 30px 0px 15px; }
+      .textbook_body .content-section .data-details__content .notice-banner__content {
+        display: flex;
+        align-items: center;
+        justify-content: space-between; }
+        .textbook_body .content-section .data-details__content .notice-banner__content-text {
+          font-size: 15px;
+          display: inline-block;
+          width: 538px;
+          color: #5670dc;
+          overflow: hidden;
+          text-overflow: ellipsis;
+          white-space: nowrap; }
+        .textbook_body .content-section .data-details__content .notice-banner__content-date {
+          color: #666;
+          font-size: 14px; }
+
+.textbook_body .delayModal .modal-content {
+  width: 510px;
+  height: 324px;
+  background: url(/resource/midhigh/assets/img/popup/pop_pc_2503-2bfd345e78cd13d95d172961f44d59d4.png) 0 0 no-repeat; }
+
+.textbook_body .delayModal .close {
+  position: absolute;
+  z-index: 5;
+  top: 12px;
+  right: 35px;
+  display: block;
+  width: 26px;
+  height: 26px;
+  cursor: pointer;
+  background: none; }
+
+.textbook_body .delayModal .week_close {
+  position: absolute;
+  z-index: 5;
+  bottom: -40px;
+  left: 0; }
+
+.textbook_body .delayModal .custom-control-input:checked ~ .custom-control-label::before {
+  color: #ffffff;
+  border-color: #899df2;
+  background-color: #899df2;
+  border-radius: 6px; }
+
+.textbook_body .delayModal .custom-checkbox .custom-control-label::before {
+  border-radius: 6px; }
+
+.textbook_body .delayModal .custom-checkbox .custom-control-label:after {
+  border-radius: 6px; }
