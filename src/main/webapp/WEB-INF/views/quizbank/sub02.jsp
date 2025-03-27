@@ -381,10 +381,15 @@
 
 					_this.toggleClass('active');
 
-					let activeRange = $(".box .range-wrap>.range.active");
-					let quiznum = $(".input-area>.num>input");
-					activeRange.forEach(range=>{
-						range.innerText = range.innerText.slice(0,-2) + (quiznum/activeRange.length) + ')';
+					let activeStep = $(".box .step-wrap .btn-line.active");
+					console.log(activeStep);
+					let quiznum = $(".input-area>.num>input").val();
+					activeStep.toArray().forEach(step=>{
+						let data = step.getAttribute('data-step');
+						console.log("몇 번 실행됨?");
+						console.log(step.innerText + Math.floor(quiznum*1/activeStep.toArray().length*1));
+						$("span.range[data-step='" + data + "']").text(step.innerText + '(' + Math.floor(quiznum*1/activeStep.toArray().length*1) + ')');
+						$(".range[data-step='" + data + "']>input").val(Math.floor(quiznum*1/activeStep.toArray().length*1));
 					})
 
 					if (_this.hasClass('active')) {
@@ -424,14 +429,14 @@
 					const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);
 					console.log(getTopic);
 					// fetch 써야 함? 기능 만들기 귀찮은데
-					fetch('http://localhost:9090/api/itemlist',{
-						method:'POST',
-						headers:{
-							'Content-Type':'application/json',
-						},
-						body:getTopic,
-					}).then(response=>response.json())
-					    .then(data=>console.log(data));
+					// fetch('http://localhost:9090/api/itemlist',{
+					// 	method:'POST',
+					// 	headers:{
+					// 		'Content-Type':'application/json',
+					// 	},
+					// 	body:getTopic,
+					// }).then(response=>response.json())
+					//     .then(data=>console.log(data));
 				});
 			}
 		</script>

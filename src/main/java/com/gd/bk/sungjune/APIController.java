@@ -92,7 +92,7 @@ public class APIController {
             log.debug("해치웠나?");
         }
 
-        return ResponseEntity.notFound().build();
+        return ResponseEntity.ok().body(response);
     }
 
     // 개발중...
