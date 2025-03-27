@@ -40,8 +40,10 @@ public class BaseController {
     public String sub02(Model model){
         Map<String,Object> chapter = getChapterList();
 
+        String sb = chapter.get("sb").toString();
         List<Chapter> chapterList = (List<Chapter>)chapter.get("chapterList");
         Map<String,Map<String,Map<String,List<String>>>> chapterMap = (Map<String,Map<String,Map<String,List<String>>>>)chapter.get("chapterMap");
+        model.addAttribute("sb",sb);
         model.addAttribute("chapterList",chapterList);
         model.addAttribute("chapterMap",chapterMap);
 
@@ -138,7 +140,7 @@ public class BaseController {
 
             System.out.println(chapterMap);
 
-            Map<String,Object> chapter = Map.of("chapterList",chapterList,"chapterMap",chapterMap);
+            Map<String,Object> chapter = Map.of("sb",jsonString,"chapterList",chapterList,"chapterMap",chapterMap);
 //            model.addAttribute("chapterMap",chapterMap);
             return chapter;
         }catch(MalformedURLException e) {

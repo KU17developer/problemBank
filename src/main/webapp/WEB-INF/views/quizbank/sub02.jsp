@@ -363,6 +363,7 @@
 						$(".btn-wrap.multi .btn-line").removeClass('active');
 						$(".step-wrap .btn-line").removeClass('active');
 						$(".range-wrap .range").hide();
+						$(".range-wrap .range.total").show();
 					}
 				}
 
@@ -411,10 +412,15 @@
 			}
 
 			const editQuiz = () =>{
-				const chapterList = "${chapterList}";
+				const chapterList = JSON.parse('${sb}').chapterList;
 
 				$(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{
-					chapterList.find(chapter=>console.log(chapter.topicChapterName==span.innerText));
+					const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);
+					console.log(getTopic);
+					// fetch 써야 함? 기능 만들기 귀찮은데
+					// fetch('http://localhost:8080/api/itemlist')
+					//     .then(response=>response.json())
+					//     .then(data=>console.log(data));
 				});
 			}
 		</script>
