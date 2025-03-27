@@ -13,6 +13,18 @@
  v.0.5 util - .search-keyword 오타 수정및 css추가 - 박선미
 |----------------------------------|
 */
+@font-face {
+  font-family: 'NotoSans-Medium';
+  src: url('/resources/css/sub00css/NotoSans-Medium-024dc32a28bc99fe1a3e5f7628989a65.woff') format('woff');
+}
+@font-face {
+  font-family: 'NotoSans-Bold';
+  src: url('/resources/css/sub00css/NotoSans-Bold-a123e4ed0d51aa4487d91274a452a981.woff') format('woff');
+}
+@font-face {
+  font-family: 'NotoSans-Regular';
+  src: url('/resources/css/sub00css/NotoSans-Regular-53e1309e4fc9372afba4fd8f872a7aa5.woff') format('woff');
+}
 .pt0 {
   padding-top: 0 !important; }
 
