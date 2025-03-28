@@ -30,7 +30,7 @@
 					<li>STEP 2 문항 편집</li>
 					<li>STEP 3 시험지 저장</li>
 				</ul>
-				<button type="button" class="del-btn"></button>
+				<button type="button" class="del-btn" onclick="window.close()"></button>
 			</div>
 			<div class="pop-content">
 				<div class="view-box">
@@ -511,7 +511,7 @@
 
 			const failCheck = () => {
 				let quiznum = $(".input-area>.num>input").val();
-				let inputsum = $(".range.total>span.num").text();
+				let inputsum = $(".range-type .range.total>span.num").text();
 				console.log("quiz",quiznum,"input",inputsum);
 				if(inputsum==quiznum){
 					$(".range-type .range-wrap>.range").removeClass("fail");
