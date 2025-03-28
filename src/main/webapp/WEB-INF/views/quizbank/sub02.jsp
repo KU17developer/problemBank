@@ -48,7 +48,7 @@
 									<div class="unit-cnt scroll-inner">
 										<div class="title-top">
 											<span>단원정보</span>
-											<input type="checkbox" id="chk01_00" class="allCheck">
+											<input type="checkbox" id="chk01_00" class="allCheck que-allCheck">
 											<label for="chk01_00">전체선택</label>
 										</div>
 										<ul>
@@ -116,7 +116,7 @@
 												<button type="button" class="btn-line active" onclick="quizNumChange(event)">30</button>
 											</div>
 											<div class="input-area">
-												<span class="num">총 <input type="text" value="30"> 문제</span>
+												<span class="num">총 <input type="text" value="30" onblur="event.target.value>30?event.target.value=30:event.target.value-=event.target.value%5;stepNumChange();"> 문제</span>
 												<div class="txt">*5의 배수로 입력해주세요. </div>
 											</div>
 
@@ -175,7 +175,7 @@
 									<div class="box">
 										<div class="title-wrap">
 											<span class="tit-text">난이도별 문제 수
-												<button type="button" class="btn-icon2 pop-btn" data-pop="que-range-pop"><i
+												<button type="button" class="btn-icon2 pop-btn" data-pop="que-range-pop" onclick="failCheck()"><i
 														class="setting"></i></button>
 											</span>
 										</div>
@@ -212,42 +212,42 @@
 			<div class="pop-inner">
 				<div class="pop-header">
 					<span>난이도별 문제 수 설정</span>
-					<button type="button" class="pop-close"></button>
+					<button type="button" class="pop-close" onclick="cancelQuizCount();"></button>
 				</div>
 				<div class="pop-content">
 					<span class="txt">문제 수를 입력하여<br> 난이도별 문제 수를 조정하세요.</span>
 					<div class="range-wrap">
 						<!-- S: 문제 수 맞지 않을 시 .fail 클래스 추가 -->
-						<div class="range color01 fail" data-step="stap1">
+						<div class="range color01" data-step="stap1">
 							<span class="color01">최하</span>
-							<input type="number">
+							<input type="number" onblur="difficultyQuizCount(event)">
 						</div>
 						<div class="range color02" data-step="stap2">
 							<span class="color02">하</span>
-							<input type="number">
+							<input type="number" onblur="difficultyQuizCount(event)">
 						</div>
 						<div class="range color03" data-step="stap3">
 							<span class="color03">중</span>
-							<input type="number">
+							<input type="number" onblur="difficultyQuizCount(event)">
 						</div>
 						<div class="range color04" data-step="stap4">
 							<span class="color04">상</span>
-							<input type="number">
+							<input type="number" onblur="difficultyQuizCount(event)">
 						</div>
 						<div class="range color05" data-step="stap5">
 							<span class="color05">최상</span>
-							<input type="number">
+							<input type="number" onblur="difficultyQuizCount(event)">
 						</div>
-						<div class="range total fail">
+						<div class="range total">
 							<span>합계</span>
-							<span class="num">20</span>
+							<span class="num"></span>
 						</div>
 						<!-- E: 문제 수 맞지 않을 시 .fail 클래스 추가 -->
 					</div>
 				</div>
 				<div class="pop-footer">
-					<button>초기화</button>
-					<button class="disabled">저장</button>
+					<button onclick="cancelQuizCount();">초기화</button>
+					<button onclick="popupInputChange();">저장</button>
 				</div>
 			</div>
 		</div>
@@ -334,6 +334,7 @@
 						$(".btn-wrap.multi .btn-line").addClass('active');
 						$(".step-wrap .btn-line").addClass('active');
 						$(".range-wrap .range").show();
+						stepNumChange();
 					}
 
 					if (_this.prop('checked')) {
@@ -360,6 +361,7 @@
 					console.log(checkedbox);
 
 					if(checkedbox.length<=1){
+						$("#chk01_00.allCheck").prop('checked',false);
 						$(".btn-wrap.multi .btn-line").removeClass('active');
 						$(".step-wrap .btn-line").removeClass('active');
 						$(".range-wrap .range").hide();
@@ -381,16 +383,7 @@
 
 					_this.toggleClass('active');
 
-					let activeStep = $(".box .step-wrap .btn-line.active");
-					console.log(activeStep);
-					let quiznum = $(".input-area>.num>input").val();
-					activeStep.toArray().forEach(step=>{
-						let data = step.getAttribute('data-step');
-						console.log("몇 번 실행됨?");
-						console.log(step.innerText + Math.floor(quiznum*1/activeStep.toArray().length*1));
-						$("span.range[data-step='" + data + "']").text(step.innerText + '(' + Math.floor(quiznum*1/activeStep.toArray().length*1) + ')');
-						$(".range[data-step='" + data + "']>input").val(Math.floor(quiznum*1/activeStep.toArray().length*1));
-					})
+					stepNumChange();
 
 					if (_this.hasClass('active')) {
 						$(".range[data-step='" + stepData + "']").show();
@@ -408,9 +401,11 @@
 				const quiznum = document.querySelector(".input-area>.num>input");
 				console.log(quiznum);
 				quiznum.value = event.target.innerText;
+				stepNumChange();
 			}
 
-			const quizNumSet = () =>{
+			// step2 버튼 누르면 동작할 로직
+			const quizNumSet = () => {
 				const inputset = document.querySelectorAll(".range-type .range-wrap>.range>input");
 				const quizsum = document.querySelector(".range-type .range-wrap>.range>span.num");
 
@@ -422,7 +417,7 @@
 				}
 			}
 
-			const editQuiz = () =>{
+			const editQuiz = () => {
 				const chapterList = JSON.parse('${sb}').chapterList;
 
 				$(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{
@@ -438,6 +433,108 @@
 					// }).then(response=>response.json())
 					//     .then(data=>console.log(data));
 				});
+			}
+
+			const stepNumChange = () => {
+				let activeStep = $(".box .step-wrap .btn-line.active");
+				console.log(activeStep);
+				let quiznum = $(".input-area>.num>input").val();
+				let inputsum = 0;
+				activeStep.toArray().forEach(step=>{
+					let data = step.getAttribute('data-step');
+					console.log("몇 번 실행됨?");
+					console.log(step.innerText + Math.floor(quiznum*1/activeStep.toArray().length*1));
+					$("span.range[data-step='" + data + "']").text(step.innerText + '(' + Math.floor(quiznum*1/activeStep.toArray().length*1) + ')');
+					$(".range[data-step='" + data + "']>input").val(Math.floor(quiznum*1/activeStep.toArray().length*1));
+					inputsum += Math.floor(quiznum*1/activeStep.toArray().length*1);
+				})
+				$(".range.total>span.num").text(inputsum);
+			}
+
+			const difficultyQuizCount = (event) => {
+				const inputset = document.querySelectorAll(".range-type .range-wrap>.range>input");
+				const quizsum = document.querySelector(".input-area>span.num>input[type=text]");
+
+				let inputsum = 0;
+				inputset.forEach(input=>{
+					console.log(inputsum);
+					console.log(input);
+					console.log(input.value);
+					inputsum += (input.value*1);
+				});
+
+				if(inputsum!=quizsum.value){
+					console.log("문제 수 잘못됨");
+					console.log(inputsum,quizsum.value);
+					$(".range-type .range-wrap>.range").addClass("fail");
+					$(".range-type .pop-footer>button:last-child").addClass("disabled");
+					$(".range-type .pop-footer>button:last-child").off("click",popClose);
+				}else{
+					console.log("문제 수 맞음");
+					$(".range-type .range-wrap>.range").removeClass("fail");
+					$(".range-type .pop-footer>button:last-child").removeClass("disabled");
+					$(".range-type .pop-footer>button:last-child").on("click",popClose);
+				}
+				console.log(inputsum);
+				$(".range-type .range.total>span.num").text(inputsum);
+			}
+
+			const cancelQuizCount = () =>{
+				let inputsum = 0;
+				$(".step-wrap>.btn-line.active").toArray().forEach(step=>{
+					console.log(step);
+					const datastep = step.getAttribute('data-step');
+					console.log(datastep);
+					const range = $(".range-wrap>span.range[data-step='" + datastep + "']").text();
+					console.log(range);
+					const count = range.slice(range.indexOf('(')+1,range.indexOf(')'));
+					console.log(count);
+					$(".range-type .range[data-step='" + datastep + "']>input[type=number]").val(count);
+					inputsum+=(count*1);
+				})
+				let quiznum = $(".input-area>.num>input").val();
+				if(inputsum==quiznum) $(".range-type .range-wrap>.range").removeClass("fail");
+				$(".range-type .range.total>span.num").text(inputsum);
+			}
+
+			const popupInputChange = () => {
+				let activeStep = $(".box .step-wrap .btn-line.active");
+				console.log(activeStep);
+				let quiznum = $(".input-area>.num>input").val();
+				activeStep.toArray().forEach(step=>{
+					let data = step.getAttribute('data-step');
+					const inputnum = $(".range[data-step='" + data + "']>input").val();
+					$("span.range[data-step='" + data + "']").text(step.innerText + '(' + inputnum + ')');
+				})
+				$(".range.total>span.num").text(quiznum);
+			}
+
+			const failCheck = () => {
+				let quiznum = $(".input-area>.num>input").val();
+				let inputsum = $(".range.total>span.num").text();
+				console.log("quiz",quiznum,"input",inputsum);
+				if(inputsum==quiznum){
+					$(".range-type .range-wrap>.range").removeClass("fail");
+					$(".range-type .pop-footer>button:last-child").removeClass("disabled");
+					$(".range-type .pop-footer>button:last-child").on("click",popClose);
+				}
+				else{
+					$(".range-type .range-wrap>.range").addClass("fail");
+					$(".range-type .pop-footer>button:last-child").addClass("disabled");
+					$(".range-type .pop-footer>button:last-child").off("click",popClose);
+				}
+			}
+
+			function popClose(){
+				console.log("이거 된거임???");
+
+				let _dim = $(".dim");
+				let _html = $("html , body");
+
+				let _this = $(this);
+				$(".pop-wrap").hide();
+				_html.css("overflow", "auto");
+				_dim.fadeOut();
 			}
 		</script>
 </body>
