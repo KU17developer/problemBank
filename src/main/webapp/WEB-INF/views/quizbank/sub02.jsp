@@ -331,7 +331,13 @@
 					console.log(checkedbox);
 
 					if(checkedbox.length<=1){
+						$(".count-area .btn-line").prop('disabled',false);
+						$(".count-area .btn-line:last-child").addClass('active');
+						$(".count-area span.num>input[type=text]").prop('disabled',false);
+						$(".count-area span.num>input[type=text]").val(30);
+						$(".btn-wrap.multi .btn-line").prop('disabled',false);
 						$(".btn-wrap.multi .btn-line").addClass('active');
+						$(".step-wrap .btn-line").prop('disabled',false);
 						$(".step-wrap .btn-line").addClass('active');
 						$(".range-wrap .range").show();
 						stepNumChange();
@@ -362,8 +368,14 @@
 
 					if(checkedbox.length<=1){
 						$("#chk01_00.allCheck").prop('checked',false);
+						$(".count-area .btn-line").prop('disabled',true);
+						$(".count-area .btn-line").removeClass('active');
+						$(".count-area span.num>input[type=text]").prop('disabled',true);
+						$(".count-area span.num>input[type=text]").val('');
 						$(".btn-wrap.multi .btn-line").removeClass('active');
+						$(".btn-wrap.multi .btn-line").prop('disabled',true);
 						$(".step-wrap .btn-line").removeClass('active');
+						$(".step-wrap .btn-line").prop('disabled',true);
 						$(".range-wrap .range").hide();
 						$(".range-wrap .range.total").show();
 					}
@@ -394,6 +406,15 @@
 				}
 
 				stepBtn.on('click', stepFunc);
+
+				$(".count-area .btn-line").prop('disabled',true);
+				$(".count-area .btn-line").removeClass('active');
+				$(".count-area span.num>input[type=text]").prop('disabled',true);
+				$(".count-area span.num>input[type=text]").val('');
+				$(".btn-wrap.multi .btn-line").removeClass('active');
+				$(".btn-wrap.multi .btn-line").prop('disabled',true);
+				$(".step-wrap .btn-line").removeClass('active');
+				$(".step-wrap .btn-line").prop('disabled',true);
 			});
 
 			const quizNumChange = (event) => {
