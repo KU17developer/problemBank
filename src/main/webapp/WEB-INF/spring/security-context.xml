@@ -49,7 +49,9 @@
          -->
 
         <!-- 문제 은행 페이지 접근 허용 -->
-        <security:intercept-url pattern="/problem/**" access="permitAll"/>
+        <security:intercept-url pattern="/problem/**" access="permitAll()"/>
+
+
 
         <security:intercept-url pattern="/academy/login" access="permitAll()"/>
         <security:intercept-url pattern="/resources/**" access="permitAll()"/>
