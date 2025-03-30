@@ -457,31 +457,19 @@
 					//     .then(data=>console.log(data));
 				// );
 
-				// 성준님이 만든 부분 주석
-				<%--const chapterList = JSON.parse('${sb}').chapterList;--%>
-				<%--let selectedTopics = [];--%>
+				const chapterList = JSON.parse('${sb}').chapterList;
+				let selectedTopics = [];
 
-				<%--$(".depth04 input[type=checkbox]:checked").each(function() {--%>
-				<%--	const topicName = $(this).next("label").children("span").text();--%>
-				<%--	const topic = chapterList.find(ch => ch.topicChapterName === topicName);--%>
-				<%--	if (topic) {--%>
-				<%--		selectedTopics.push({--%>
-				<%--			topicChapterId: topic.topicChapterId,--%>
-				<%--			subjectId: topic.subjectId--%>
-				<%--		});--%>
-				<%--	}--%>
-				<%--const minorClassification = [];--%>
-				<%--$(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{--%>
-				<%--	const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);--%>
-				<%--	console.log(getTopic);--%>
-				<%--	minorClassification.push({--%>
-				<%--		"subject":"1136",--%>
-				<%--		"large":getTopic.largeChapterId,--%>
-				<%--		"medium":getTopic.mediumChapterId,--%>
-				<%--		"small":getTopic.smallChapterId,--%>
-				<%--		"topic":getTopic.topicChapterId--%>
-				<%--	})--%>
-				<%--});--%>
+				$(".depth04 input[type=checkbox]:checked").each(function() {
+					const topicName = $(this).next("label").children("span").text();
+					const topic = chapterList.find(ch => ch.topicChapterName === topicName);
+					if (topic) {
+						selectedTopics.push({
+							topicChapterId: topic.topicChapterId,
+							subjectId: topic.subjectId
+						});
+					}
+				});
 
 				console.log("선택된 topic 리스트:", selectedTopics);
 
@@ -493,15 +481,27 @@
 					body: JSON.stringify(selectedTopics),
 					credentials: "include" // 임시적으로 세션 추가
 				})
-						.then(response => response.json())
-						.then(data => {
-							sessionStorage.setItem("questionList", JSON.stringify(data));
-							window.location.href = "${path}/sub03_01";
-						})
-						.catch(error => console.error("문항 가져오기 실패", error));
-
+				.then(response => response.json())
+				.then(data => {
+					sessionStorage.setItem("questionList", JSON.stringify(data));
+					window.location.href = "${path}/sub03_01";
+				})
+				.catch(error => console.error("문항 가져오기 실패", error));
 
 				// 성준님이 만든 부분 주석
+				// const minorClassification = [];
+				// $(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{
+				// 	const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);
+				// 	console.log(getTopic);
+				// 	minorClassification.push({
+				// 		"subject":"1136",
+				// 		"large":getTopic.largeChapterId,
+				// 		"medium":getTopic.mediumChapterId,
+				// 		"small":getTopic.smallChapterId,
+				// 		"topic":getTopic.topicChapterId
+				// 	})
+				// });
+
 				// console.log(minorClassification);
 				//
 				// const activeDifficulty = $(".step-wrap .btn-line.active");
