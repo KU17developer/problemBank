@@ -439,12 +439,14 @@
 			}
 
 			const editQuiz = () => {
-				const chapterList = JSON.parse('${sb}').chapterList;
+				<%--const chapterList = JSON.parse('${sb}').chapterList;--%>
 
-				$(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{
-					const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);
-					console.log(getTopic);
-					// fetch 써야 함? 기능 만들기 귀찮은데
+				<%--$(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{--%>
+				<%--	const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);--%>
+				<%--	console.log(getTopic);--%>
+
+
+					// fetch 써야 함? 기능 만들기 귀찮은데  여기부터 기존 주석부분~
 					// fetch('http://localhost:9090/api/itemlist',{
 					// 	method:'POST',
 					// 	headers:{
@@ -453,7 +455,41 @@
 					// 	body:getTopic,
 					// }).then(response=>response.json())
 					//     .then(data=>console.log(data));
+				// );
+
+
+				const chapterList = JSON.parse('${sb}').chapterList;
+				let selectedTopics = [];
+
+				$(".depth04 input[type=checkbox]:checked").each(function() {
+					const topicName = $(this).next("label").children("span").text();
+					const topic = chapterList.find(ch => ch.topicChapterName === topicName);
+					if (topic) {
+						selectedTopics.push({
+							topicChapterId: topic.topicChapterId,
+							subjectId: topic.subjectId
+						});
+					}
 				});
+
+				console.log("선택된 topic 리스트:", selectedTopics);
+
+				fetch("${path}/edit/questionList", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify(selectedTopics),
+					credentials: "include" // 임시적으로 세션 추가
+				})
+						.then(response => response.json())
+						.then(data => {
+							sessionStorage.setItem("questionList", JSON.stringify(data));
+							window.location.href = "${path}/sub03_01";
+						})
+						.catch(error => console.error("문항 가져오기 실패", error));
+
+
 			}
 
 			const stepNumChange = () => {
