@@ -290,8 +290,8 @@
 					<span class="txt">해당 문제 구성으로 출제하시겠습니까?</span>
 				</div>
 				<div class="pop-footer">
-					<button>취소</button>
-					<button class="pop-close">확인</button>
+					<button class="pop-close">취소</button>
+					<button class="pop-close">확인</button>	<%-- 어떻게 고치지 🤔 --%>
 				</div>
 			</div>
 		</div>
@@ -439,24 +439,6 @@
 			}
 
 			const editQuiz = () => {
-				<%--const chapterList = JSON.parse('${sb}').chapterList;--%>
-
-				<%--$(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{--%>
-				<%--	const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);--%>
-				<%--	console.log(getTopic);--%>
-
-
-					// fetch 써야 함? 기능 만들기 귀찮은데  여기부터 기존 주석부분~
-					// fetch('http://localhost:9090/api/itemlist',{
-					// 	method:'POST',
-					// 	headers:{
-					// 		'Content-Type':'application/json',
-					// 	},
-					// 	body:getTopic,
-					// }).then(response=>response.json())
-					//     .then(data=>console.log(data));
-				// );
-
 				const chapterList = JSON.parse('${sb}').chapterList;
 				let selectedTopics = [];
 
