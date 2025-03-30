@@ -21,22 +21,17 @@ import java.util.Map;
 public class EditController {
 
     @PostMapping("/questionList")
-    public ResponseEntity<Object> getQuestionList(@RequestBody List<Map<String, Object>> topicList) {
+    public ResponseEntity<Object> getQuestionList(@RequestBody Map<String, Object> payload) {
         String response = "";
         try {
-            List<Long> topicIds = topicList.stream()
-                    .map(m -> Long.parseLong(m.get("topicChapterId").toString()))
-                    .toList();
-
             URL url = new URL("https://tsherpa.item-factory.com/item-img/chapters/item-list");
             HttpsURLConnection connect = (HttpsURLConnection) url.openConnection();
             connect.setRequestMethod("POST");
             connect.setDoOutput(true);
             connect.setRequestProperty("Content-Type", "application/json");
 
-            Map<String, Object> params = Map.of("topicChapterIdList", topicIds);
             ObjectMapper mapper = new ObjectMapper();
-            String json = mapper.writeValueAsString(params);
+            String json = mapper.writeValueAsString(payload);
             connect.getOutputStream().write(json.getBytes());
 
             InputStream is = connect.getInputStream();
@@ -48,7 +43,6 @@ public class EditController {
             }
             response = sb.toString();
             return ResponseEntity.ok().body(response);
-
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("문항 조회 실패: " + e.getMessage());
