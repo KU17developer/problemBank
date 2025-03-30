@@ -143,7 +143,7 @@
 											<c:if test="${status.index%3==0}">
 												<div class="btn-wrap multi">
 											</c:if>
-											<button type="button" id="${eval.domainid}" class="btn-line">${eval.domainName}</button>
+											<button type="button" id="${eval.domainId}" class="btn-line activity">${eval.domainName}</button>
 											<c:if test="${status.index%3==2} || ${status.index+1}==${evaluation}.length">
 												</div>
 											</c:if>
@@ -441,19 +441,73 @@
 			const editQuiz = () => {
 				const chapterList = JSON.parse('${sb}').chapterList;
 
+				const minorClassification = [];
 				$(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{
 					const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);
 					console.log(getTopic);
-					// fetch 써야 함? 기능 만들기 귀찮은데
-					// fetch('http://localhost:9090/api/itemlist',{
-					// 	method:'POST',
-					// 	headers:{
-					// 		'Content-Type':'application/json',
-					// 	},
-					// 	body:getTopic,
-					// }).then(response=>response.json())
-					//     .then(data=>console.log(data));
+					minorClassification.push({
+						"subject":"1136",
+						"large":getTopic.largeChapterId,
+						"medium":getTopic.mediumChapterId,
+						"small":getTopic.smallChapterId,
+						"topic":getTopic.topicChapterId
+					})
 				});
+
+				console.log(minorClassification);
+
+				const activeDifficulty = $(".step-wrap .btn-line.active");
+
+				const levelCnt = [];
+				activeDifficulty.toArray().forEach(diff=>{
+					const step = diff.getAttribute('data-step');
+					const input = $(".range-type .range-wrap>.range[data-step='" + step + "']>input");
+					levelCnt.push(input.val()*1);
+				})
+
+				console.log(levelCnt);
+
+				const multiple = $(".btn-wrap.multi>button#multiple.active");
+				const subjective = $(".btn-wrap.multi>button#subjective.active");
+
+				let questionForm = '';
+
+				if(multiple.length>0){
+					if(subjective.length>0){
+						questionForm = 'multiple,subjective';
+					}else{
+						questionForm = 'multiple';
+					}
+				}else if(subjective.length>0){
+					questionForm = 'subjective';
+				}
+
+				console.log("question",questionForm);
+
+				const activity = $(".btn-wrap.multi>button.activity");
+
+				const activityCategoryList = [];
+
+				activity.toArray().forEach(acti=>{
+					console.log(acti);
+					activityCategoryList.push(acti.getAttribute('id'));
+				})
+
+				console.log("actCate", activityCategoryList);
+
+				fetch('http://localhost:9090/problembank/api/itemlist',{
+					method:'POST',
+					headers:{
+						'Content-Type':'application/json'
+					},
+					body:JSON.stringify({
+						'minorClassification':minorClassification,
+						'levelCnt':levelCnt,
+						'questionForm':questionForm,
+						'activityCategoryList':activityCategoryList
+					})
+				}).then(response=>response.json())
+				.then(data=>console.log(data));
 			}
 
 			const stepNumChange = () => {
@@ -473,16 +527,16 @@
 			}
 
 			const difficultyQuizCount = (event) => {
-				const inputset = document.querySelectorAll(".range-type .range-wrap>.range>input");
+				const activeDifficulty = $(".step-wrap .btn-line.active");
+
 				const quizsum = document.querySelector(".input-area>span.num>input[type=text]");
 
 				let inputsum = 0;
-				inputset.forEach(input=>{
-					console.log(inputsum);
-					console.log(input);
-					console.log(input.value);
-					inputsum += (input.value*1);
-				});
+				activeDifficulty.toArray().forEach(diff=>{
+					const step = diff.getAttribute('data-step');
+					const input = $(".range-type .range-wrap>.range[data-step='" + step + "']>input");
+					inputsum += (input.val()*1);
+				})
 
 				if(inputsum!=quizsum.value){
 					console.log("문제 수 잘못됨");
