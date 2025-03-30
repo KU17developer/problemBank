@@ -439,75 +439,123 @@
 			}
 
 			const editQuiz = () => {
-				const chapterList = JSON.parse('${sb}').chapterList;
+				<%--const chapterList = JSON.parse('${sb}').chapterList;--%>
 
-				const minorClassification = [];
-				$(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{
-					const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);
-					console.log(getTopic);
-					minorClassification.push({
-						"subject":"1136",
-						"large":getTopic.largeChapterId,
-						"medium":getTopic.mediumChapterId,
-						"small":getTopic.smallChapterId,
-						"topic":getTopic.topicChapterId
-					})
-				});
+				<%--$(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{--%>
+				<%--	const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);--%>
+				<%--	console.log(getTopic);--%>
 
-				console.log(minorClassification);
 
-				const activeDifficulty = $(".step-wrap .btn-line.active");
+					// fetch 써야 함? 기능 만들기 귀찮은데  여기부터 기존 주석부분~
+					// fetch('http://localhost:9090/api/itemlist',{
+					// 	method:'POST',
+					// 	headers:{
+					// 		'Content-Type':'application/json',
+					// 	},
+					// 	body:getTopic,
+					// }).then(response=>response.json())
+					//     .then(data=>console.log(data));
+				// );
 
-				const levelCnt = [];
-				activeDifficulty.toArray().forEach(diff=>{
-					const step = diff.getAttribute('data-step');
-					const input = $(".range-type .range-wrap>.range[data-step='" + step + "']>input");
-					levelCnt.push(input.val()*1);
-				})
+				// 성준님이 만든 부분 주석
+				<%--const chapterList = JSON.parse('${sb}').chapterList;--%>
+				<%--let selectedTopics = [];--%>
 
-				console.log(levelCnt);
+				<%--$(".depth04 input[type=checkbox]:checked").each(function() {--%>
+				<%--	const topicName = $(this).next("label").children("span").text();--%>
+				<%--	const topic = chapterList.find(ch => ch.topicChapterName === topicName);--%>
+				<%--	if (topic) {--%>
+				<%--		selectedTopics.push({--%>
+				<%--			topicChapterId: topic.topicChapterId,--%>
+				<%--			subjectId: topic.subjectId--%>
+				<%--		});--%>
+				<%--	}--%>
+				<%--const minorClassification = [];--%>
+				<%--$(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{--%>
+				<%--	const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);--%>
+				<%--	console.log(getTopic);--%>
+				<%--	minorClassification.push({--%>
+				<%--		"subject":"1136",--%>
+				<%--		"large":getTopic.largeChapterId,--%>
+				<%--		"medium":getTopic.mediumChapterId,--%>
+				<%--		"small":getTopic.smallChapterId,--%>
+				<%--		"topic":getTopic.topicChapterId--%>
+				<%--	})--%>
+				<%--});--%>
 
-				const multiple = $(".btn-wrap.multi>button#multiple.active");
-				const subjective = $(".btn-wrap.multi>button#subjective.active");
+				console.log("선택된 topic 리스트:", selectedTopics);
 
-				let questionForm = '';
-
-				if(multiple.length>0){
-					if(subjective.length>0){
-						questionForm = 'multiple,subjective';
-					}else{
-						questionForm = 'multiple';
-					}
-				}else if(subjective.length>0){
-					questionForm = 'subjective';
-				}
-
-				console.log("question",questionForm);
-
-				const activity = $(".btn-wrap.multi>button.activity");
-
-				const activityCategoryList = [];
-
-				activity.toArray().forEach(acti=>{
-					console.log(acti);
-					activityCategoryList.push(acti.getAttribute('id'));
-				})
-
-				console.log("actCate", activityCategoryList);
-
-				fetch('http://localhost:9090/problembank/api/itemlist',{
-					method:'POST',
-					headers:{
-						'Content-Type':'application/json'
+				fetch("${path}/edit/questionList", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
 					},
-					body:JSON.stringify({
-						'minorClassification':minorClassification,
-						'levelCnt':levelCnt,
-						'questionForm':questionForm,
-						'activityCategoryList':activityCategoryList
-					})
-				}).then(response=>response.json())
-				.then(data=>console.log(data));
+					body: JSON.stringify(selectedTopics),
+					credentials: "include" // 임시적으로 세션 추가
+				})
+						.then(response => response.json())
+						.then(data => {
+							sessionStorage.setItem("questionList", JSON.stringify(data));
+							window.location.href = "${path}/sub03_01";
+						})
+						.catch(error => console.error("문항 가져오기 실패", error));
+
+
+				// 성준님이 만든 부분 주석
+				// console.log(minorClassification);
+				//
+				// const activeDifficulty = $(".step-wrap .btn-line.active");
+				//
+				// const levelCnt = [];
+				// activeDifficulty.toArray().forEach(diff=>{
+				// 	const step = diff.getAttribute('data-step');
+				// 	const input = $(".range-type .range-wrap>.range[data-step='" + step + "']>input");
+				// 	levelCnt.push(input.val()*1);
+				// })
+				//
+				// console.log(levelCnt);
+				//
+				// const multiple = $(".btn-wrap.multi>button#multiple.active");
+				// const subjective = $(".btn-wrap.multi>button#subjective.active");
+				//
+				// let questionForm = '';
+				//
+				// if(multiple.length>0){
+				// 	if(subjective.length>0){
+				// 		questionForm = 'multiple,subjective';
+				// 	}else{
+				// 		questionForm = 'multiple';
+				// 	}
+				// }else if(subjective.length>0){
+				// 	questionForm = 'subjective';
+				// }
+				//
+				// console.log("question",questionForm);
+				//
+				// const activity = $(".btn-wrap.multi>button.activity");
+				//
+				// const activityCategoryList = [];
+				//
+				// activity.toArray().forEach(acti=>{
+				// 	console.log(acti);
+				// 	activityCategoryList.push(acti.getAttribute('id'));
+				// })
+				//
+				// console.log("actCate", activityCategoryList);
+				//
+				// fetch('http://localhost:9090/problembank/api/itemlist',{
+				// 	method:'POST',
+				// 	headers:{
+				// 		'Content-Type':'application/json'
+				// 	},
+				// 	body:JSON.stringify({
+				// 		'minorClassification':minorClassification,
+				// 		'levelCnt':levelCnt,
+				// 		'questionForm':questionForm,
+				// 		'activityCategoryList':activityCategoryList
+				// 	})
+				// }).then(response=>response.json())
+				// .then(data=>console.log(data));
 			}
 
 			const stepNumChange = () => {
