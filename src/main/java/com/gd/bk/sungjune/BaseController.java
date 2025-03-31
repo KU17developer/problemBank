@@ -76,7 +76,8 @@ public class BaseController {
 
     // step3 이동용
     @RequestMapping("/sub04_01")
-    public String sub04_01(){
+    public String sub04_01(Model model){
+
         return "quizbank/sub04_01";
     }
 

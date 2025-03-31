@@ -122,66 +122,66 @@
 								</div>
 								<div class="tbody">
 									<div class="scroll-inner">
-										<div class="col">
-											<span>1</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>2</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>3</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>4</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>5</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>6</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>7</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>8</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>9</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>10</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
+<%--										<div class="col">--%>
+<%--											<span>1</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>2</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>3</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>4</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>5</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>6</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>7</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>8</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>9</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>10</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
 									</div>
 								</div>
 							</div>
@@ -219,6 +219,26 @@
 		</div> -->
 		<!-- e 230619 폴더 추가 팝업 삭제-->
 </body>
+<script>
+	$(function(){
+		const questionList = JSON.parse(sessionStorage.getItem('questionList'));
+		console.log(questionList);
+		questionList.forEach(question=>{
+			const col = $('<div>');
+			col.addClass('col');
+			const num = $('<span>');
+			num.text(question.itemNo);
+			const tit = $('<span>');
+			tit.addClass('tit');
+			tit.text(question.largeChapterName + " > " + question.mediumChapterName);
+			const qForm = $('<span>');
+			qForm.text(question.questionFormName);
+			const diff = $('<span>');
+			diff.text(question.difficultyName);
 
-
+			col.append(num).append(tit).append(qForm).append(diff);
+			$('.tbody>.scroll-inner').append(col);
+		})
+	})
+</script>
 </html>
