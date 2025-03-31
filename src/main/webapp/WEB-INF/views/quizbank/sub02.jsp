@@ -439,77 +439,93 @@
 			}
 
 			const editQuiz = () => {
-                // 상균씨가 한 부분
-				const chapterList = JSON.parse('${sb}').chapterList;
+				const checked = $(".unit-cnt input[type=checkbox]:checked");
+				const multiple = $("#multiple.active");
+				const subjective = $("#subjective.active");
+				const activity = $(".btn-line.activity.active");
+				const level = $(".step-wrap .btn-line.active");
 
-				const minorClassification = [];
-				$(".depth04 input[type=checkbox]:checked").each(function () {
-					const topicName = $(this).next("label").children("span").text();
-					const topic = chapterList.find(ch => ch.topicChapterName === topicName);
-					if (topic) {
-						minorClassification.push({
-							subject: topic.subjectId.toString(),
-							large: topic.largeChapterId.toString(),
-							medium: topic.mediumChapterId.toString(),
-							small: topic.smallChapterId.toString(),
-							topic: topic.topicChapterId.toString()
-						});
-					}
-				});
+				if(checked.length<=0){
+					alert("단원을 선택해 주세요!");
+				}else if(multiple.length<=0 && subjective.length<=0) {
+					alert("문제형태를 선택해 주세요!");
+				}else if(activity.length<=0) {
+					alert("평가영역을 선택해 주세요!");
+				}else if(level.length<=0){
+					alert("난이도를 선택해 주세요!");
+				}else{
+					// 상균씨가 한 부분
+					const chapterList = JSON.parse('${sb}').chapterList;
 
-				<%--const levelCnt = []; 일단 난이도 부분은 주석해 둘게욤~~~~~~~~ --%>
-				<%--$(".step-wrap .btn-line.active").each(function () {--%>
-				<%--	const step = $(this).data("step");--%>
-				<%--	const input = $(`.range-type .range-wrap .range[data-step='${step}'] input`).val();--%>
-				<%--	levelCnt.push(Number(input));--%>
-				<%--});--%>
+					const minorClassification = [];
+					$(".depth04 input[type=checkbox]:checked").each(function () {
+						const topicName = $(this).next("label").children("span").text();
+						const topic = chapterList.find(ch => ch.topicChapterName === topicName);
+						if (topic) {
+							minorClassification.push({
+								subject: topic.subjectId.toString(),
+								large: topic.largeChapterId.toString(),
+								medium: topic.mediumChapterId.toString(),
+								small: topic.smallChapterId.toString(),
+								topic: topic.topicChapterId.toString()
+							});
+						}
+					});
+
+					<%--const levelCnt = []; 일단 난이도 부분은 주석해 둘게욤~~~~~~~~ --%>
+					<%--$(".step-wrap .btn-line.active").each(function () {--%>
+					<%--	const step = $(this).data("step");--%>
+					<%--	const input = $(`.range-type .range-wrap .range[data-step='${step}'] input`).val();--%>
+					<%--	levelCnt.push(Number(input));--%>
+					<%--});--%>
 
 				const levelCnt = [2, 4, 10, 8, 6]; // ✅ 여기 고정
 
-				let questionForm = '';
-				const multiple = $("#multiple").hasClass("active");
-				const subjective = $("#subjective").hasClass("active");
+					let questionForm = '';
+					const multiple = $("#multiple").hasClass("active");
+					const subjective = $("#subjective").hasClass("active");
 
-				if (multiple && subjective) {
-					questionForm = 'multiple,subjective';
-				} else if (multiple) {
-					questionForm = 'multiple';
-				} else if (subjective) {
-					questionForm = 'subjective';
-				}
+					if (multiple && subjective) {
+						questionForm = 'multiple,subjective';
+					} else if (multiple) {
+						questionForm = 'multiple';
+					} else if (subjective) {
+						questionForm = 'subjective';
+					}
 
-				const activityCategoryList = [];
-				$(".btn-line.activity").each(function () {
-					const id = $(this).attr("id");
-					if (id) activityCategoryList.push(Number(id));
-				});
-
-				// 조건 검증: 합계 문제 수와 총 문제 수가 일치하는지
-				const inputsum = Number($(".range-type .range.total>span.num").text());
-				const quiznum = Number($(".input-area>.num>input").val());
-
-
-
-				if (inputsum != quiznum) {
-					console.log("합계가 일치하지 않음 → 팝업 띄우고 대기");
-
-					// 팝업 보이게 하고 fetch는 뒤로 미룸
-					$(".pop-wrap[data-pop='que-pop']").show();
-					$(".dim").fadeIn();
-					$("html, body").css("overflow", "hidden");
-
-					// 팝업 내부 "확인" 버튼 클릭 시 fetch + 페이지 이동
-					$(".pop-wrap[data-pop='que-pop'] .pop-footer button.pop-close").off("click").on("click", function () {
-						$(".pop-wrap").hide();
-						$(".dim").fadeOut();
-						$("html, body").css("overflow", "auto");
-
-						// 여기서 fetch
-						submitEditQuiz(minorClassification, levelCnt, questionForm, activityCategoryList);
+					const activityCategoryList = [];
+					$(".btn-line.activity").each(function () {
+						const id = $(this).attr("id");
+						if (id) activityCategoryList.push(Number(id));
 					});
-				} else {
-					// 문제 수가 이미 맞으면 바로 fetch
-					submitEditQuiz(minorClassification, levelCnt, questionForm, activityCategoryList);
+
+					// 조건 검증: 합계 문제 수와 총 문제 수가 일치하는지
+					const inputsum = Number($(".range-type .range.total>span.num").text());
+					const quiznum = Number($(".input-area>.num>input").val());
+
+					console.log("input",inputsum,"quiz",quiznum);
+					
+					if (inputsum != quiznum) {
+						console.log("합계가 일치하지 않음 → 팝업 띄우고 대기");
+
+						// 팝업 보이게 하고 fetch는 뒤로 미룸
+						$(".pop-wrap[data-pop='que-pop']").show();
+						$(".dim").fadeIn();
+						$("html, body").css("overflow", "hidden");
+
+						// 팝업 내부 "확인" 버튼 클릭 시 fetch + 페이지 이동
+						$(".pop-wrap[data-pop='que-pop'] .pop-footer button.pop-close").off("click").on("click", function () {
+							$(".pop-wrap").hide();
+							$(".dim").fadeOut();
+							$("html, body").css("overflow", "auto");
+
+							// 여기서 fetch
+							submitEditQuiz(minorClassification, levelCnt, questionForm, activityCategoryList);
+						});
+					} else {
+						// 문제 수가 이미 맞으면 바로 fetch
+						submitEditQuiz(minorClassification, levelCnt, questionForm, activityCategoryList);
+					}
 				}
 			};
 
@@ -521,17 +537,17 @@
 						"Content-Type": "application/json"
 					},
 					body: JSON.stringify({
-						minorClassification,
-						levelCnt,
-						questionForm,
-						activityCategoryList
+						'minorClassification':minorClassification,
+						'levelCnt':levelCnt,
+						'questionForm':questionForm,
+						'activityCategoryList':activityCategoryList
 					}),
 					credentials: "include"
 				})
 						.then(response => response.json())
 						.then(data => {
 							sessionStorage.setItem("questionList", JSON.stringify(data));
-							window.location.href = contextPath + "/quizbank/sub03_01";
+							window.location.href = "${path}/quizbank/sub03_01";
 						})
 						.catch(error => console.error("문항 가져오기 실패", error));
 
