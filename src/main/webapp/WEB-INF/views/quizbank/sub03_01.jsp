@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -856,7 +858,7 @@
 			</div>
 			<div class="step-btn-wrap">
 				<button type="button" class="btn-step">STEP 1 단원 선택</button>
-				<button type="button" class="btn-step next">STEP 3 시험지 저장 </button>
+				<button type="button" class="btn-step next" onclick="location.assign('${path}/sub04_01')">STEP 3 시험지 저장 </button>
 			</div>
 
 
