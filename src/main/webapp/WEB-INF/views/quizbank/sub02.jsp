@@ -200,7 +200,7 @@
 			</div>
 			<div class="step-btn-wrap">
 				<button type="button" class="btn-step" onclick="location.assign('${path}/sub01')">출제 방법 선택</button>
-				<button type="button" class="btn-step next pop-btn" data-pop="que-pop" onclick="editQuiz()">STEP2 문항 편집</button><!-- 230629 pop-btn 추가-->
+				<button type="button" class="btn-step next" data-pop="que-pop" onclick="editQuiz()">STEP2 문항 편집</button><!-- 230629 pop-btn 추가-->
 			</div>
 
 

@@ -62,14 +62,10 @@
 												<c:forEach var="middleChap" items="${chapterMap[largeChap].keySet()}" varStatus="s2">
 													<c:forEach var="smallChap" items="${chapterMap[largeChap][middleChap].keySet()}" varStatus="s3">
 														<div class="col">
-															<span>
-																<input type="checkbox" id="chk_${s1.index}${s2.index}${s3.index}" class="chk_paperId">
-																<label for="chk_${s1.index}${s2.index}${s3.index}"></label>
-															</span>
 															<span class="tit">${middleChap} > ${smallChap} > 1회</span>
 															<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i
 																		class="preview" onclick="previewPopup('${smallChap}')"></i></button></span>
-															<span><button type="button" class="btn-icon2"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
+															<span><button type="button" class="btn-icon2" onclick="editProblem('${smallChap}')"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->
 															<span>
 																<div class="btn-wrap"><button type="button" class="btn-default" onclick="download('all','${smallChap}')">전체</button> <button
 																		type="button" class="btn-default" onclick="download('quiz','${smallChap}')">문제</button> <button type="button" class="btn-default" onclick="download('answer','${smallChap}')">정답
@@ -197,6 +193,7 @@
 				body:JSON.stringify(itemIdList[sChap])
 			}).then(response=>response.json())
 			.then(data=>{
+				$('.view-data').empty();
 				data.forEach((da,index)=>{
 					const exarea = $('<div>');
 					exarea.addClass('example-area');
@@ -206,7 +203,7 @@
 					const qitem = $('<div>');
 					qitem.addClass('item-question');
 					const numbering = $('<span>');
-					numbering.text(index+'.');
+					numbering.text((index*1+1*1)+'.');
 					const qimg = $('<img>');
 					qimg.attr('src',da.questionUrl);
 					numbering.addClass('numbering');
@@ -251,6 +248,23 @@
 					$('.view-data').append(exarea);
 				})
 			});
+		}
+	}
+
+	const editProblem = (sChap) => {
+		const itemIdList = JSON.parse('${itemIdList}');
+		if(itemIdList[sChap]!=null){
+			fetch('${path}/api/preview',{
+				method:'POST',
+				headers:{
+					'Content-Type':'application/json'
+				},
+				body:JSON.stringify(itemIdList[sChap])
+			}).then(response=>response.json())
+			.then(data=>{
+				sessionStorage.setItem("questionList",JSON.stringify(data));
+				location.assign('${path}/sub03_01');
+			})
 		}
 	}
 	// debugger;

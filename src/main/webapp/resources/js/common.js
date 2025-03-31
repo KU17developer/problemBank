@@ -185,20 +185,20 @@ $(function () {
   // popup
   let _dim = $(".dim");
   let _html = $("html , body");
-  // let popBtn = $(".pop-btn");
+  let popBtn = $(".pop-btn");
   let closePop = $(".pop-close, .ui-close");
 
-  // function popFunc() {
-  //   let _this = $(this);
-  //   let popData = _this.data("pop");
-  //
-  //   _html.css("overflow", "hidden");
-  //   _dim.fadeIn();
-  //
-  //   $(".pop-wrap[data-pop='" + popData + "']").show();
-  //
-  //   console.log($(".pop-wrap[data-pop='" + popData + "']"));
-  // }
+  function popFunc() {
+    let _this = $(this);
+    let popData = _this.data("pop");
+
+    _html.css("overflow", "hidden");
+    _dim.fadeIn();
+
+    $(".pop-wrap[data-pop='" + popData + "']").show();
+
+    console.log($(".pop-wrap[data-pop='" + popData + "']"));
+  }
 
   function popClose() {
     let _this = $(this);
@@ -207,7 +207,7 @@ $(function () {
     _dim.fadeOut();
   }
 
-  // popBtn.on("click", popFunc);
+  popBtn.on("click", popFunc);
   closePop.on("click", popClose);
 
   // checkbox

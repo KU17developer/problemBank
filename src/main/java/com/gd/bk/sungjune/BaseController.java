@@ -69,6 +69,11 @@ public class BaseController {
         return "quizbank/sub02";
     }
 
+    @RequestMapping("/sub03_01")
+    public String sub03_01(){
+        return "quizbank/sub03_01";
+    }
+
     private Map<String,Object> getChapterList(){
         try{
             URL url = new URL("https://tsherpa.item-factory.com/chapter/chapter-list");
