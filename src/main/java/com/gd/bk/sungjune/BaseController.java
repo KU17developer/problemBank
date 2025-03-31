@@ -74,6 +74,13 @@ public class BaseController {
         return "quizbank/sub03_01";
     }
 
+    // step3 이동용
+    @RequestMapping("/sub04_01")
+    public String sub04_01(Model model){
+
+        return "quizbank/sub04_01";
+    }
+
     private Map<String,Object> getChapterList(){
         try{
             URL url = new URL("https://tsherpa.item-factory.com/chapter/chapter-list");

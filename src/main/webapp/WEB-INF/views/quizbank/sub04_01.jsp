@@ -1,4 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<c:set var="path" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="ko">
 
@@ -9,14 +11,14 @@
 	<title>T셀파 문제은행</title>
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.css" />
 	<link rel="stylesheet" href="https://code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
-	<link rel="stylesheet" href="../inc/css/font.css">
-	<link rel="stylesheet" href="../inc/css/reset.css">
-	<link rel="stylesheet" href="../inc/css/common.css">
+	<link rel="stylesheet" href="${path}/resources/css/font.css">
+	<link rel="stylesheet" href="${path}/resources/css/reset.css">
+	<link rel="stylesheet" href="${path}/resources/css/common.css">
 	<script src="https://code.jquery.com/jquery-1.12.4.min.js"
 		integrity="sha256-ZosEbRLbNQzLpnKIkEdrPv7lOy9C27hHQ+Xp8a4MxAQ=" crossorigin="anonymous"></script>
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
-	<script src="../inc/js/common.js"></script>
+	<script src="${path}/resources/js/common.js"></script>
 </head>
 
 <body>
@@ -120,66 +122,66 @@
 								</div>
 								<div class="tbody">
 									<div class="scroll-inner">
-										<div class="col">
-											<span>1</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>2</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>3</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>4</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>5</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>6</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>7</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>8</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>9</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
-										<div class="col">
-											<span>10</span>
-											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>
-											<span>주관식</span>
-											<span>하</span>
-										</div>
+<%--										<div class="col">--%>
+<%--											<span>1</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>2</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>3</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>4</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>5</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>6</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>7</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>8</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>9</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
+<%--										<div class="col">--%>
+<%--											<span>10</span>--%>
+<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
+<%--											<span>주관식</span>--%>
+<%--											<span>하</span>--%>
+<%--										</div>--%>
 									</div>
 								</div>
 							</div>
@@ -217,6 +219,26 @@
 		</div> -->
 		<!-- e 230619 폴더 추가 팝업 삭제-->
 </body>
+<script>
+	$(function(){
+		const questionList = JSON.parse(sessionStorage.getItem('questionList'));
+		console.log(questionList);
+		questionList.forEach(question=>{
+			const col = $('<div>');
+			col.addClass('col');
+			const num = $('<span>');
+			num.text(question.itemNo);
+			const tit = $('<span>');
+			tit.addClass('tit');
+			tit.text(question.largeChapterName + " > " + question.mediumChapterName);
+			const qForm = $('<span>');
+			qForm.text(question.questionFormName);
+			const diff = $('<span>');
+			diff.text(question.difficultyName);
 
-
+			col.append(num).append(tit).append(qForm).append(diff);
+			$('.tbody>.scroll-inner').append(col);
+		})
+	})
+</script>
 </html>
