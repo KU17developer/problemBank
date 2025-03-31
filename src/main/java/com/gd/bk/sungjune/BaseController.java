@@ -6,6 +6,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.net.ssl.HttpsURLConnection;
@@ -28,9 +29,18 @@ public class BaseController {
     @RequestMapping("/sub01")
     public String sub01(Model model) {
         Map<String,Object> chapter = getChapterList();
+        Map<String,List<Long>> itemIdList = getItemId((List<Chapter>)chapter.get("chapterList"));
 
         List<Chapter> chapterList = (List<Chapter>)chapter.get("chapterList");
         Map<String,Map<String,Map<String,List<String>>>> chapterMap = (Map<String,Map<String,Map<String,List<String>>>>)chapter.get("chapterMap");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        try{
+            String jsonString = objectMapper.writeValueAsString(itemIdList);
+            model.addAttribute("itemIdList",jsonString);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
         model.addAttribute("chapterList",chapterList);
         model.addAttribute("chapterMap",chapterMap);
 
@@ -57,6 +67,11 @@ public class BaseController {
         model.addAttribute("evaluation",evaluation);
 
         return "quizbank/sub02";
+    }
+
+    @RequestMapping("/sub03_01")
+    public String sub03_01(){
+        return "quizbank/sub03_01";
     }
 
     private Map<String,Object> getChapterList(){
@@ -208,6 +223,103 @@ public class BaseController {
         return null;
     }
 
+    public Map<String,List<Long>> getItemId(List<Chapter> chapterList){
+        Object eTemp = evaluationlist();
+        List<Map<String,Object>> evaluation = null;
+        if(eTemp instanceof List){
+            evaluation = (List<Map<String,Object>>)eTemp;
+        }
+
+        List<Long> categoryList = new ArrayList<>();
+        evaluation.forEach(e->{
+            categoryList.add(toLong(e.get("domainId")));
+        });
+
+        long smallChap = 0;
+        List<Map<String,Object>> minorClassification = new ArrayList<>();
+        Map<String,List<Long>> itemIdMap = new HashMap<>();
+        String smallChapName = "";
+        for(Chapter c : chapterList){
+            System.out.println(c.toString());
+            if(smallChap==1136080501) {
+                System.out.println(c.getTopicChapterId());
+                System.out.println(chapterList.get(chapterList.size() - 1).getTopicChapterId());
+                System.out.println(c.getTopicChapterId() == chapterList.get(chapterList.size() - 1).getTopicChapterId());
+            }
+            if(c.getSmallChapterId()!=smallChap || c.getTopicChapterId()==chapterList.get(chapterList.size()-1).getTopicChapterId()){
+                if(minorClassification.size()>0){
+                    System.out.println(minorClassification);
+                    System.out.println(smallChapName);
+                    System.out.println(c.getSmallChapterId());
+                    if(smallChap==1136080301) {}    // 지금 오류 해결 못해서 이렇게 해놓음
+                    else{
+                        try{
+                            URL url = new URL("https://tsherpa.item-factory.com/item-img/chapters/item-list");
+                            HttpsURLConnection connect = (HttpsURLConnection)url.openConnection();
+
+                            connect.setRequestMethod("POST");
+                            connect.setDoOutput(true);
+                            connect.setRequestProperty("Content-Type", "application/json");
+
+                            Map<String, Object> params = Map.of("minorClassification",minorClassification,"levelCnt",List.of("30","30","30","30","30"),"questionForm","multiple,subjective","activityCategoryList",categoryList);    // 이거 바꿔야됨
+
+                            System.out.println("어디서");
+
+                            ObjectMapper mapper = new ObjectMapper();
+                            String json = mapper.writeValueAsString(params);
+                            byte[] input = json.getBytes();
+                            connect.getOutputStream().write(input);
+
+                            System.out.println("문제가");
+
+                            InputStream is = connect.getInputStream();
+                            System.out.println("여기 앞일듯");
+                            InputStreamReader isr = new InputStreamReader(is);
+                            int data = 0;
+                            StringBuilder sb = new StringBuilder();
+                            while((data=isr.read())!=-1){
+                                sb.append((char)data);
+                            }
+                            String jsonString = sb.toString();
+
+                            System.out.println("생기지?");
+
+                            ObjectMapper mapper2 = new ObjectMapper();
+                            Map<String,Object> map = mapper.readValue(jsonString, Map.class);
+
+//            model.addAttribute("map",map);
+
+//                        System.out.println(map.get("itemList"));
+
+                            List<Map<String,Object>> itemList = (List<Map<String,Object>>)map.get("itemList");
+
+                            List<Long> itemIdList = new ArrayList<>();
+                            itemList.forEach(item->{
+                                itemIdList.add(toLong(item.get("itemId")));
+                            });
+                            itemIdMap.put(smallChapName,itemIdList);
+
+                            System.out.println(itemIdList);
+//                        System.out.println(itemIdMap);
+                        }catch(MalformedURLException e) {
+                            log.error("URL이 잘못되었습니다 : " + e.getMessage());
+                        }catch(IOException e){
+                            log.error("Connection 에러 : " + e.getMessage());
+                        }finally{
+                            log.debug("해치웠나?");
+                        }
+                    }
+                }
+                smallChap = c.getSmallChapterId();
+                minorClassification.clear();
+                smallChapName = c.getSmallChapterName();
+//                minorClassification.add(Map.of("subject",c.getSubjectId(),"small",c.getSmallChapterId()));
+            }
+            minorClassification.add(Map.of("subject",c.getSubjectId(),"topic",c.getTopicChapterId()));
+        };
+
+        return itemIdMap;
+    }
     // 😑
     private static Long toLong(Object value) {
         if (value instanceof Integer) {

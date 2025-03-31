@@ -200,7 +200,7 @@
 			</div>
 			<div class="step-btn-wrap">
 				<button type="button" class="btn-step" onclick="location.assign('${path}/sub01')">출제 방법 선택</button>
-				<button type="button" class="btn-step next pop-btn" data-pop="que-pop" onclick="editQuiz()">STEP2 문항 편집</button><!-- 230629 pop-btn 추가-->
+				<button type="button" class="btn-step next" data-pop="que-pop" onclick="editQuiz()">STEP2 문항 편집</button><!-- 230629 pop-btn 추가-->
 			</div>
 
 
@@ -290,8 +290,8 @@
 					<span class="txt">해당 문제 구성으로 출제하시겠습니까?</span>
 				</div>
 				<div class="pop-footer">
-					<button>취소</button>
-					<button class="pop-close">확인</button>
+					<button class="pop-close">취소</button>
+					<button class="pop-close">확인</button>	<%-- 어떻게 고치지 🤔 --%>
 				</div>
 			</div>
 		</div>
@@ -439,74 +439,119 @@
 			}
 
 			const editQuiz = () => {
-				<%--const chapterList = JSON.parse('${sb}').chapterList;--%>
+				const checked = $(".unit-cnt input[type=checkbox]:checked");
+				const multiple = $("#multiple.active");
+				const subjective = $("#subjective.active");
+				const activity = $(".btn-line.activity.active");
+				const level = $(".step-wrap .btn-line.active");
 
-				<%--$(".depth04 input[type=checkbox]:checked").next("label").children("span").toArray().forEach(span=>{--%>
-				<%--	const getTopic = chapterList.find(chapter=>chapter.topicChapterName==span.innerText);--%>
-				<%--	console.log(getTopic);--%>
+				if(checked.length<=0){
+					alert("단원을 선택해 주세요!");
+				}else if(multiple.length<=0 && subjective.length<=0) {
+					alert("문제형태를 선택해 주세요!");
+				}else if(activity.length<=0) {
+					alert("평가영역을 선택해 주세요!");
+				}else if(level.length<=0){
+					alert("난이도를 선택해 주세요!");
+				}else{
+					// 상균씨가 한 부분
+					const chapterList = JSON.parse('${sb}').chapterList;
 
+					const minorClassification = [];
+					$(".depth04 input[type=checkbox]:checked").each(function () {
+						const topicName = $(this).next("label").children("span").text();
+						const topic = chapterList.find(ch => ch.topicChapterName === topicName);
+						if (topic) {
+							minorClassification.push({
+								subject: topic.subjectId.toString(),
+								large: topic.largeChapterId.toString(),
+								medium: topic.mediumChapterId.toString(),
+								small: topic.smallChapterId.toString(),
+								topic: topic.topicChapterId.toString()
+							});
+						}
+					});
 
-					// fetch 써야 함? 기능 만들기 귀찮은데  여기부터 기존 주석부분~
-					// fetch('http://localhost:9090/api/itemlist',{
-					// 	method:'POST',
-					// 	headers:{
-					// 		'Content-Type':'application/json',
-					// 	},
-					// 	body:getTopic,
-					// }).then(response=>response.json())
-					//     .then(data=>console.log(data));
-				// );
+					<%--const levelCnt = []; 일단 난이도 부분은 주석해 둘게욤~~~~~~~~ --%>
+					<%--$(".step-wrap .btn-line.active").each(function () {--%>
+					<%--	const step = $(this).data("step");--%>
+					<%--	const input = $(`.range-type .range-wrap .range[data-step='${step}'] input`).val();--%>
+					<%--	levelCnt.push(Number(input));--%>
+					<%--});--%>
 
-				// 상균씨가 한 부분
-				const chapterList = JSON.parse('${sb}').chapterList;
+				const levelCnt = [2, 4, 10, 8, 6]; // ✅ 여기 고정
 
-				const minorClassification = [];
-				$(".depth04 input[type=checkbox]:checked").each(function () {
-					const topicName = $(this).next("label").children("span").text();
-					const topic = chapterList.find(ch => ch.topicChapterName === topicName);
-					if (topic) {
-						minorClassification.push({
-							subject: topic.subjectId.toString(),
-							large: topic.largeChapterId.toString(),
-							medium: topic.mediumChapterId.toString(),
-							small: topic.smallChapterId.toString(),
-							topic: topic.topicChapterId.toString()
-						});
+					let questionForm = '';
+					const multiple = $("#multiple").hasClass("active");
+					const subjective = $("#subjective").hasClass("active");
+
+					if (multiple && subjective) {
+						questionForm = 'multiple,subjective';
+					} else if (multiple) {
+						questionForm = 'multiple';
+					} else if (subjective) {
+						questionForm = 'subjective';
 					}
-				});
 
-				const levelCnt = [2, 4, 10, 8, 6];
+					const activityCategoryList = [];
+					$(".btn-line.activity").each(function () {
+						const id = $(this).attr("id");
+						if (id) activityCategoryList.push(Number(id));
+					});
 
-				let questionForm = '';
-				if ($("#multiple").hasClass("active")) questionForm += 'multiple';
-				if ($("#subjective").hasClass("active")) {
-					questionForm += questionForm ? ',subjective' : 'subjective';
+					// 조건 검증: 합계 문제 수와 총 문제 수가 일치하는지
+					const inputsum = Number($(".range-type .range.total>span.num").text());
+					const quiznum = Number($(".input-area>.num>input").val());
+
+					console.log("input",inputsum,"quiz",quiznum);
+					
+					if (inputsum != quiznum) {
+						console.log("합계가 일치하지 않음 → 팝업 띄우고 대기");
+
+						// 팝업 보이게 하고 fetch는 뒤로 미룸
+						$(".pop-wrap[data-pop='que-pop']").show();
+						$(".dim").fadeIn();
+						$("html, body").css("overflow", "hidden");
+
+						// 팝업 내부 "확인" 버튼 클릭 시 fetch + 페이지 이동
+						$(".pop-wrap[data-pop='que-pop'] .pop-footer button.pop-close").off("click").on("click", function () {
+							$(".pop-wrap").hide();
+							$(".dim").fadeOut();
+							$("html, body").css("overflow", "auto");
+
+							// 여기서 fetch
+							submitEditQuiz(minorClassification, levelCnt, questionForm, activityCategoryList);
+						});
+					} else {
+						// 문제 수가 이미 맞으면 바로 fetch
+						submitEditQuiz(minorClassification, levelCnt, questionForm, activityCategoryList);
+					}
 				}
+			};
 
-				const activityCategoryList = [];
-				$(".btn-line.activity").each(function () {
-					const id = $(this).attr("id");
-					if (id) activityCategoryList.push(Number(id));
-				});
+			// 따로 빼두는 fetch 함수
+			const submitEditQuiz = (minorClassification, levelCnt, questionForm, activityCategoryList) => {
+				const contextPath = "${path}";
 
-				// form 동적으로 생성해서 서버로 보냄
-				const form = document.createElement("form");
-				form.method = "POST";
-				form.action = "${path}/edit/submitQuiz";
-
-				const input = document.createElement("input");
-				input.type = "hidden";
-				input.name = "payload";
-				input.value = JSON.stringify({
-					minorClassification,
-					levelCnt,
-					questionForm,
-					activityCategoryList
-				});
-				form.appendChild(input);
-
-				document.body.appendChild(form);
-				form.submit();
+				fetch("${path}/edit/questionList", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						'minorClassification':minorClassification,
+						'levelCnt':levelCnt,
+						'questionForm':questionForm,
+						'activityCategoryList':activityCategoryList
+					}),
+					credentials: "include"
+				})
+						.then(response => response.json())
+						.then(data => {
+							sessionStorage.setItem("questionList", JSON.stringify(data));
+							window.location.href = "${path}/quizbank/sub03_01";
+						})
+						.catch(error => console.error("문항 가져오기 실패", error));
 
 				// 성준님이 만든 부분 주석
 				// const minorClassification = [];
