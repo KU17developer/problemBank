@@ -534,6 +534,8 @@
 
 			// 따로 빼두는 fetch 함수
 			const submitEditQuiz = (minorClassification, levelCnt, questionForm, activityCategoryList) => {
+				const contextPath = "${path}";
+
 				fetch("${path}/edit/questionList", {
 					method: "POST",
 					headers: {

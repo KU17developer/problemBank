@@ -1804,7 +1804,7 @@
                                 new_form.appendTo('body');
                                 new_form.submit();
                             }else{
-                                window.open('http://localhost:9090/problembank/sub01','_blank','width=1600,height=900')
+                                window.open('${path}/sub01','_blank','width=1600,height=900')     // $\{path}로 바꾸기
                             }
                         }
                     </script> </div>
