@@ -66,7 +66,7 @@
 }
 #q-preview .item-question {
   display: flex;
-  align-items: center;
+  align-items: flex-start;  /* center에서 바꿈 */
   margin-bottom: 15px;
 }
 #q-preview .choice-contanier .answer-input {

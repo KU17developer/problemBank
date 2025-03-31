@@ -1,6 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
+<c:set var="path" value="${pageContext.request.contextPath}"/>
 
 <!DOCTYPE html>
 
@@ -311,7 +311,7 @@
 </span>
             <span class="util-member">
 <a href="javascript:doLogin();"><span class="underline">로그인</span></a>
-<a href="https://www.tsherpa.co.kr/mo_membership/signup.html">회원가입</a>
+<a href="${path}/member/enroller">회원가입</a>
 <a href="https://www.tsherpa.co.kr/center/M-noticM.html">고객센터</a>
 <a href="https://www.tsherpa.co.kr/event/index.html">이벤트</a>
 <a href="https://www.tsherpa.co.kr/center/M-sitemap.html">사이트맵</a>
@@ -775,8 +775,8 @@
             </div>
             <a class="btn_login" href="javascript: void(0);">로그인</a>
             <p class="login_find_btn_area">
-                <a class="btn_find" href="https://www.tsherpa.co.kr/mo_membership/form_find_id.html?tab=id">아이디</a>
-                <a class="btn_find" href="https://www.tsherpa.co.kr/mo_membership/form_find_id.html?tab=pw">비밀번호 찾기</a>
+                <a class="btn_find" href="${path}/member/findId">아이디</a>
+                <a class="btn_find" href="${path}/member/findPw">비밀번호 찾기</a>
             </p>
             <p class="sns_login_btns" style="left: 13px;">
                 <a href="javascript: void(0);" onclick="oauthLogin('naver');"><img alt="네이버 로그인" src="<%= request.getContextPath() %>/resources/images/sub00img/01-ico-naver-87f221453f29695d7ee15e95b54ff119.png"/></a>
@@ -1804,7 +1804,7 @@
                                 new_form.appendTo('body');
                                 new_form.submit();
                             }else{
-                                window.open('http://localhost:9090/problembank/sub01','_blank','width=1600,height=900')
+                                window.open('${path}/sub01','_blank','width=1600,height=900')     // $\{path}로 바꾸기
                             }
                         }
                     </script> </div>

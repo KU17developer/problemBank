@@ -9,6 +9,7 @@
     <typeAliases>
 
         <typeAlias type="com.gd.bk.common.SpringArrayTypeHandler" alias="strArr"/>
+        <typeAlias type="com.gd.bk.member.model.dto.Member" alias="member"/>
 
     </typeAliases>
 </configuration>
