@@ -458,7 +458,6 @@
 				// );
 
 				// 상균씨가 한 부분
-				const contextPath = "${path}";
 				const chapterList = JSON.parse('${sb}').chapterList;
 
 				const minorClassification = [];
@@ -476,25 +475,12 @@
 					}
 				});
 
-				<%--const levelCnt = []; 일단 난이도 부분은 주석해 둘게욤~~~~~~~~ --%>
-				<%--$(".step-wrap .btn-line.active").each(function () {--%>
-				<%--	const step = $(this).data("step");--%>
-				<%--	const input = $(`.range-type .range-wrap .range[data-step='${step}'] input`).val();--%>
-				<%--	levelCnt.push(Number(input));--%>
-				<%--});--%>
-
-				const levelCnt = [2, 4, 10, 8, 6]; // ✅ 여기 고정
+				const levelCnt = [2, 4, 10, 8, 6];
 
 				let questionForm = '';
-				const multiple = $("#multiple").hasClass("active");
-				const subjective = $("#subjective").hasClass("active");
-
-				if (multiple && subjective) {
-					questionForm = 'multiple,subjective';
-				} else if (multiple) {
-					questionForm = 'multiple';
-				} else if (subjective) {
-					questionForm = 'subjective';
+				if ($("#multiple").hasClass("active")) questionForm += 'multiple';
+				if ($("#subjective").hasClass("active")) {
+					questionForm += questionForm ? ',subjective' : 'subjective';
 				}
 
 				const activityCategoryList = [];
@@ -503,56 +489,24 @@
 					if (id) activityCategoryList.push(Number(id));
 				});
 
-				// 조건 검증: 합계 문제 수와 총 문제 수가 일치하는지
-				const inputsum = Number($(".range-type .range.total>span.num").text());
-				const quiznum = Number($(".input-area>.num>input").val());
+				// form 동적으로 생성해서 서버로 보냄
+				const form = document.createElement("form");
+				form.method = "POST";
+				form.action = "${path}/edit/submitQuiz";
 
+				const input = document.createElement("input");
+				input.type = "hidden";
+				input.name = "payload";
+				input.value = JSON.stringify({
+					minorClassification,
+					levelCnt,
+					questionForm,
+					activityCategoryList
+				});
+				form.appendChild(input);
 
-
-				if (inputsum != quiznum) {
-					console.log("합계가 일치하지 않음 → 팝업 띄우고 대기");
-
-					// 팝업 보이게 하고 fetch는 뒤로 미룸
-					$(".pop-wrap[data-pop='que-pop']").show();
-					$(".dim").fadeIn();
-					$("html, body").css("overflow", "hidden");
-
-					// 팝업 내부 "확인" 버튼 클릭 시 fetch + 페이지 이동
-					$(".pop-wrap[data-pop='que-pop'] .pop-footer button.pop-close").off("click").on("click", function () {
-						$(".pop-wrap").hide();
-						$(".dim").fadeOut();
-						$("html, body").css("overflow", "auto");
-
-						// 여기서 fetch
-						submitEditQuiz(minorClassification, levelCnt, questionForm, activityCategoryList);
-					});
-				} else {
-					// 문제 수가 이미 맞으면 바로 fetch
-					submitEditQuiz(minorClassification, levelCnt, questionForm, activityCategoryList);
-				}
-			};
-
-			// 따로 빼두는 fetch 함수
-			const submitEditQuiz = (minorClassification, levelCnt, questionForm, activityCategoryList) => {
-				fetch("${path}/edit/questionList", {
-					method: "POST",
-					headers: {
-						"Content-Type": "application/json"
-					},
-					body: JSON.stringify({
-						minorClassification,
-						levelCnt,
-						questionForm,
-						activityCategoryList
-					}),
-					credentials: "include"
-				})
-						.then(response => response.json())
-						.then(data => {
-							sessionStorage.setItem("questionList", JSON.stringify(data));
-							window.location.href = contextPath + "/quizbank/sub03_01";
-						})
-						.catch(error => console.error("문항 가져오기 실패", error));
+				document.body.appendChild(form);
+				form.submit();
 
 				// 성준님이 만든 부분 주석
 				// const minorClassification = [];
