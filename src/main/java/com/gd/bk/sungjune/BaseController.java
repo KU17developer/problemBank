@@ -29,18 +29,19 @@ public class BaseController {
     @RequestMapping("/sub01")
     public String sub01(Model model) {
         Map<String,Object> chapter = getChapterList();
-        Map<String,List<Long>> itemIdList = getItemId((List<Chapter>)chapter.get("chapterList"));
+//        Map<String,List<Long>> itemIdList = getItemId((List<Chapter>)chapter.get("chapterList"));
 
         List<Chapter> chapterList = (List<Chapter>)chapter.get("chapterList");
         Map<String,Map<String,Map<String,List<String>>>> chapterMap = (Map<String,Map<String,Map<String,List<String>>>>)chapter.get("chapterMap");
 
         ObjectMapper objectMapper = new ObjectMapper();
         try{
-            String jsonString = objectMapper.writeValueAsString(itemIdList);
-            model.addAttribute("itemIdList",jsonString);
+            String jsonString = objectMapper.writeValueAsString(chapterList);
+            model.addAttribute("jsonChapList",jsonString);
         }catch(Exception e){
             e.printStackTrace();
         }
+
         model.addAttribute("chapterList",chapterList);
         model.addAttribute("chapterMap",chapterMap);
 
@@ -184,7 +185,7 @@ public class BaseController {
         return null;
     }
 
-    public Object evaluationlist(){
+    protected static Object evaluationlist(){
         String response = "";
         try{
             URL url = new URL("https://tsherpa.item-factory.com/chapter/evaluation-list");

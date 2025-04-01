@@ -119,12 +119,37 @@
 		</div>
 	</div>
 <script>
+	$(function(){
+		console.log('${chapterList}');
+		console.log('${chapterList[0].subjectId}')
+		if(sessionStorage.getItem('itemIdList')==null || sessionStorage.getItem('subjectId')!='${chapterList[0].subjectId}'){
+			fetch('${path}/api/getitemid',{
+				method:'POST',
+				headers:{
+					'Content-Type':'application/json'
+				},
+				body:'${jsonChapList}'
+			}).then(response=>{
+				console.log(response);
+				return response.json()
+			})
+			.then(data=>{
+				console.log(data);
+				sessionStorage.setItem('subjectId','${chapterList[0].subjectId}');
+				sessionStorage.setItem('itemIdList',JSON.stringify(data));
+			});
+		}
+		console.log(sessionStorage.getItem('itemIdList'));
+	})
+
 	const download = (type,scName) => {
-		const itemIdList = JSON.parse('${itemIdList}');
-		console.log(type);
-		console.log(itemIdList);
-		console.log(scName);
-		console.log(itemIdList[scName]);
+		<%--const itemIdList = JSON.parse('${itemIdList}');--%>
+		<%--console.log(type);--%>
+		<%--console.log(itemIdList);--%>
+		<%--console.log(scName);--%>
+		<%--console.log(itemIdList[scName]);--%>
+
+		const itemIdList = JSON.parse(sessionStorage.getItem('itemIdList'));
 
 		if(itemIdList[scName]!=null){
 			fetch('${path}/api/download',{
@@ -183,7 +208,7 @@
 	}
 
 	const previewPopup = (sChap) =>{
-		const itemIdList = JSON.parse('${itemIdList}');
+		const itemIdList = JSON.parse(sessionStorage.getItem('itemIdList'));
 		if(itemIdList[sChap]!=null){
 			fetch('${path}/api/preview',{
 				method:'POST',
@@ -252,7 +277,7 @@
 	}
 
 	const editProblem = (sChap) => {
-		const itemIdList = JSON.parse('${itemIdList}');
+		const itemIdList = JSON.parse(sessionStorage.getItem('itemIdList'));
 		if(itemIdList[sChap]!=null){
 			fetch('${path}/api/preview',{
 				method:'POST',
