@@ -190,7 +190,7 @@
 				</div>
 			</div>
 			<div class="step-btn-wrap">
-				<button type="button" class="btn-step">STEP 2 문항 편집</button>
+				<button type="button" class="btn-step" onclick="location.assign('${path}/sub03_01')">STEP 2 문항 편집</button>
 				<button type="button" class="btn-step next done">시험지 저장하기</button>
 			</div>
 
@@ -238,6 +238,29 @@
 
 			col.append(num).append(tit).append(qForm).append(diff);
 			$('.tbody>.scroll-inner').append(col);
+		})
+
+		$(".view-que-list").change(function () {
+			let _leg = $('.view-que').length;
+			let arr = [];
+
+			viewListFunc();
+		})
+
+		const diff = {'하':0,'중':0,'상':0}
+		const quesForm = {'객관식':0,'주관식':0}
+		JSON.parse(sessionStorage.getItem('questionList')).forEach(q=>{
+			const quesType = q.questionFormCode/10==5?'객관식':'주관식';
+			diff[q.difficultyName]++;
+			quesForm[quesType]++;
+		});
+
+		$(".left-wrap>.que-badge-group span.num").each((i,num)=>{
+			num.innerText = diff[num.previousElementSibling.innerText];
+		})
+
+		$(".right-wrap>.que-badge-group span.num").each((i,num)=>{
+			num.innerText = quesForm[num.previousElementSibling.innerText];
 		})
 	})
 </script>

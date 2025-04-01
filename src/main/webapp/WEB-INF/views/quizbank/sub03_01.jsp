@@ -833,7 +833,7 @@
 										</div>
 									</div>
 									<div class="bottom-box">
-										<div class="que-badge-group">
+										<div class="que-badge-group type02">
 											<div class="que-badge-wrap">
 												<span class="que-badge gray">객관식</span>
 												<span class="num">35</span>
@@ -1001,6 +1001,22 @@
 					let arr = [];
 
 					viewListFunc();
+				})
+
+				const diff = {'하':0,'중':0,'상':0}
+				const quesForm = {'객관식':0,'주관식':0}
+				JSON.parse(sessionStorage.getItem('questionList')).forEach(q=>{
+					const quesType = q.questionFormCode/10==5?'객관식':'주관식';
+					diff[q.difficultyName]++;
+					quesForm[quesType]++;
+				});
+
+				$(".bottom-box>.type01 span.num").each((i,num)=>{
+					num.innerText = diff[num.previousElementSibling.innerText];
+				})
+
+				$(".bottom-box>.type02 span.num").each((i,num)=>{
+					num.innerText = quesForm[num.previousElementSibling.innerText];
 				})
 
 				function viewListFunc() {
