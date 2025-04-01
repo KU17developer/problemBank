@@ -28,6 +28,7 @@ public class BaseController {
 
     @RequestMapping("/sub01")
     public String sub01(Model model) {
+        Map<String,Map<String,Object>> examList = getExamList();
         Map<String,Object> chapter = getChapterList();
 //        Map<String,List<Long>> itemIdList = getItemId((List<Chapter>)chapter.get("chapterList"));
 
@@ -42,6 +43,7 @@ public class BaseController {
             e.printStackTrace();
         }
 
+        model.addAttribute("examList",examList);
         model.addAttribute("chapterList",chapterList);
         model.addAttribute("chapterMap",chapterMap);
 
@@ -80,6 +82,12 @@ public class BaseController {
     public String sub04_01(Model model){
 
         return "quizbank/sub04_01";
+    }
+
+    @RequestMapping("/sub04_02")
+    public String sub04_02(Model model){
+
+        return "quizbank/sub04_02";
     }
 
     private Map<String,Object> getChapterList(){
@@ -328,6 +336,60 @@ public class BaseController {
 
         return itemIdMap;
     }
+
+    public Map<String,Map<String,Object>> getExamList(){
+        String response = "";
+        try{
+            URL url = new URL("https://tsherpa.item-factory.com/chapter/exam-list");
+            HttpsURLConnection connect = (HttpsURLConnection)url.openConnection();
+
+            connect.setRequestMethod("POST");
+            connect.setDoOutput(true);
+            connect.setRequestProperty("Content-Type", "application/json");
+
+            Map<String, Object> params = Map.of("subjectId","1136");    // 이거 바꿔야됨
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(params);
+            byte[] input = json.getBytes();
+            connect.getOutputStream().write(input);
+
+            InputStream is = connect.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            int data = 0;
+            StringBuilder sb = new StringBuilder();
+            while((data=isr.read())!=-1){
+                sb.append((char)data);
+            }
+            String jsonString = sb.toString();
+
+            ObjectMapper mapper2 = new ObjectMapper();
+            Map<String,List<Map<String,Object>>> list = mapper.readValue(jsonString, Map.class);
+
+            Map<String,Map<String,Object>> examList = new LinkedHashMap<>();
+
+            list.get("examList").forEach(exam->{
+                Map<String,Object> largeChap = examList.get(exam.get("largeChapterName"));
+                if(largeChap!=null){
+                    largeChap.put((String)exam.get("examName"),exam);
+                }else{
+                    largeChap = new LinkedHashMap<>();
+                    largeChap.put((String)exam.get("examName"),exam);
+                    examList.put((String)exam.get("largeChapterName"),largeChap);
+                }
+            });
+
+            return examList;
+        }catch(MalformedURLException e) {
+            log.error("URL이 잘못되었습니다 : " + e.getMessage());
+        }catch(IOException e){
+            log.error("Connection 에러 : " + e.getMessage());
+        }finally{
+            log.debug("해치웠나?");
+        }
+
+        return null;
+    }
+
     // 😑
     private static Long toLong(Object value) {
         if (value instanceof Integer) {

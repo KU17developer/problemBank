@@ -254,6 +254,46 @@ public class APIController {
         return ResponseEntity.notFound().build();
     }
 
+    // 이거로 바꿔서 쓰려고 했는데 일단 보류
+//    @PostMapping("/preview")
+//    public ResponseEntity<Object> preview(@RequestBody List<Long> itemIdList){
+//        try{
+//            URL url = new URL("https://tsherpa.item-factory.com/exam/preview");
+//            HttpsURLConnection connect = (HttpsURLConnection)url.openConnection();
+//
+//            connect.setRequestMethod("POST");
+//            connect.setDoOutput(true);
+//            connect.setRequestProperty("Content-Type", "application/json");
+//
+//            Map<String, Object> params = Map.of("subjectId","1136","differentiation","A");
+//            ObjectMapper mapper = new ObjectMapper();
+//            String json = mapper.writeValueAsString(params);
+//            byte[] input = json.getBytes();
+//            connect.getOutputStream().write(input);
+//
+//            InputStream is = connect.getInputStream();
+//            InputStreamReader isr = new InputStreamReader(is);
+//            int data = 0;
+//            StringBuilder sb = new StringBuilder();
+//            while((data=isr.read())!=-1){
+//                sb.append((char)data);
+//            }
+//            String jsonString = sb.toString();
+//
+//            ObjectMapper mapper2 = new ObjectMapper();
+//            Map<String,Object> map = mapper2.readValue(jsonString, Map.class);
+//
+//            return ResponseEntity.ok().body(map.get("previewUrl"));
+//        }catch(MalformedURLException e) {
+//            log.error("URL이 잘못되었습니다 : " + e.getMessage());
+//        }catch(IOException e){
+//            log.error("Connection 에러 : " + e.getMessage());
+//        }finally{
+//            log.debug("해치웠나?");
+//        }
+//        return ResponseEntity.notFound().build();
+//    }
+
     @RequestMapping("/getitemid")
     public ResponseEntity<Object> getItemId(@RequestBody List<Chapter> chapterList){
         System.out.println(chapterList);

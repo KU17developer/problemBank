@@ -1,6 +1,9 @@
 package com.gd.bk.edit.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gd.bk.edit.model.dto.ExamPaper;
+import com.gd.bk.edit.model.service.EditService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +24,8 @@ import java.util.Map;
 @Controller
 @RequestMapping("/edit")
 public class EditController {
+    @Autowired
+    private EditService editService;
 
     @PostMapping("/questionList")
     public ResponseEntity<Object> getQuestionList(@RequestBody Map<String, Object> payload) {
@@ -92,6 +97,14 @@ public class EditController {
             model.addAttribute("error", "문항 조회 실패: " + e.getMessage());
             return "error"; // error.jsp 등 에러 처리 페이지로 보내도 됨
         }
+    }
 
+    @PostMapping("/saveexampaper")
+    public ResponseEntity<Object> saveExamPaper(@RequestBody List<ExamPaper> examPaper){
+        examPaper.forEach(paper -> {
+            editService.saveExamPaper(paper);
+        });
+
+        return ResponseEntity.notFound().build();
     }
 }

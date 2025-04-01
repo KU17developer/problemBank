@@ -19,6 +19,7 @@
 	<script src="https://code.jquery.com/ui/1.13.1/jquery-ui.js"></script>
 	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 	<script src="${path}/resources/js/common.js"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
 </head>
 
 <body>
@@ -122,66 +123,6 @@
 								</div>
 								<div class="tbody">
 									<div class="scroll-inner">
-<%--										<div class="col">--%>
-<%--											<span>1</span>--%>
-<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
-<%--											<span>주관식</span>--%>
-<%--											<span>하</span>--%>
-<%--										</div>--%>
-<%--										<div class="col">--%>
-<%--											<span>2</span>--%>
-<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
-<%--											<span>주관식</span>--%>
-<%--											<span>하</span>--%>
-<%--										</div>--%>
-<%--										<div class="col">--%>
-<%--											<span>3</span>--%>
-<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
-<%--											<span>주관식</span>--%>
-<%--											<span>하</span>--%>
-<%--										</div>--%>
-<%--										<div class="col">--%>
-<%--											<span>4</span>--%>
-<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
-<%--											<span>주관식</span>--%>
-<%--											<span>하</span>--%>
-<%--										</div>--%>
-<%--										<div class="col">--%>
-<%--											<span>5</span>--%>
-<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
-<%--											<span>주관식</span>--%>
-<%--											<span>하</span>--%>
-<%--										</div>--%>
-<%--										<div class="col">--%>
-<%--											<span>6</span>--%>
-<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
-<%--											<span>주관식</span>--%>
-<%--											<span>하</span>--%>
-<%--										</div>--%>
-<%--										<div class="col">--%>
-<%--											<span>7</span>--%>
-<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
-<%--											<span>주관식</span>--%>
-<%--											<span>하</span>--%>
-<%--										</div>--%>
-<%--										<div class="col">--%>
-<%--											<span>8</span>--%>
-<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
-<%--											<span>주관식</span>--%>
-<%--											<span>하</span>--%>
-<%--										</div>--%>
-<%--										<div class="col">--%>
-<%--											<span>9</span>--%>
-<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
-<%--											<span>주관식</span>--%>
-<%--											<span>하</span>--%>
-<%--										</div>--%>
-<%--										<div class="col">--%>
-<%--											<span>10</span>--%>
-<%--											<span class="tit">1. 새로운 시작 > (1) 시의 아름다움</span>--%>
-<%--											<span>주관식</span>--%>
-<%--											<span>하</span>--%>
-<%--										</div>--%>
 									</div>
 								</div>
 							</div>
@@ -191,13 +132,26 @@
 			</div>
 			<div class="step-btn-wrap">
 				<button type="button" class="btn-step" onclick="location.assign('${path}/sub03_01')">STEP 2 문항 편집</button>
-				<button type="button" class="btn-step next done">시험지 저장하기</button>
+				<button type="button" class="btn-step next done" onclick="saveTestPaper()">시험지 저장하기</button>
 			</div>
 
 
 		</div>
 		<div class="dim"></div>
 
+		<div id="q-preview" class="pop-wrap prev-type " data-pop="prev-pop">
+			<div class="pop-inner">
+				<div class="pop-content">
+					<div class="view-box">
+						<div class="scroll-inner">
+							<div class="view-data">
+
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
 		<!-- 폴더 추가 팝업 -->
 		<!-- s 230619 폴더 추가 팝업 삭제-->
 		<!-- <div class="pop-wrap input-type" data-pop="add-folder-pop">
@@ -262,6 +216,128 @@
 		$(".right-wrap>.que-badge-group span.num").each((i,num)=>{
 			num.innerText = quesForm[num.previousElementSibling.innerText];
 		})
+
+		questionList.forEach((question,index)=>{
+			const exarea = $('<div>');
+			exarea.addClass('example-area');
+			const exbox = $('<div>');
+			exbox.addClass('example-box');
+
+			const qitem = $('<div>');
+			qitem.addClass('item-question');
+			const numbering = $('<span>');
+			numbering.text((index*1+1*1)+'.');
+			const qimg = $('<img>');
+			qimg.attr('src',question.questionUrl);
+			numbering.addClass('numbering');
+
+			qitem.append(numbering);
+			qitem.append(qimg);
+
+			const aitem = $('<div>');
+			aitem.addClass('answer-container');
+			const atit = $('<span>');
+			atit.addClass('answer-tit');
+			atit.text('(정답)');
+			const aimgdiv = $('<div>');
+			aimgdiv.addClass('answer-img');
+			const aimg = $('<img>');
+			aimg.attr('src',question.answerUrl);
+
+			aitem.append(atit);
+			aimgdiv.append(aimg);
+			aitem.append(aimgdiv);
+
+			const eitem = $('<div>');
+			eitem.addClass('explain-answer');
+			const etit = $('<span>');
+			etit.addClass('explain-tit');
+			etit.text('(해설)');
+			const eimgdiv = $('<div>');
+			eimgdiv.addClass('explain-img');
+			const eimg = $('<img>');
+			eimg.attr('src',question.explainUrl);
+
+			eitem.append(etit);
+			eimgdiv.append(eimg);
+			eitem.append(eimgdiv);
+
+			exbox.append(qitem);
+			exbox.append(aitem);
+			exbox.append(eitem);
+
+			exarea.append(exbox);
+
+			$('.view-data').append(exarea);
+		})
 	})
+
+	const saveTestPaper = () =>{
+		const questionList = JSON.parse(sessionStorage.getItem('questionList'));
+
+		// $(".pop-wrap[data-pop='prev-pop']").show();
+
+		if($(".left-wrap .search-box>input.search").val()==''){
+			alert('시험지명을 입력해주세요.');
+		}else {
+			// 시험지에 들어갈 정보 찾기
+			if(confirm('시험지를 저장하시겠습니까?')){
+				const download = document.getElementById('q-preview');
+				const download2 = document.querySelector('.view-data');
+
+				html2pdf()
+				.from(download2)
+				.set({
+					margin: 1,
+					filename: "example.pdf",
+					html2canvas: { scale: 2 },
+					jsPDF: { orientation: "portrait" },
+				})
+				.save();
+
+				// 그리고 저장하기
+				// 저장할 데이터 먼저 적어보자
+				// examCode : sequence 사용
+				// title : $(".left-wrap .search-box>input.search").val()
+				// problemType : questionList에 없는듯 ❗
+				// difficulty : questionList에서 가져오기
+				// problemForm : questionList에서 가져오기
+				// examImage : 이미지 3개라서 column 2개 추가해야 함 ❗
+				// questioncount : 저장할 필요 있나 싶지만 일단 세서 저장 ❓
+				// examregistday : sysdate로 설정
+				// subject : questionList에서 가져오려고 했는데 없네 ❗
+				// teacode : 일단 회원이 없으니 임의의 값 설정
+				// midhighcode : 코드가 없어서 뭘 저장해야 할지 모르겠다
+				// subCode : questionList에서 잘 가져오기 😐
+
+				const sendData = [];
+				questionList.forEach(question=>{
+					sendData.push({
+						'title' : $(".left-wrap .search-box>input.search").val(),
+						'difficulty' : question.difficultyName,
+						'problemForm' : question.questionFormName,
+						'questionImage' : question.questionUrl,
+						'answerImage' : question.answerUrl,
+						'explainImage' : question.explainUrl,
+						'questioncount' : question.itemNo,	// 일단 문항번호로 저장
+						'teacode' : 6804,	// 임의의 번호(아님)으로 저장
+						'subCode' : sessionStorage.getItem('subjectId')
+					})
+				})
+
+				// 페이지를 넘어가면서 저장하는 것으로 해보자...라고 할거면 어떻게 body에 넣을건데 fetch로 해야겠다
+				fetch('${path}/edit/saveexampaper',{
+					method:'POST',
+					headers:{
+						'Content-Type':'application/json'
+					},
+					body:JSON.stringify(sendData)
+				}).then(response=>{
+					if(!response.ok) alert('저장이 되지 않았습니다. 다시 시도하세요');
+					else location.assign('${path}/sub04_02');
+				})
+			}
+		}
+	}
 </script>
 </html>

@@ -78,6 +78,36 @@
 										</div>
 									</div>
 								</c:forEach>
+<%--								바꿔야겠다 싶어서 만들려고 했는데 일단 보류 --%>
+<%--								<c:forEach var="largeChap" items="${examList.keySet()}">--%>
+<%--									<button type="button" class="acc-btn">${largeChap}</button>--%>
+<%--									<div class="cnt">--%>
+<%--										<div class="table">--%>
+<%--											<div class="fix-head">--%>
+<%--												<span>시험지명</span>--%>
+<%--												<span>미리보기</span>--%>
+<%--												<span>편집하기</span>--%>
+<%--												<span>다운로드</span>--%>
+<%--											</div>--%>
+<%--											<!-- e 230706 선택 삭제, 편집하기 추가 -->--%>
+<%--											<div class="tbody">--%>
+<%--												<c:forEach var="examName" items="${examList[largeChap].keySet()}" varStatus="s2">--%>
+<%--													<div class="col">--%>
+<%--														<span class="tit">${examName}</span>--%>
+<%--														<span><button type="button" class="pop-btn btn-icon2" data-pop="prev-pop"><i--%>
+<%--																class="preview" onclick="previewPopup('${examList[largeChap][examName][examId]}')"></i></button></span>--%>
+<%--														<span><button type="button" class="btn-icon2" onclick="editProblem('${smallChap}')"><i class="edit-type02"></i></button></span><!--230706 편집하기 버튼 추가-->--%>
+<%--														<span>--%>
+<%--															<div class="btn-wrap"><button type="button" class="btn-default" onclick="download('all','${smallChap}')">전체</button> <button--%>
+<%--																	type="button" class="btn-default" onclick="download('quiz','${smallChap}')">문제</button> <button type="button" class="btn-default" onclick="download('answer','${smallChap}')">정답--%>
+<%--																	+ 해설</button></div>--%>
+<%--														</span>--%>
+<%--													</div>--%>
+<%--												</c:forEach>--%>
+<%--											</div>--%>
+<%--										</div>--%>
+<%--									</div>--%>
+<%--								</c:forEach>--%>
 							</div>
 						</div>
 					</div>
@@ -292,53 +322,21 @@
 			})
 		}
 	}
-	// debugger;
-	// const chapterList = [];
-	// const sortedChapterNameList = {};
-	// fetch('http://localhost:9090/api/chapterlist')
-	// .then(response=>response.json())
-	// .then(data=>{
-	// 	chapterList = data.chapterList;
-	// 	console.log(data);
-	// 	console.log(chapterList);
-	// 	sortChapter();
-	// });
-	// const sortChapter=function(){
 
-	// console.log(chapterList);
-	//
-	// chapterList.forEach(c=>{
-	// 	debugger;
-	// 	const largeKey = Object.keys(sortedChapterNameList);
-	// 	const largeChap = largeKey!=null?largeKey.find(lk => lk == c.largeChapterName):null;
-	// 	if(largeChap!=null){
-	// 		const mediumKey = Object.keys(sortedChapterNameList[largeChap]);
-	// 		const mediumChap = mediumKey!=null?mediumKey.find(mk => mk == c.mediumChapterName):null;
-	// 		if(mediumChap!=null){
-	// 			const smallKey = Object.keys(sortedChapterNameList[largeChap][mediumChap]);
-	// 			const smallChap = smallKey!=null?smallKey.find(sk => sk == c.smallChapterName):null;
-	// 			if(smallChap!=null){
-	// 				sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName].push(c.topicChapterName);
-	// 			}
-	// 			else{
-	// 				sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName] = [];
-	// 				sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName].push(c.topicChapterName);
-	// 			}
-	// 		}
-	// 		else{
-	// 			sortedChapterNameList[c.largeChapterName][c.mediumChapterName] = {};
-	// 			sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName] = [];
-	// 			sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName].push(c.topicChapterName);
-	// 		}
-	// 	}else{
-	// 		sortedChapterNameList[c.largeChapterName] = {};
-	// 		sortedChapterNameList[c.largeChapterName][c.mediumChapterName] = {};
-	// 		sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName] = [];
-	// 		sortedChapterNameList[c.largeChapterName][c.mediumChapterName][c.smallChapterName].push(c.topicChapterName);
-	// 	}
-	// })
-	// console.log(sortedChapterNameList);
-	// }
+	// 바꿔야겠다 싶어서 만들려고 했는데 일단 보류
+	<%--const previewPopup = (examId) => {--%>
+	<%--	fetch('${path}/api/preview',{--%>
+	<%--		method:'POST',--%>
+	<%--		headers:{--%>
+	<%--			'Content-Type':'application/json'--%>
+	<%--		},--%>
+	<%--		body:JSON.stringify(examId)--%>
+	<%--	}).then(response=>response.json())--%>
+	<%--	.then(data=>{--%>
+	<%--		sessionStorage.setItem("questionList",JSON.stringify(data));--%>
+	<%--		location.assign('${path}/sub03_01');--%>
+	<%--	})--%>
+	<%--}--%>
 </script>
 </body>
 </html>
