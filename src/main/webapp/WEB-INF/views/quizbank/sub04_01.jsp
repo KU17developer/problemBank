@@ -339,6 +339,7 @@
 				// 그래서 2개의 항목은 비어있다...
 
 				let examCode;
+
 				// 페이지를 넘어가면서 저장하는 건 body에 넣을 방법을 못 찾아 fetch로 하기로 했다.
 				// 여기서 시험지를 DB에 저장하고 시험지 번호를 가져온다.
 				// teacode + subcode + max(examcode) 로 가져올 수 있겠다. teacode와 subcode가 일치하면서 examcode가 가장 큰 것으로.
