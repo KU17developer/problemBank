@@ -44,7 +44,11 @@ public class EditController {
                 sb.append((char) data);
             }
             response = sb.toString();
-            return ResponseEntity.ok().body(response);
+
+            ObjectMapper mapper2 = new ObjectMapper();
+            Map<String,Object> map = mapper2.readValue(response, Map.class);
+
+            return ResponseEntity.ok().body(map.get("itemList"));
         } catch (Exception e) {
             e.printStackTrace();
             return ResponseEntity.status(500).body("문항 조회 실패: " + e.getMessage());
