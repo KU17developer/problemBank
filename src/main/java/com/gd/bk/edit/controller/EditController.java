@@ -102,7 +102,10 @@ public class EditController {
 
     @PostMapping("/saveexampaper")
     public ResponseEntity<Object> saveExamPaper(@RequestBody ExamPaper examPaper) {
-        return ResponseEntity.notFound().build();
+        editService.saveExamPaper(examPaper);
+        String examCode = editService.getExamCode(examPaper);
+        System.out.println(examCode);
+        return ResponseEntity.ok().body(examCode);
     }
 
     @PostMapping("/saveexamquestion")
