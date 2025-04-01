@@ -28,6 +28,7 @@ public class EditController {
         try {
             URL url = new URL("https://tsherpa.item-factory.com/item-img/chapters/item-list");
             HttpsURLConnection connect = (HttpsURLConnection) url.openConnection();
+
             connect.setRequestMethod("POST");
             connect.setDoOutput(true);
             connect.setRequestProperty("Content-Type", "application/json");
