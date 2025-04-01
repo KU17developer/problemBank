@@ -339,10 +339,10 @@
 				// 그래서 2개의 항목은 비어있다...
 
 				let examCode;
-				// 페이지를 넘어가면서 저장하는 것으로 해보자...라고 할거면 어떻게 body에 넣을건데 fetch로 해야겠다
-				// 여기 가서 시험지를 DB에 저장하고 시험지 번호를 가져온다. 그런데 어떻게? 위 정보로? 🙃
-				// 보니까 teacode + subcode + examregistday 로 가져올 수 있겠다. teacode와 subcode가 일치하면서 examregistday가 가장 최신 것으로.
-				// 그건 내일 짜겠습니다. 일단 잘래. 오늘은 더 하고 싶은 마음이 안두러...
+				// 페이지를 넘어가면서 저장하는 건 body에 넣을 방법을 못 찾아 fetch로 하기로 했다.
+				// 여기서 시험지를 DB에 저장하고 시험지 번호를 가져온다.
+				// teacode + subcode + max(examcode) 로 가져올 수 있겠다. teacode와 subcode가 일치하면서 examcode가 가장 큰 것으로.
+				// 그러면 가장 최신 시험지를 가져올 수 있겠지
 				await fetch('${path}/edit/saveexampaper',{
 					method:'POST',
 					headers:{
@@ -368,7 +368,7 @@
 					// examCode : 시험지 만들고 가져오기
 
 					console.log("examCode",examCode);
-					
+
 					sendQuesData.push({
 						'passageUrl':question.passageUrl,
 						'questionUrl':question.questionUrl,
