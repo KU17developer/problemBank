@@ -2,6 +2,7 @@ package com.gd.bk.edit.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.gd.bk.edit.model.dto.ExamPaper;
+import com.gd.bk.edit.model.dto.ExamQuestion;
 import com.gd.bk.edit.model.service.EditService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -100,9 +101,14 @@ public class EditController {
     }
 
     @PostMapping("/saveexampaper")
-    public ResponseEntity<Object> saveExamPaper(@RequestBody List<ExamPaper> examPaper){
-        examPaper.forEach(paper -> {
-            editService.saveExamPaper(paper);
+    public ResponseEntity<Object> saveExamPaper(@RequestBody ExamPaper examPaper) {
+        return ResponseEntity.notFound().build();
+    }
+
+    @PostMapping("/saveexamquestion")
+    public ResponseEntity<Object> saveExamQuestion(@RequestBody List<ExamQuestion> examQuestion){
+        examQuestion.forEach(question -> {
+            editService.saveExamQuestion(question);
         });
 
         return ResponseEntity.notFound().build();

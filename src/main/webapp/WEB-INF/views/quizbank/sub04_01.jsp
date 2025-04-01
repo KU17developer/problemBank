@@ -297,41 +297,88 @@
 
 				// 그리고 저장하기
 				// 저장할 데이터 먼저 적어보자
-				// examCode : sequence 사용
-				// title : $(".left-wrap .search-box>input.search").val()
-				// problemType : questionList에 없는듯 ❗
-				// difficulty : questionList에서 가져오기
-				// problemForm : questionList에서 가져오기
-				// examImage : 이미지 3개라서 column 2개 추가해야 함 ❗
-				// questioncount : 저장할 필요 있나 싶지만 일단 세서 저장 ❓
-				// examregistday : sysdate로 설정
-				// subject : questionList에서 가져오려고 했는데 없네 ❗
-				// teacode : 일단 회원이 없으니 임의의 값 설정
-				// midhighcode : 코드가 없어서 뭘 저장해야 할지 모르겠다
-				// subCode : questionList에서 잘 가져오기 😐
 
-				const sendData = [];
-				questionList.forEach(question=>{
-					sendData.push({
-						'title' : $(".left-wrap .search-box>input.search").val(),
-						'difficulty' : question.difficultyName,
-						'problemForm' : question.questionFormName,
-						'questionImage' : question.questionUrl,
-						'answerImage' : question.answerUrl,
-						'explainImage' : question.explainUrl,
-						'questioncount' : question.itemNo,	// 일단 문항번호로 저장
-						'teacode' : 6804,	// 임의의 번호(아님)으로 저장
-						'subCode' : sessionStorage.getItem('subjectId')
-					})
+				const sendPaperData = [];
+				const sendQuesData = [];
+
+				let problemType;
+
+				let numArr = [];
+				$(".right-wrap>.que-badge-group span.num").each((i,num)=>{
+					numArr.push(num.innerText);
 				})
 
+				if(numArr[0]>0 && numArr[1]>0) problemType='multiple, subjective';
+				else if(numArr[0]>0) problemType='multiple';
+				else if(numArr[1]>0) problemType='subjective';
+
+				// 시험지 정보인데 시험지 문항을 저장하려고 함 😅 시험지 문항은 아래로
+				// examCode : sequence 사용
+				// title : $(".left-wrap .search-box>input.search").val()
+				// problemType : 객관식, 주관식 각각 1개 이상이면 영어로 문자열에 추가
+				// difficulty : questionList에서 가져오기
+				// problemForm : questionList에서 가져오기
+				// examImage : 뭐 가져와야 하지? 🤔
+				// questioncount : 문제 개수 세서 저장(근데 안세도 될수도 있음!)
+				// examregistday : sysdate로 설정
+				// subject : 이거... 어디에서 가져옴? 🤔
+				// teacode : 일단 회원이 없으니 임의의 값 설정
+				// midhighcode : 코드가 없어서 뭘 저장해야 할지 모르겠다 🤔
+				// subCode : sessionStorage에서 가져오기
+				sendPaperData.push({
+					'title' : $(".left-wrap .search-box>input.search").val(),
+					'problemType' : problemType,		// 객관식, 주관식에 따라 바꾸는 것으로 만들기
+					'difficulty' : question[0].difficultyName,	// 근데 이거 뭐 저장하는 거임? 배열로 최대 5개까지 저장하는 건가?
+					'problemForm' : question[0].questionFormName,
+					'examImage' : '',			// 일단 이건 뭔지 모르겠어
+					'questioncount' : question[0].itemNo,	// 일단 문항번호로 저장
+					'subject' : sessionStorage.getItem('subjectName'),
+					'teacode' : 6804,	// 임의의 번호(아님)으로 저장
+					'midhighcode' : '',			// 어디서 가져오는지 모르겠어
+					'subCode' : sessionStorage.getItem('subjectId')
+				})
+				// 그래서 2개의 항목은 비어있다...
+
+				let examCode;
 				// 페이지를 넘어가면서 저장하는 것으로 해보자...라고 할거면 어떻게 body에 넣을건데 fetch로 해야겠다
+				// 여기 가서 시험지를 DB에 저장하고 시험지 번호를 가져온다. 그런데 어떻게? 위 정보로? 🙃
+				// 보니까 teacode + subcode + examregistday 로 가져올 수 있겠다. teacode와 subcode가 일치하면서 examregistday가 가장 최신 것으로.
+				// 그건 내일 짜겠습니다. 일단 잘래. 오늘은 더 하고 싶은 마음이 안두러...
 				fetch('${path}/edit/saveexampaper',{
 					method:'POST',
 					headers:{
 						'Content-Type':'application/json'
 					},
-					body:JSON.stringify(sendData)
+					body:JSON.stringify(sendPaperData)
+				}).then(response=>response.json())
+				.then(data=>{
+					examCode=data;		// 일단 여기서 시험지 번호를 가져올 생각이라 examCode=data란 코드를 친건데...
+				}).catch(error=>console.error(error))
+
+				questionList.forEach(question=>{
+					// 시험지 문항 데이터
+					// questionCode : sequence 사용하기
+					// passageUrl : questionList에서 가져오기(근데 지문 없는게 많긴 해)
+					// questionUrl : questionList에서 가져오기
+					// answerUrl : questionList에서 가져오기
+					// explainUrl : questionList에서 가져오기
+					// examCode : 시험지 만들고 가져오기
+
+					sendQuesData.push({
+						'passageUrl':question.passageUrl,
+						'questionUrl':question.questionUrl,
+						'answerUrl':question.answerUrl,
+						'explainUrl':question.explainUrl,
+						'examCode':examCode		// 시험지 저장하고 가져오기!!! 근데 어떻게? 😐
+					})
+				})
+
+				fetch('${path}/edit/saveexamquestion',{
+					method:'POST',
+					headers:{
+						'Content-Type':'application/json'
+					},
+					body:JSON.stringify(sendQuesData)
 				}).then(response=>{
 					if(!response.ok) alert('저장이 되지 않았습니다. 다시 시도하세요');
 					else location.assign('${path}/sub04_02');

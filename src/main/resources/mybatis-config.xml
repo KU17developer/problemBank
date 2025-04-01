@@ -8,8 +8,8 @@
     </settings>
     <typeAliases>
         <typeAlias type="com.gd.bk.edit.model.dto.ExamPaper" alias="examPaper"/>
+        <typeAlias type="com.gd.bk.edit.model.dto.ExamQuestion" alias="examQuestion"/>
         <typeAlias type="com.gd.bk.common.SpringArrayTypeHandler" alias="strArr"/>
         <typeAlias type="com.gd.bk.member.model.dto.Member" alias="member"/>
-
     </typeAliases>
 </configuration>

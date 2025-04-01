@@ -2,6 +2,7 @@ package com.gd.bk.edit.model.service;
 
 import com.gd.bk.edit.model.dao.EditDao;
 import com.gd.bk.edit.model.dto.ExamPaper;
+import com.gd.bk.edit.model.dto.ExamQuestion;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -16,7 +17,7 @@ public class EditServiceImpl implements EditService {
     private EditDao dao;
 
     @Override
-    public int saveExamPaper(ExamPaper examPaper){
-        return dao.saveExamPaper(session,examPaper);
+    public int saveExamQuestion(ExamQuestion examQuestion){
+        return dao.saveExamPaper(session,examQuestion);
     }
 }

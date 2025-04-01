@@ -1809,14 +1809,6 @@
                                 window.open('${path}/sub01','_blank','width=1600,height=900')     // $\{path}로 바꾸기
                             }
                         }
-
-                        <script>
-                            const midko = [{
-                                img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-02-03.jpg',
-                                title: '국어 1-1 (노미숙)',
-                                url:''
-                            }]
-                        </script>
                     </script> </div>
                 <!-- ‘T셀파 교수자료 무단 배포 주의사항 안내’ 노출 화면 -->
                 <div class="middle-wrapper">

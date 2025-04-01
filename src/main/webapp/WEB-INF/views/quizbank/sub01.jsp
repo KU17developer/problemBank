@@ -170,6 +170,9 @@
 			});
 		}
 		console.log(sessionStorage.getItem('itemIdList'));
+
+		// sessionStorage에 과목명 추가
+		sessionStorage.setItem('subjectName','${chapterList[0].subjectName}');
 	})
 
 	const download = (type,scName) => {
