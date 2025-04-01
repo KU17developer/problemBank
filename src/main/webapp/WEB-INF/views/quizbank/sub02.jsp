@@ -472,14 +472,18 @@
 						}
 					});
 
-					<%--const levelCnt = []; 일단 난이도 부분은 주석해 둘게욤~~~~~~~~ --%>
-					<%--$(".step-wrap .btn-line.active").each(function () {--%>
-					<%--	const step = $(this).data("step");--%>
-					<%--	const input = $(`.range-type .range-wrap .range[data-step='${step}'] input`).val();--%>
-					<%--	levelCnt.push(Number(input));--%>
-					<%--});--%>
+					const levelCnt = []; // 일단 난이도 부분은 주석해 둘게욤~~~~~~~~
+					$(".step-wrap .btn-line").each(function () {
+						if($(this).hasClass('active')){
+							const step = $(this).data("step");
+							const input = $(".range-type .range-wrap .range[data-step='" + step + "'] input").val();
+							levelCnt.push(Number(input));
+						}else{
+							levelCnt.push(Number(0));
+						}
+					});
 
-				const levelCnt = [2, 4, 10, 8, 6]; // ✅ 여기 고정
+				// const levelCnt = [2, 4, 10, 8, 6]; // ✅ 여기 고정
 
 					let questionForm = '';
 					const multiple = $("#multiple").hasClass("active");
@@ -549,7 +553,7 @@
 						.then(response => response.json())
 						.then(data => {
 							sessionStorage.setItem("questionList", JSON.stringify(data));
-							window.location.href = "${path}/quizbank/sub03_01";
+							window.location.href = "${path}/sub03_01";
 						})
 						.catch(error => console.error("문항 가져오기 실패", error));
 
