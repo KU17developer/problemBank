@@ -411,7 +411,7 @@
                     <!-- 중등 과목 -->
                     <ul class="box02__list on">
                         <li><a class="on" href="#" onclick="getTextBookList(1)">국어 <span class="img-arrow-right-blue"></span></a></li>
-                        <li><a href="#" onclick="getTextBookList(2)">영어 <span class="img-arrow-right-blue"></span></a></li>
+                        <li><a href="#" onclick="getTextBookList('영어')">영어 <span class="img-arrow-right-blue"></span></a></li>
                         <li><a href="#" onclick="getTextBookList(3)">수학 <span class="img-arrow-right-blue"></span></a></li>
                         <li><a href="#" onclick="getTextBookList(4)">사회/역사/도덕 <span class="img-arrow-right-blue"></span></a></li>
                         <li><a href="#" onclick="getTextBookList(5)">과학/기술·가정/정보 <span class="img-arrow-right-blue"></span></a></li>
@@ -560,7 +560,8 @@
             // 교과서자료 GNB 메뉴 교과서 가져오기
 
             _this.showTextBookList = await $.get("/midhigh/getTextbookData.do", {mhCateId: _this.mhCateList[_this.mhCateIndex].id, groupId: groupId});
-
+            console.log('작업 시작' );
+            console.log('_this.showTextBookList ㅡ ㅡㅡㅡㅡㅡㅡㅡㅡ', _this.showTextBookList);
             // 애니메이션효과를 주기위해 불가피하게 높이값을 고정으로 설정(auto설정 후 높이값 측정)
             let $column = document.querySelector(".box03__column__btn");
             $column.each(function () {
@@ -1268,11 +1269,11 @@
                     </div>
                     <!-- // 교과서 목록  -->
                     <!-- 교과서 목록 -->
-                    <div class="tb-container tb-list">
+                    <div class="tb-container tb-list" id="group1">
                         <h2 class="tb-container__header">
                             2015 개정 교육과정
                         </h2>
-                        <div class="tb-container__body">
+                        <div class="tb-container__body" >
                             <div class="columns">
                                 <!-- item -->
                                 <div class="item">
@@ -1467,6 +1468,7 @@
                                     <div class="item-content">
                                         <div class="item-image">
                                             <figure class="image is-thumnail">
+
                                                 <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-03-03.jpg"/>
                                             </figure>
                                         </div>
@@ -1807,6 +1809,14 @@
                                 window.open('${path}/sub01','_blank','width=1600,height=900')     // $\{path}로 바꾸기
                             }
                         }
+
+                        <script>
+                            const midko = [{
+                                img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-02-03.jpg',
+                                title: '국어 1-1 (노미숙)',
+                                url:''
+                            }]
+                        </script>
                     </script> </div>
                 <!-- ‘T셀파 교수자료 무단 배포 주의사항 안내’ 노출 화면 -->
                 <div class="middle-wrapper">
@@ -1977,5 +1987,6 @@
         </div>
     </div>
 </div>
+
 </body>
 </html>
