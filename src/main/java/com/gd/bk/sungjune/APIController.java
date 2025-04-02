@@ -298,9 +298,10 @@ public class APIController {
 
     @RequestMapping("/getitemid")
     public ResponseEntity<Object> getItemId(@RequestBody List<Chapter> chapterList){
+        System.out.println("chapterList");
         System.out.println(chapterList);
 
-        Object eTemp = BaseController.evaluationlist();
+        Object eTemp = BaseController.evaluationlist(""+chapterList.get(0).getSubjectId());
         List<Map<String,Object>> evaluation = null;
         if(eTemp instanceof List){
             evaluation = (List<Map<String,Object>>)eTemp;

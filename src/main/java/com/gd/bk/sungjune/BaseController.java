@@ -54,7 +54,7 @@ public class BaseController {
     @RequestMapping("/sub02")
     public String sub02(@RequestParam String subjectId, Model model){
         Map<String,Object> chapter = getChapterList(subjectId);
-        Object eTemp = evaluationlist();
+        Object eTemp = evaluationlist(subjectId);
 
         String sb = chapter.get("sb").toString();
         List<Chapter> chapterList = (List<Chapter>)chapter.get("chapterList");
@@ -194,7 +194,7 @@ public class BaseController {
         return null;
     }
 
-    protected static Object evaluationlist(){
+    protected static Object evaluationlist(String subjectId){
         String response = "";
         try{
             URL url = new URL("https://tsherpa.item-factory.com/chapter/evaluation-list");
@@ -204,7 +204,7 @@ public class BaseController {
             connect.setDoOutput(true);
             connect.setRequestProperty("Content-Type", "application/json");
 
-            Map<String, Object> params = Map.of("subjectId","1136");    // 이거 바꿔야됨
+            Map<String, Object> params = Map.of("subjectId",subjectId);    // 이거 바꿔야됨
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(params);
             byte[] input = json.getBytes();
@@ -241,7 +241,7 @@ public class BaseController {
     }
 
     public Map<String,List<Long>> getItemId(List<Chapter> chapterList){
-        Object eTemp = evaluationlist();
+        Object eTemp = evaluationlist(""+chapterList.get(0).getSubjectId());
         List<Map<String,Object>> evaluation = null;
         if(eTemp instanceof List){
             evaluation = (List<Map<String,Object>>)eTemp;

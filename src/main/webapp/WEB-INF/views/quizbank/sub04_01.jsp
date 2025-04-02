@@ -221,6 +221,14 @@
 		})
 
 		questionList.forEach((question,index)=>{
+			let testdiv;
+
+			if(index%2==1) testdiv = $('.testdiv'+(index-1));
+			else{
+				testdiv = $('<div>');
+				testdiv.addClass('testdiv'+index);
+			}
+
 			const exarea = $('<div>');
 			exarea.addClass('example-area');
 			const exbox = $('<div>');
@@ -297,8 +305,9 @@
 			exbox.append(eitem);
 
 			exarea.append(exbox);
+			testdiv.append(exarea);
 
-			$('.view-data').append(exarea);
+			if(index%2==0) $('.view-data').append(testdiv);
 		})
 	})
 
