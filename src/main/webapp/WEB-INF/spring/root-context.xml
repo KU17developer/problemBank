@@ -3,6 +3,11 @@
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/tx https://www.springframework.org/schema/tx/spring-tx-4.3.xsd">
+
+        <bean id="resourceLoader" class="org.springframework.core.io.DefaultResourceLoader"/>
+
+        <!-- ResourceLoader나 다른 의존성 선언 -->
+        <bean id="fileService" class="com.gd.bk.common.FileService"/>
         <!--
              DB접속을 위한 클래스를 bean으로 등록하기
              1. DataSource클래스 구현체 -> BasicDataSource클래스 등록

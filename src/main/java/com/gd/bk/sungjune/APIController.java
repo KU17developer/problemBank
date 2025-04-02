@@ -1,24 +1,26 @@
 package com.gd.bk.sungjune;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.gd.bk.common.FileService;
+import com.gd.bk.common.ResourceService;
 import com.gd.bk.common.quiz.model.dto.Chapter;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
 import javax.net.ssl.HttpsURLConnection;
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
+import java.io.*;
+import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.*;
 
 @Slf4j
 @Controller
@@ -393,6 +395,75 @@ public class APIController {
         };
 
         return ResponseEntity.ok().body(itemIdMap);
+    }
+
+    @Autowired
+    private ResourceService resourceService;
+
+    @RequestMapping("/downloadimg")
+    public ResponseEntity<Object> downloadImg(@RequestParam String imgurl, @RequestParam String i){
+        String saveimgdir = new File("D:/uploads/images/exampaper").getAbsolutePath();
+//        String saveimgdir = System.getProperty("user.dir") + "/src/main/resources/static/images/exampaper/";
+        File dir = new File(saveimgdir);
+        System.out.println(saveimgdir);
+//        System.out.println(System.getProperty("user.dir"));
+//        System.out.println(getClass().getClassLoader().getResource("/").getPath());
+
+        if(!dir.exists()){
+            dir.mkdirs();
+        }
+
+        String saveimgurl = new Date().getTime() + "_" + i + ".svg";
+        System.out.println(saveimgurl);
+        try {
+            URL url = new URL(imgurl);
+            HttpsURLConnection connect = (HttpsURLConnection) url.openConnection();
+
+            int responseCode = connect.getResponseCode();
+            if (responseCode == HttpURLConnection.HTTP_OK) {
+                FileOutputStream fos = new FileOutputStream(saveimgdir + File.separator + saveimgurl);
+
+                InputStream is = connect.getInputStream();
+                byte[] buffer = new byte[1024];
+                int bytesRead;
+                while ((bytesRead = is.read(buffer)) != -1) {
+                    fos.write(buffer,0, bytesRead);
+                }
+
+                fos.close();
+                is.close();
+            }
+
+            return ResponseEntity.ok().body(saveimgurl);
+        }catch(MalformedURLException e) {
+            log.error("URL이 잘못되었습니다 : " + e.getMessage());
+        }catch(IOException e){
+            log.error("Connection 에러 : " + e.getMessage());
+        }finally{
+            log.debug("해치웠나?");
+        }
+
+        return ResponseEntity.notFound().build();
+    }
+
+    @GetMapping("/getimage")
+    public ResponseEntity<Resource> getImage(@RequestParam String fileName) {
+        try {
+            // 파일 경로 설정
+            Path filePath = Paths.get("D:/intellij/problemBank/target/AcademyLecture/resources/images/exampaper/")
+                    .resolve(fileName);
+            Resource resource = new UrlResource(filePath.toUri());
+
+            if (!resource.exists()) {
+                throw new RuntimeException("파일을 찾을 수 없습니다.");
+            }
+
+            return ResponseEntity.ok()
+                    .header(HttpHeaders.CONTENT_TYPE, "image/svg+xml")
+                    .body(resource);
+        } catch (Exception e) {
+            throw new RuntimeException("파일 제공 실패", e);
+        }
     }
 
     private static Long toLong(Object value) {

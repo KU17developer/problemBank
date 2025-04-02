@@ -8,10 +8,7 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.servlet.HandlerExceptionResolver;
-import org.springframework.web.servlet.config.annotation.CorsRegistry;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+import org.springframework.web.servlet.config.annotation.*;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
 import java.util.Properties;
@@ -28,6 +25,16 @@ public class MyWebAppConfig implements WebMvcConfigurer {
 
 
     }
+
+    // 채찍피티 알려준거 테스트용
+    @Override
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+        // "file:" 접두사를 사용하여 절대 경로를 지정합니다.
+        registry.addResourceHandler("/resources/images/exampaper/**")
+                .addResourceLocations("file:D:/uploads/images/exampaper/");
+    }
+
+
     //암호화 처리하는 메소드를 제공한다.
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {

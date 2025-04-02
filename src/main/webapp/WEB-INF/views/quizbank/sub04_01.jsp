@@ -20,6 +20,9 @@
 	<script src="https://cdn.jsdelivr.net/npm/swiper@8/swiper-bundle.min.js"></script>
 	<script src="${path}/resources/js/common.js"></script>
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.2/html2pdf.bundle.min.js"></script>
+<%--	<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>--%>
+<%--	<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.4.0/jspdf.umd.min.js"></script>--%>
+	<script src="https://unpkg.com/imagesloaded@4/imagesloaded.pkgd.min.js"></script>
 </head>
 
 <body>
@@ -231,6 +234,15 @@
 			qimg.attr('src',question.questionUrl);
 			numbering.addClass('numbering');
 
+			<%--fetch('${path}/api/downloadimg?imgurl='+question.questionUrl+'&i='+(index*3+1))--%>
+			<%--.then(response=>response.text())--%>
+			<%--.then(data=>{--%>
+			<%--	console.log(data);--%>
+			<%--	setTimeout(()=>{--%>
+			<%--		qimg.attr('src','${path}/resources/images/exampaper/'+data)--%>
+			<%--	},2000)--%>
+			<%--});--%>
+
 			qitem.append(numbering);
 			qitem.append(qimg);
 
@@ -243,6 +255,15 @@
 			aimgdiv.addClass('answer-img');
 			const aimg = $('<img>');
 			aimg.attr('src',question.answerUrl);
+
+			<%--fetch('${path}/api/downloadimg?imgurl='+question.answerUrl+'&i='+(index*3+2))--%>
+			<%--.then(response=>response.text())--%>
+			<%--.then(data=>{--%>
+			<%--	console.log(data);--%>
+			<%--	setTimeout(()=>{--%>
+			<%--		aimg.attr('src','/resources/images/exampaper/'+data)--%>
+			<%--	},2000)--%>
+			<%--});--%>
 
 			aitem.append(atit);
 			aimgdiv.append(aimg);
@@ -257,6 +278,15 @@
 			eimgdiv.addClass('explain-img');
 			const eimg = $('<img>');
 			eimg.attr('src',question.explainUrl);
+
+			<%--fetch('${path}/api/downloadimg?imgurl='+question.explainUrl+'&i='+(index*3+3))--%>
+			<%--.then(response=>response.text())--%>
+			<%--.then(data=>{--%>
+			<%--	console.log(data);--%>
+			<%--	setTimeout(()=>{--%>
+			<%--		eimg.attr('src','/resources/images/exampaper/'+data)--%>
+			<%--	},2000)--%>
+			<%--});--%>
 
 			eitem.append(etit);
 			eimgdiv.append(eimg);
@@ -285,6 +315,21 @@
 				const download = document.getElementById('q-preview');
 				const download2 = document.querySelector('.view-data');
 
+				// await html2canvas(document.querySelector('.view-data')).then((canvas) => {
+				// 	const imgData = canvas.toDataURL('image/png');
+				// 	const pdf = new jspdf.jsPDF();
+				// 	pdf.addImage(imgData, 'PNG', 10, 10);
+				// 	pdf.save('document.pdf');
+				// });
+
+				// await $(".pop-wrap[data-pop='prev-pop']").hide();
+
+				await $(".pop-wrap[data-pop='prev-pop']").show();
+
+				// 이미지 저장이 잘 될때까지 주석
+				// await $('.view-data').imagesLoaded()
+				// 	.done(function(instance){
+				// 		console.log("됨?");
 				html2pdf()
 				.from(download2)
 				.set({
@@ -293,103 +338,107 @@
 					html2canvas: { scale: 2 },
 					jsPDF: { orientation: "portrait" },
 				})
-				.save();
+				.save()
+					// }).fail(function(){
+					// 	console.log("겟냐?");
+					// });
 
-				// 그리고 저장하기
-				// 저장할 데이터 먼저 적어보자
+				<%--// 그리고 저장하기--%>
+				<%--// 저장할 데이터 먼저 적어보자--%>
 
-				const sendQuesData = [];
+				<%--const sendQuesData = [];--%>
 
-				let problemType;
+				<%--let problemType;--%>
 
-				let numArr = [];
-				$(".right-wrap>.que-badge-group span.num").each((i,num)=>{
-					numArr.push(num.innerText);
-				})
+				<%--let numArr = [];--%>
+				<%--$(".right-wrap>.que-badge-group span.num").each((i,num)=>{--%>
+				<%--	numArr.push(num.innerText);--%>
+				<%--})--%>
 
-				if(numArr[0]>0 && numArr[1]>0) problemType='multiple, subjective';
-				else if(numArr[0]>0) problemType='multiple';
-				else if(numArr[1]>0) problemType='subjective';
+				<%--if(numArr[0]>0 && numArr[1]>0) problemType='multiple, subjective';--%>
+				<%--else if(numArr[0]>0) problemType='multiple';--%>
+				<%--else if(numArr[1]>0) problemType='subjective';--%>
 
-				// 시험지 정보인데 시험지 문항을 저장하려고 함 😅 시험지 문항은 아래로
-				// examCode : sequence 사용
-				// title : $(".left-wrap .search-box>input.search").val()
-				// problemType : 객관식, 주관식 각각 1개 이상이면 영어로 문자열에 추가
-				// difficulty : questionList에서 가져오기
-				// problemForm : questionList에서 가져오기
-				// examImage : 뭐 가져와야 하지? 🤔
-				// questioncount : 문제 개수 세서 저장(근데 안세도 될수도 있음!)
-				// examregistday : sysdate로 설정
-				// subject : 이거... 어디에서 가져옴? 🤔
-				// teacode : 일단 회원이 없으니 임의의 값 설정
-				// midhighcode : 코드가 없어서 뭘 저장해야 할지 모르겠다 🤔
-				// subCode : sessionStorage에서 가져오기
-				const sendPaperData = {
-					'title' : $(".left-wrap .search-box>input.search").val(),
-					'problemType' : problemType,		// 객관식, 주관식에 따라 바꾸는 것으로 만들기
-					'difficulty' : questionList[0].difficultyName,	// 근데 이거 뭐 저장하는 거임? 배열로 최대 5개까지 저장하는 건가?
-					'problemForm' : questionList[0].questionFormName,
-					'examImage' : '',			// 일단 이건 뭔지 모르겠어
-					'questionCount' : questionList.length,	// 일단 문항번호로 저장
-					'subject' : sessionStorage.getItem('subjectName'),
-					'teaCode' : '6804',	// 임의의 번호(아님)으로 저장
-					'midhighcode' : '',			// 어디서 가져오는지 모르겠어
-					'subCode' : sessionStorage.getItem('subjectId')
-				}
-				// 그래서 2개의 항목은 비어있다...
+				<%--// 시험지 정보인데 시험지 문항을 저장하려고 함 😅 시험지 문항은 아래로--%>
+				<%--// examCode : sequence 사용--%>
+				<%--// title : $(".left-wrap .search-box>input.search").val()--%>
+				<%--// problemType : 객관식, 주관식 각각 1개 이상이면 영어로 문자열에 추가--%>
+				<%--// difficulty : questionList에서 가져오기--%>
+				<%--// problemForm : questionList에서 가져오기--%>
+				<%--// examImage : 뭐 가져와야 하지? 🤔--%>
+				<%--// questioncount : 문제 개수 세서 저장(근데 안세도 될수도 있음!)--%>
+				<%--// examregistday : sysdate로 설정--%>
+				<%--// subject : 이거... 어디에서 가져옴? 🤔--%>
+				<%--// teacode : 일단 회원이 없으니 임의의 값 설정--%>
+				<%--// midhighcode : 코드가 없어서 뭘 저장해야 할지 모르겠다 🤔--%>
+				<%--// subCode : sessionStorage에서 가져오기--%>
+				<%--const sendPaperData = {--%>
+				<%--	'title' : $(".left-wrap .search-box>input.search").val(),--%>
+				<%--	'problemType' : problemType,		// 객관식, 주관식에 따라 바꾸는 것으로 만들기--%>
+				<%--	'difficulty' : questionList[0].difficultyName,	// 근데 이거 뭐 저장하는 거임? 배열로 최대 5개까지 저장하는 건가?--%>
+				<%--	'problemForm' : questionList[0].questionFormName,--%>
+				<%--	'examImage' : '',			// 일단 이건 뭔지 모르겠어--%>
+				<%--	'questionCount' : questionList.length,	// 일단 문항번호로 저장--%>
+				<%--	'subject' : sessionStorage.getItem('subjectName'),--%>
+				<%--	'teaCode' : '6804',	// 임의의 번호(아님)으로 저장--%>
+				<%--	'midhighcode' : '',			// 어디서 가져오는지 모르겠어--%>
+				<%--	'subCode' : sessionStorage.getItem('subjectId')--%>
+				<%--}--%>
+				<%--// 그래서 2개의 항목은 비어있다...--%>
 
-				let examCode;
+				<%--let examCode;--%>
 
-				// 페이지를 넘어가면서 저장하는 건 body에 넣을 방법을 못 찾아 fetch로 하기로 했다.
-				// 여기서 시험지를 DB에 저장하고 시험지 번호를 가져온다.
-				// teacode + subcode + max(examcode) 로 가져올 수 있겠다. teacode와 subcode가 일치하면서 examcode가 가장 큰 것으로.
-				// 그러면 가장 최신 시험지를 가져올 수 있겠지
-				await fetch('${path}/edit/saveexampaper',{
-					method:'POST',
-					headers:{
-						'Content-Type':'application/json'
-					},
-					body:JSON.stringify(sendPaperData)
-				}).then(response=>{
-					console.log(response);
-					return response.json()
-				})
-				.then(data=>{
-					console.log(data);
-					examCode=data;		// 일단 여기서 시험지 번호를 가져올 생각이라 examCode=data란 코드를 친건데...
-				}).catch(error=>console.error(error))
+				<%--// 페이지를 넘어가면서 저장하는 건 body에 넣을 방법을 못 찾아 fetch로 하기로 했다.--%>
+				<%--// 여기서 시험지를 DB에 저장하고 시험지 번호를 가져온다.--%>
+				<%--// teacode + subcode + max(examcode) 로 가져올 수 있겠다. teacode와 subcode가 일치하면서 examcode가 가장 큰 것으로.--%>
+				<%--// 그러면 가장 최신 시험지를 가져올 수 있겠지--%>
+				<%--await fetch('${path}/edit/saveexampaper',{--%>
+				<%--	method:'POST',--%>
+				<%--	headers:{--%>
+				<%--		'Content-Type':'application/json'--%>
+				<%--	},--%>
+				<%--	body:JSON.stringify(sendPaperData)--%>
+				<%--}).then(response=>{--%>
+				<%--	console.log(response);--%>
+				<%--	return response.json()--%>
+				<%--})--%>
+				<%--.then(data=>{--%>
+				<%--	console.log(data);--%>
+				<%--	examCode=data;		// 일단 여기서 시험지 번호를 가져올 생각이라 examCode=data란 코드를 친건데...--%>
+				<%--}).catch(error=>console.error(error))--%>
 
-				await questionList.forEach(question=>{
-					// 시험지 문항 데이터
-					// questionCode : sequence 사용하기
-					// passageUrl : questionList에서 가져오기(근데 지문 없는게 많긴 해)
-					// questionUrl : questionList에서 가져오기
-					// answerUrl : questionList에서 가져오기
-					// explainUrl : questionList에서 가져오기
-					// examCode : 시험지 만들고 가져오기
+				<%--await questionList.forEach(question=>{--%>
+				<%--	// 시험지 문항 데이터--%>
+				<%--	// questionCode : sequence 사용하기--%>
+				<%--	// passageUrl : questionList에서 가져오기(근데 지문 없는게 많긴 해)--%>
+				<%--	// questionUrl : questionList에서 가져오기--%>
+				<%--	// answerUrl : questionList에서 가져오기--%>
+				<%--	// explainUrl : questionList에서 가져오기--%>
+				<%--	// examCode : 시험지 만들고 가져오기--%>
 
-					console.log("examCode",examCode);
+				<%--	console.log("examCode",examCode);--%>
 
-					sendQuesData.push({
-						'passageUrl':question.passageUrl,
-						'questionUrl':question.questionUrl,
-						'answerUrl':question.answerUrl,
-						'explainUrl':question.explainUrl,
-						'examCode':String(examCode)		// 시험지 저장하고 가져오기!!! 근데 어떻게? 😐
-					})
-				})
+				<%--	sendQuesData.push({--%>
+				<%--		'passageUrl':question.passageUrl,--%>
+				<%--		'questionUrl':question.questionUrl,--%>
+				<%--		'answerUrl':question.answerUrl,--%>
+				<%--		'explainUrl':question.explainUrl,--%>
+				<%--		'examCode':String(examCode)		// 시험지 저장하고 가져오기!!! 근데 어떻게? 😐--%>
+				<%--	})--%>
+				<%--})--%>
 
-				await fetch('${path}/edit/saveexamquestion',{
-					method:'POST',
-					headers:{
-						'Content-Type':'application/json'
-					},
-					body:JSON.stringify(sendQuesData)
-				}).then(response=>{
-					if(!response.ok) alert('저장이 되지 않았습니다. 다시 시도하세요');
-					else location.assign('${path}/sub04_02');
-				})
+				<%--await fetch('${path}/edit/saveexamquestion',{--%>
+				<%--	method:'POST',--%>
+				<%--	headers:{--%>
+				<%--		'Content-Type':'application/json'--%>
+				<%--	},--%>
+				<%--	body:JSON.stringify(sendQuesData)--%>
+				<%--}).then(response=>{--%>
+				<%--	if(!response.ok) alert('저장이 되지 않았습니다. 다시 시도하세요');--%>
+				<%--	else location.assign('${path}/sub04_02');--%>
+				<%--})--%>
 			}
+			// await $(".pop-wrap[data-pop='prev-pop']").hide();
 		}
 	}
 </script>
