@@ -34,13 +34,13 @@
 				<div class="view-box">
 					<div class="view-top">
 						<div class="paper-info">
-							<span>수학 1</span>
-							이준열(2015) 수정
+							<!--<span>수학 </span>
+							이준열(2015) 수정-->
 							${chapterList[0].subjectName}
 						</div>
 						<div class="btn-wrap">
 							<button class="btn-icon"><i class="edit"></i>선택한 시험지 편집하기</button>
-							<button class="btn-icon" onclick="location.assign('${path}/sub02')"><i class="newpaper"></i>신규 시험지 만들기</button>
+							<button class="btn-icon" onclick="location.assign('${path}/sub02?subjectId='+sessionStorage.getItem('subjectId'))"><i class="newpaper"></i>신규 시험지 만들기</button>
 						</div>
 					</div>
 
@@ -150,7 +150,7 @@
 	</div>
 <script>
 	$(function(){
-		console.log('${chapterList}');
+		<%--console.log('${chapterList}');--%>
 		console.log('${chapterList[0].subjectId}')
 		if(sessionStorage.getItem('itemIdList')==null || sessionStorage.getItem('subjectId')!='${chapterList[0].subjectId}'){
 			fetch('${path}/api/getitemid',{

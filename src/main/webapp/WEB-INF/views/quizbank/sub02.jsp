@@ -36,8 +36,8 @@
 				<div class="view-box">
 					<div class="view-top">
 						<div class="paper-info">
-							<span>국어 1-1</span>
-							노미숙(2015)
+							<!--<span>국어 1-1</span>
+							노미숙(2015)-->
 							${chapterList[0].subjectName}
 						</div>
 					</div>
@@ -199,7 +199,7 @@
 
 			</div>
 			<div class="step-btn-wrap">
-				<button type="button" class="btn-step" onclick="location.assign('${path}/sub01')">출제 방법 선택</button>
+				<button type="button" class="btn-step" onclick="location.assign('${path}/sub01?subjedtId='+sessionStorage.getItem('subjectId'))">출제 방법 선택</button>
 				<button type="button" class="btn-step next" data-pop="que-pop" onclick="editQuiz()">STEP2 문항 편집</button><!-- 230629 pop-btn 추가-->
 			</div>
 

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
@@ -27,9 +28,9 @@ public class BaseController {
     }
 
     @RequestMapping("/sub01")
-    public String sub01(Model model) {
-        Map<String,Map<String,Object>> examList = getExamList();
-        Map<String,Object> chapter = getChapterList();
+    public String sub01(@RequestParam String subjectId, Model model) {
+        Map<String,Map<String,Object>> examList = getExamList(subjectId);
+        Map<String,Object> chapter = getChapterList(subjectId);
 //        Map<String,List<Long>> itemIdList = getItemId((List<Chapter>)chapter.get("chapterList"));
 
         List<Chapter> chapterList = (List<Chapter>)chapter.get("chapterList");
@@ -51,8 +52,8 @@ public class BaseController {
     }
 
     @RequestMapping("/sub02")
-    public String sub02(Model model){
-        Map<String,Object> chapter = getChapterList();
+    public String sub02(@RequestParam String subjectId, Model model){
+        Map<String,Object> chapter = getChapterList(subjectId);
         Object eTemp = evaluationlist();
 
         String sb = chapter.get("sb").toString();
@@ -90,7 +91,7 @@ public class BaseController {
         return "quizbank/sub04_02";
     }
 
-    private Map<String,Object> getChapterList(){
+    private Map<String,Object> getChapterList(String subjectId){
         try{
             URL url = new URL("https://tsherpa.item-factory.com/chapter/chapter-list");
             HttpsURLConnection connect = (HttpsURLConnection)url.openConnection();
@@ -99,7 +100,7 @@ public class BaseController {
             connect.setDoOutput(true);
             connect.setRequestProperty("Content-Type", "application/json");
 
-            Map<String, String> params = Map.of("subjectId","1136");
+            Map<String, String> params = Map.of("subjectId",subjectId);
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(params);
             byte[] input = json.getBytes();
@@ -337,7 +338,7 @@ public class BaseController {
         return itemIdMap;
     }
 
-    public Map<String,Map<String,Object>> getExamList(){
+    public Map<String,Map<String,Object>> getExamList(String subjectId){
         String response = "";
         try{
             URL url = new URL("https://tsherpa.item-factory.com/chapter/exam-list");
@@ -347,7 +348,7 @@ public class BaseController {
             connect.setDoOutput(true);
             connect.setRequestProperty("Content-Type", "application/json");
 
-            Map<String, Object> params = Map.of("subjectId","1136");    // 이거 바꿔야됨
+            Map<String, Object> params = Map.of("subjectId",subjectId);    // 이거 바꿔야됨
             ObjectMapper mapper = new ObjectMapper();
             String json = mapper.writeValueAsString(params);
             byte[] input = json.getBytes();

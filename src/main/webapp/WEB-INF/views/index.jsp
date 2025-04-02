@@ -1476,7 +1476,7 @@
                             //     new_form.appendTo('body');
                             //     new_form.submit();
                             // }else{
-                                window.open('${path}/sub01','_blank','width=1600,height=900')     // $\{path}로 바꾸기
+                                window.open('${path}/sub01?subjectId='+subjectId,'_blank','width=1600,height=900')     // $\{path}로 바꾸기
                             //}
                         }
 
@@ -2053,6 +2053,7 @@
     function cornfrim(e="중학", d="국어") {
             if (e == '중학') {
                 dom2022.innerHTML= '';
+                dom2015.innerHTML='';
                 let midcategory = document.getElementById("mid");
                 midcategory.style.display = (midcategory.style.display === 'none') ? "flex" : "flex";
 
