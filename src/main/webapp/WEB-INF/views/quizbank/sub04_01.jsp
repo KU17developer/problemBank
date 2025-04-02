@@ -147,9 +147,9 @@
 				<div class="pop-content">
 					<div class="view-box">
 						<div class="scroll-inner">
-							<div class="view-data">
+<%--							<div class="view-data">--%>
 
-							</div>
+<%--							</div>--%>
 						</div>
 					</div>
 				</div>
@@ -221,7 +221,14 @@
 		})
 
 		questionList.forEach((question,index)=>{
+			let viewdata;
 			let testdiv;
+
+			if(index%4==0){
+				viewdata = $('<div>');
+				viewdata.addClass('view-data');
+				viewdata.addClass('view'+Math.floor(index/4));
+			}else viewdata = $('.view-data.view'+Math.floor(index/4));
 
 			if(index%2==1) testdiv = $('.testdiv'+(index-1));
 			else{
@@ -307,7 +314,13 @@
 			exarea.append(exbox);
 			testdiv.append(exarea);
 
-			if(index%2==0) $('.view-data').append(testdiv);
+			if(index%2==0) {
+				console.log(index, "냠냠");
+				console.log(viewdata,"뷰");
+				console.log(testdiv,"테스트");
+				viewdata.append(testdiv);
+			}
+			if(index%4==0) $("#q-preview .scroll-inner").append(viewdata);
 		})
 	})
 
