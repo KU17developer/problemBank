@@ -344,16 +344,34 @@
 					}
 
 					if (_this.prop('checked')) {
-						_this.parents().next('ul').find('input[type=checkbox]').prop('checked', true);
+						// _this.parents().next('ul').find('input[type=checkbox]').prop('checked', true);
+						const checkbox = _this.parents().next('ul').find('input[type=checkbox]');
+						checkbox.prop('checked', true);
+						checkbox.next('label').children('button').removeClass('active');
+						checkbox.parents('.check-group').next('div').stop().slideDown('fast');
 
 					} else {
-						_this.parents().next('ul').find('input[type=checkbox]').prop('checked', false);
+						const checkbox = _this.parents().next('ul').find('input[type=checkbox]');
+						checkbox.prop('checked', false);
+						checkbox.next('label').children('button').addClass('active');
+						checkbox.parents('.check-group').next('div').stop().slideUp('fast');
 					}
 
-					if (_this.prop('checked') && _this.hasClass('depth01')) {
-						_this.parents('.check-group').next('div').find('input[type=checkbox]').prop('checked', true);
+					// if (_this.prop('checked') && _this.hasClass('depth01')) {
+					if (_this.prop('checked')) {
+						const checkbox = _this.parents('.check-group').next('div').find('input[type=checkbox]');
+						checkbox.prop('checked', true);
+						_this.next('label').children('button').removeClass('active');
+						_this.parents('.check-group').next('div').stop().slideDown('fast');
+						checkbox.next('label').children('button').removeClass('active');
+						checkbox.parents('.check-group').next('div').stop().slideDown('fast');
 					} else {
-						_this.parents('.check-group').next('div').find('input[type=checkbox]').prop('checked', false);
+						const checkbox = _this.parents('.check-group').next('div').find('input[type=checkbox]');
+						checkbox.prop('checked', false);
+						_this.next('label').children('button').addClass('active');
+						_this.parents('.check-group').next('div').stop().slideUp('fast');
+						checkbox.next('label').children('button').addClass('active');
+						checkbox.parents('.check-group').next('div').stop().slideUp('fast');
 					}
 
 					if (_this.prop('checked')) {
