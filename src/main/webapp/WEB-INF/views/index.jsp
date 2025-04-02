@@ -402,8 +402,8 @@
             <div class="inner">
                 <div class="box01">
                     <ul class="box01__list">
-                        <li><a class="on" href="#" onclick="mhCateIndex = 0; getTextBookList();">중학 <span class="img-arrow-right-blue"></span></a></li>
-                        <li><a href="#" onclick="mhCateIndex = 1; getTextBookList();">고등 <span class="img-arrow-right-blue"></span></a></li>
+                        <li><a class="on" href="#" onclick="cornfrim('중학','국어');">중학 <span class="img-arrow-right-blue"></span></a></li>
+                        <li><a href="#" onclick="cornfrim('고등','국어');">고등 <span class="img-arrow-right-blue"></span></a></li>
                     </ul>
                     <a class="box01_banner" href="https://text.tsherpa.co.kr/" target="_blank"><img alt="2022 교과서 전시관" src="<%= request.getContextPath() %>/resources/images/sub00img/banner_20240911-a4e5875bdaab3202727676fcbbb53ef9.png"/></a>
                 </div>
@@ -411,7 +411,7 @@
                     <!-- 중등 과목 -->
                     <ul class="box02__list on">
                         <li><a class="on" href="#" onclick="getTextBookList(1)">국어 <span class="img-arrow-right-blue"></span></a></li>
-                        <li><a href="#" onclick="getTextBookList('영어')">영어 <span class="img-arrow-right-blue"></span></a></li>
+                        <li><a href="#" onclick="getTextBookList(2)">영어 <span class="img-arrow-right-blue"></span></a></li>
                         <li><a href="#" onclick="getTextBookList(3)">수학 <span class="img-arrow-right-blue"></span></a></li>
                         <li><a href="#" onclick="getTextBookList(4)">사회/역사/도덕 <span class="img-arrow-right-blue"></span></a></li>
                         <li><a href="#" onclick="getTextBookList(5)">과학/기술·가정/정보 <span class="img-arrow-right-blue"></span></a></li>
@@ -806,57 +806,57 @@
     <a class="btn_top" href="#"><span></span>TOP</a>
 </div>
 <script>
-    if (Storages.cookieStorage.setPath('/').get('menu_collapse') == 'Y') {
-        document.querySelector(".quick_menu").addClass("active");
-    } else {
-        document.querySelector(".quick_menu").removeClass("active");
-    }
-    $(function () {
-        document.querySelector(".btn_quick_toggle").addEventListener("click", function(e) {
+    document.addEventListener("DOMContentLoaded", function () {
+        var quickMenu = document.querySelector(".quick_menu");
+        var btnQuickToggle = document.querySelector(".btn_quick_toggle");
+        var btnQuickOpen = document.querySelector(".quick_open");
+        var btnTop = document.querySelector(".btn_top");
+
+        // 퀵메뉴 열기/닫기
+        btnQuickToggle.addEventListener("click", function (e) {
             e.preventDefault();
-            document.querySelector(".quick_menu").toggleClass("active");
+            quickMenu.classList.toggle("active");
             setQuickMenuCookie();
         });
-        document.querySelector(".quick_open").addEventListener("click", function(e) {
+
+        btnQuickOpen.addEventListener("click", function (e) {
             e.preventDefault();
-            document.querySelector(".quick_menu").removeClass("active");
-            if ($(this).hasClass("inp_auto")) {
+            quickMenu.classList.remove("active");
+            if (btnQuickOpen.classList.contains("inp_auto")) {
                 document.querySelector(".input_field #ID").focus();
             }
             setQuickMenuCookie();
         });
-        var btnTop = document.querySelector(".btn_top");
-        btnTop.addEventListener("click", function(e) {
+
+        // TOP 버튼 클릭 시 스크롤 맨 위로 이동
+        btnTop.addEventListener("click", function (e) {
             e.preventDefault();
-            document.querySelector("html, body").animate({
-                scrollTop: 0
-            }, 'slow');
-        });
-        $(window).on('load', function () {
-            var scrollTop = $(window).scrollTop();
-            if (scrollTop > 50) {
-                btnTop.css({'opacity': 1});
-            } else {
-                btnTop.css({'opacity': 0});
-            }
-        });
-        $(window).on('scroll', function () {
-            var scrollTop = $(window).scrollTop();
-            if (scrollTop > 50) {
-                btnTop.css({'opacity': 1});
-            } else {
-                btnTop.css({'opacity': 0});
-            }
+            window.scrollTo({ top: 0, behavior: "smooth" });
         });
 
+        // 스크롤 이벤트: TOP 버튼 보이기/숨기기
+        function updateTopButton() {
+            var scrollTop = window.scrollY;
+            btnTop.style.opacity = scrollTop > 50 ? "1" : "0";
+        }
+
+        window.addEventListener("scroll", updateTopButton);
+        window.addEventListener("load", updateTopButton);
+
+        // 쿠키 설정 함수
         function setQuickMenuCookie() {
-            if (document.querySelector(".quick_menu").hasClass("active")) {
-                Storages.cookieStorage.setPath('/').set('menu_collapse', 'Y');
-            } else {
-                Storages.cookieStorage.setPath('/').set('menu_collapse', 'N');
-            }
+            var isActive = quickMenu.classList.contains("active") ? "Y" : "N";
+            Storages.cookieStorage.setPath("/").set("menu_collapse", isActive);
+        }
+
+        // 페이지 로드 시 메뉴 상태 유지
+        if (Storages.cookieStorage.setPath("/").get("menu_collapse") === "Y") {
+            quickMenu.classList.add("active");
+        } else {
+            quickMenu.classList.remove("active");
         }
     });
+
 </script>
 <script>
     async function oauthLogin(type) {
@@ -1090,10 +1090,10 @@
                         <!-- 중등 고등, 수능, 시험지 보관함 탭 -->
                         <ul class="tabs__list tabs__list--3">
                             <li class="tabs__item">
-                                <a class="tabs__link tabs__link--on" href="testbank.html?cateCode=M-TestBank">중학</a>
+                                <a class="tabs__link tabs__link--on" href="javascript:" onclick="cornfrim('중학','국어'); cssc(this, 'mid')">중학</a>
                             </li>
                             <li class="tabs__item">
-                                <a class="tabs__link" href="testbank.html?cateCode=H-TestBank">고등</a>
+                                <a class="tabs__link" href="javascript:" onclick="cornfrim('고등','국어'); cssc(this, 'high')">고등</a>
                             </li>
                             <li class="tabs__item">
                                 <a class="tabs__link" href="testbank.html?cateCode=TestBank-Storage">시험지 보관함</a>
@@ -1101,28 +1101,49 @@
                         </ul>
                         <!-- // 중등 고등, 수능, 시험지 보관함 탭 -->
                         <!-- 과목 카테고리 탭 -->
-                        <ul class="tabs__list tabs__list--4">
+                        <ul id="mid" class="tabs__list tabs__list--4">
                             <li class="tabs__item">
-                                <a class="tabs__link tabs__link--on" href="testbank.html?cateCode=M-TestBank&amp;subjectCode=M-testBank-ko&amp;testbankYN=Y">국어</a>
+                                <a class="tabs__link tabs__link--on" href="javascript:" onclick="cornfrim('중학','국어'); cssc(this, 'mid');">국어</a>
                             </li>
                             <li class="tabs__item">
-                                <a class="tabs__link" href="testbank.html?cateCode=M-TestBank&amp;subjectCode=M-testBank-eng&amp;testbankYN=Y">영어</a>
+                                <a class="tabs__link" href="javascript:" onclick="cornfrim('중학','영어'); cssc(this, 'mid');">영어</a>
                             </li>
                             <li class="tabs__item">
-                                <a class="tabs__link" href="testbank.html?cateCode=M-TestBank&amp;subjectCode=M-testBank-math&amp;testbankYN=Y">수학</a>
+                                <a class="tabs__link" href="javascript:" onclick="cornfrim('중학','수학'); cssc(this, 'mid');">수학</a>
                             </li>
                             <li class="tabs__item">
-                                <a class="tabs__link" href="testbank.html?cateCode=M-TestBank&amp;subjectCode=M-testBank-society&amp;testbankYN=Y">사회</a>
+                                <a class="tabs__link" href="javascript:" onclick="cornfrim('중학','사회'); cssc(this, 'mid');">사회</a>
                             </li>
                             <li class="tabs__item">
-                                <a class="tabs__link" href="testbank.html?cateCode=M-TestBank&amp;subjectCode=M-testBank-history&amp;testbankYN=Y">역사</a>
+                                <a class="tabs__link" href="javascript:" onclick="cornfrim('중학','역사'); cssc(this, 'mid');">역사</a>
                             </li>
                             <li class="tabs__item">
-                                <a class="tabs__link" href="testbank.html?cateCode=M-TestBank&amp;subjectCode=M-testBank-morality&amp;testbankYN=Y">도덕</a>
+                                <a class="tabs__link" href="javascript:" onclick="cornfrim('중학','도덕'); cssc(this, 'mid');">도덕</a>
                             </li>
                             <li class="tabs__item">
-                                <a class="tabs__link" href="testbank.html?cateCode=M-TestBank&amp;subjectCode=M-testBank-science&amp;testbankYN=Y">과학</a>
+                                <a class="tabs__link" href="javascript:" onclick="cornfrim('중학','과학'); cssc(this, 'mid');">과학</a>
                             </li>
+                        </ul>
+
+                        <ul id="high" class="tabs__list tabs__list--4" style="display: none;">
+                        <li class="tabs__item">
+                            <a class="tabs__link tabs__link--on" href="javascript:" onclick="cornfrim('고등','국어'); cssc(this, 'high');">국어</a>
+                        </li>
+                        <li class="tabs__item">
+                            <a class="tabs__link" href="javascript:" onclick="cornfrim('고등','영어'); cssc(this, 'high');">영어</a>
+                        </li>
+                        <li class="tabs__item">
+                            <a class="tabs__link" href="javascript:" onclick="cornfrim('고등','수학'); cssc(this, 'high');">수학</a>
+                        </li>
+                        <li class="tabs__item">
+                            <a class="tabs__link" href="javascript:" onclick="cornfrim('고등','사회'); cssc(this, 'high');">사회</a>
+                        </li>
+                        <li class="tabs__item">
+                            <a class="tabs__link" href="javascript:" onclick="cornfrim('고등','역사'); cssc(this, 'high');">역사</a>
+                        </li>
+                        <li class="tabs__item">
+                            <a class="tabs__link" href="javascript:" onclick="cornfrim('고등','과학'); cssc(this, 'high');">과학</a>
+                        </li>
                         </ul>
                         <!-- // 과목 카테고리 탭 -->
                     </div>
@@ -1191,370 +1212,19 @@
                             2022 개정 교육과정
                         </h2>
                         <div class="tb-container__body">
-                            <div class="columns">
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_830715" onclick="delBookmark('M-testBank-ko_01_11', 830715);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_830715" onclick="addBookmark('M-testBank-ko_01_11','Y', 830715);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                        <mark>NEW</mark>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/01_국어/중등국어1-1(노미숙)_표1.jpg">
-                                                </img></figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 1-1 (노미숙)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('5757');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_830985" onclick="delBookmark('M-testBank-ko_03_11', 830985);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_830985" onclick="addBookmark('M-testBank-ko_03_11','Y', 830985);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                        <mark>NEW</mark>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/01_국어/A-중등 국어1-1_1-2(정호웅)_1.jpg">
-                                                </img></figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 1-1 (정호웅)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('5756');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305" onclick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_960305" onclick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                        <mark>NEW</mark>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="https://i.namu.wiki/i/6-0dD7RxiZQdaahJSxuU0v6J0fHZS1pzismraaB6yLBTolEPdsT-rlx5g2QCjXoA8LtCJwpC8XpNnJFJzxPISw.webp">
-                                                </img></figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">커비 1-1 (양커비)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('6804');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
+                            <div class="columns" id="2022dom">
                             </div>
                         </div>
                     </div>
                     <!-- // 교과서 목록  -->
                     <!-- 교과서 목록 -->
                     <div class="tb-container tb-list" id="group1">
-                        <h2 class="tb-container__header">
+                        <h2 class="tb-container__header" id="highhidden">
                             2015 개정 교육과정
                         </h2>
                         <div class="tb-container__body" >
-                            <div class="columns">
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611500" onclick="delBookmark('M-testBank-ko_01_01', 611500);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_611500" onclick="addBookmark('M-testBank-ko_01_01','Y', 611500);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-02-03.jpg">
-                                                </img></figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 1-1 (노미숙)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('1154');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611501" onclick="delBookmark('M-testBank-ko_01_02', 611501);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_611501" onclick="addBookmark('M-testBank-ko_01_02','Y', 611501);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-02-04.jpg">
-                                                </img></figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 1-2 (노미숙)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('1155');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611502" onclick="delBookmark('M-testBank-ko_01_03', 611502);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_611502" onclick="addBookmark('M-testBank-ko_01_03','Y', 611502);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//중학표지/15개정_(중)국어(노미숙)_2-1.jpg">
-                                                </img></figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 2-1 (노미숙)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('1156');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611503" onclick="delBookmark('M-testBank-ko_01_04', 611503);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_611503" onclick="addBookmark('M-testBank-ko_01_04','Y', 611503);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//중학표지/15개정_(중)국어(노미숙)_2-2.jpg">
-                                                </img></figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 2-2 (노미숙)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('1157');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611504" onclick="delBookmark('M-testBank-ko_01_05', 611504);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_611504" onclick="addBookmark('M-testBank-ko_01_05','Y', 611504);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//중 바꿀 썸네일/중 국어 3-1.jpg">
-                                                </img></figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 3-1 (노미숙)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('1158');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611505" onclick="delBookmark('M-testBank-ko_01_06', 611505);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_611505" onclick="addBookmark('M-testBank-ko_01_06','Y', 611505);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//중학표지/(15개정)(노)중학_국어3-2_교과서.jpg">
-                                                </img></figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 3-2 (노미숙)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('1159');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611506" onclick="delBookmark('M-testBank-ko_02_01', 611506);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_611506" onclick="addBookmark('M-testBank-ko_02_01','Y', 611506);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-03-01.jpg"/>
-                                            </figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 1-1 (박영목)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('1198');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611507" onclick="delBookmark('M-testBank-ko_02_02', 611507);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_611507" onclick="addBookmark('M-testBank-ko_02_02','Y', 611507);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-03-02.jpg"/>
-                                            </figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 1-2 (박영목)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('1199');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611508" onclick="delBookmark('M-testBank-ko_02_03', 611508);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_611508" onclick="addBookmark('M-testBank-ko_02_03','Y', 611508);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-03-03.jpg"/>
-                                            </figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 2-1 (박영목)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('1200');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611509" onclick="delBookmark('M-testBank-ko_02_04', 611509);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_611509" onclick="addBookmark('M-testBank-ko_02_04','Y', 611509);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//중학표지/15개정_(중)국어2-2(박영목)교과서.jpg"/>
-                                            </figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 2-2 (박영목)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('1201');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611510" onclick="delBookmark('M-testBank-ko_02_05', 611510);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_611510" onclick="addBookmark('M-testBank-ko_02_05','Y', 611510);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-03-05.jpg"/>
-                                            </figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 3-1 (박영목)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('1202');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
-                                <!-- item -->
-                                <div class="item">
-                                    <div class="item-mark">
-                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611511" onclick="delBookmark('M-testBank-ko_02_06', 611511);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
-                                        <a class="tooltip-mark" href="javascript:;" id="del_611511" onclick="addBookmark('M-testBank-ko_02_06','Y', 611511);"><span class="ir_su">즐겨찾기 등록</span></a>
-                                    </div>
-                                    <div class="item-content">
-                                        <div class="item-image">
-                                            <figure class="image is-thumnail">
-                                                <img alt="교과서 이미지" src="//cdata2.tsherpa.co.kr/tsherpa//중학표지/15개정(중)국어3-2(박영목)교과서표1(4).jpg"/>
-                                            </figure>
-                                        </div>
-                                        <div class="item-info">
-                                            <p class="data_title">국어 3-2 (박영목)</p>
-                                            <div class="data_buttons">
-                                                <a class="button" href="javascript:;" onclick="customExamPopup('1203');" title="새창 열림">
-                                                    <i class="icon icon-memo-center"></i>시험지 만들기
-                                                </a>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- // item -->
+                            <div class="columns" id="2015dom">
                             </div>
-                        </div>
-                    </div>
                     <!-- // 교과서 목록  -->
                     <script>
                         $(function(){
@@ -1782,33 +1452,34 @@
                         }
 
                         function customExamPopup(subjectId) {
-                            if(subjectId!=6804){
-                                if (!checkUserLoggedIn(location.href)) {
-                                    return false;
-                                }
-                                //새창으로 열기
-                                let pop_title = "win_pop";
-                                let url = 'https://testbank.tsherpa.co.kr/customExam/step0';
-
-                                window.open("",pop_title,'width=1400,height=1024,status=no,toolbar=no,scrollbars=no, left=500, top=0');
-
-                                //form
-                                let new_form = document.createElement("form");
-                                new_form.attr("name", "new_form");
-                                new_form.attr("charset", "UTF-8");
-                                new_form.attr("method", "post");
-                                new_form.attr("action", url);
-                                new_form.attr("target", pop_title);
-
-                                //step0 세팅지 리스트를 위한 교재정보 - 문항통합에서 교재정보 컬럼명 = subjectId
-                                new_form.append($('<input/>', {type: 'hidden', name: 'subjectId', value: subjectId}));
-
-                                new_form.appendTo('body');
-                                new_form.submit();
-                            }else{
+                            // if(subjectId!=6804){
+                            //     if (!checkUserLoggedIn(location.href)) {
+                            //         return false;
+                            //     }
+                            //     //새창으로 열기
+                            //     let pop_title = "win_pop";
+                            //     let url = 'https://testbank.tsherpa.co.kr/customExam/step0';
+                            //
+                            //     window.open("",pop_title,'width=1400,height=1024,status=no,toolbar=no,scrollbars=no, left=500, top=0');
+                            //
+                            //     //form
+                            //     let new_form = document.createElement("form");
+                            //     new_form.attr("name", "new_form");
+                            //     new_form.attr("charset", "UTF-8");
+                            //     new_form.attr("method", "post");
+                            //     new_form.attr("action", url);
+                            //     new_form.attr("target", pop_title);
+                            //
+                            //     //step0 세팅지 리스트를 위한 교재정보 - 문항통합에서 교재정보 컬럼명 = subjectId
+                            //     new_form.append($('<input/>', {type: 'hidden', name: 'subjectId', value: subjectId}));
+                            //
+                            //     new_form.appendTo('body');
+                            //     new_form.submit();
+                            // }else{
                                 window.open('${path}/sub01','_blank','width=1600,height=900')     // $\{path}로 바꾸기
-                            }
+                            //}
                         }
+
                     </script> </div>
                 <!-- ‘T셀파 교수자료 무단 배포 주의사항 안내’ 노출 화면 -->
                 <div class="middle-wrapper">
@@ -1979,6 +1650,1041 @@
         </div>
     </div>
 </div>
+<script>
+    const midko = [
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/01_국어/중등국어1-1(노미숙)_표1.jpg',
+            title: '국어 1-1 (노미숙)',
+            url: '5757',
+            year: '2022'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/01_국어/A-중등 국어1-1_1-2(정호웅)_1.jpg',
+            title: '국어 1-1 (정호웅)',
+            url: '5756',
+            year: '2022'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-02-03.jpg',
+            title: '국어 1-1 (노미숙)',
+            url: '1154',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-02-03.jpg',
+            title: '국어 1-2 (노미숙)',
+            url: '1155',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/15개정_(중)국어(노미숙)_2-1.jpg',
+            title: '국어 2-1 (노미숙)',
+            url: '1156',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/15개정_(중)국어(노미숙)_2-2.jpg',
+            title: '국어 2-2 (노미숙)',
+            url: '1157'
+            , year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중 바꿀 썸네일/중 국어 3-1.jpg',
+            title: '국어 3-1 (노미숙)',
+            url: '1158',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/(15개정)(노)중학_국어3-2_교과서.jpg',
+            title: '국어 3-2 (노미숙)',
+            url: '1159',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-03-01.jpg',
+            title: '국어 1-1 (박영목)',
+            url: '1198',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-03-02.jpg',
+            title: '국어 1-2 (박영목)',
+            url: '1199',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-03-03.jpg',
+            title: '국어 2-1 (박영목)',
+            url: '1200',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/15개정_(중)국어2-2(박영목)교과서.jpg',
+            title: '국어 2-2 (박영목)',
+            url: '1201',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-KK-KK-03-05.jpg',
+            title: '국어 3-1 (박영목)',
+            url: '1202',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/15개정(중)국어3-2(박영목)교과서표1(4).jpg',
+            title: '국어 3-2 (박영목)',
+            url: '1203',
+            year: '2015'
+        }]
 
+
+    const midmath = [
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/03_수학/B-중등 수학(김화경) (1)_1.jpg',
+            title: '수학 1 (김화경)',
+            url: '5786',
+            year: '2022'
+
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/03_수학/A-중등 수학1(김동재) (1)_1.jpg',
+            title: '수학 1 (김동재)',
+            url: '5785',
+            year: '2022'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/03_수학/중1 수학 기초 연산.png',
+            title: '기초연산',
+            url: '5793',
+            year: '2022'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//01 cont_m/03_mat/07_교과서표지/중학_수학1_이준열.jpg',
+            title: '수학 1 (이준열)',
+            url: '1139',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//01 cont_m/03_mat/07_교과서표지/중학_수학2_이준열.jpg',
+            title: '수학 2 (이준열)',
+            url: '1140',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//01 cont_m/03_mat/07_교과서표지/중학_수학3_이준열.jpg',
+            title: '수학 3 (이준열)',
+            url: '1141',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중 바꿀 썸네일/중 수학 1.jpg',
+            title: '수학 1 (류희찬)',
+            url: '1136',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//교과서표지/류희찬수학2.jpg',
+            title: '수학 2 (류희찬)',
+            url: '1137',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//01 cont_m/03_mat/07_교과서표지/중학_수학3_류희찬.jpg',
+            title: '수학 3 (류희찬)',
+            url: '1138',
+            year: '2015'
+        }];
+    const miden = [
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/02_영어/B-중등 영어(소영순)1_1.jpg',
+            title: '영어 1 (소영순)',
+            url: '5739',
+            year: '2022'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/02_영어/A-중등 영어1(이상기)_1.jpg',
+            title: '영어 1 (이상기)',
+            url: '5738',
+            year: '2022'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-EE-EE-03-01.jpg',
+            title: '영어 1 (이재영)',
+            url: '1160',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-EE-EE-03-02.jpg',
+            title: '영어 2 (이재영)',
+            url: '1161',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-EE-EE-03-03.jpg',
+            title: '영어 3 (이재영)',
+            url: '1162',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-EE-EE-06-01.jpg',
+            title: '영어 1 (정사열)',
+            url: '1163',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-EE-EE-06-02.jpg',
+            title: '영어 2 (정사열)',
+            url: '1164',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-EE-EE-06-03.jpg',
+            title: '영어 3 (정사열)',
+            url: '1165',
+            year: '2015'
+        }];
+    const midso = [
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/04_사회_역사_도덕/A-중등 사회(허수미)1_2_1.jpg',
+            title: '사회 1 (허수미)',
+            url: '5765',
+            year: '2022'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중 바꿀 썸네일/중 사회 1.jpg',
+            title: '사회 1 (구정화)',
+            url: '1166',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중 바꿀 썸네일/중 사회 2.jpg',
+            title: '사회 2 (구정화)',
+            url: '1167',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-SS-SS-06-01.jpg',
+            title: '사회 1 (박형준)',
+            url: '1168',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-SS-SS-06-02.jpg',
+            title: '사회 2 (박형준)',
+            url: '1169',
+            year: '2015'
+        }];
+    const midhistory = [
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/04_사회_역사_도덕/A-중등 역사1_2(이종관)_1.jpg',
+            title: '역사 1 (이종관)',
+            url: '5766',
+            year: '2022'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-SS-SM-02-01.jpg',
+            title: '역사 1 (김덕수)',
+            url: '1170',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중 바꿀 썸네일/중 역사 2.jpg',
+            title: '역사 2 (김덕수)',
+            url: '1171',
+            year: '2015'
+        }];
+    const midmoral = [
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/04_사회_역사_도덕/A-중등 도덕(김남준)1_2_1.jpg',
+            title: '도덕 1 (김남준)',
+            url: '5760',
+            year: '2022'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//교과서표지/정본 15개정(중)도덕1(변순용).jpg',
+            title: '도덕 1 (변순용)',
+            url: '1172',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//교과서표지/정본 15개정(중)도덕2(변순용).jpg',
+            title: '도덕 2 (변순용)',
+            url: '1173',
+            year: '2015'
+        }];
+    const midscience = [
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/05_과학/B-중등 과학(정대홍)1_1.jpg',
+            title: '과학 1 (정대홍)',
+            url: '5752',
+            year: '2022'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_중학/표지/05_과학/A-중등 과학1(임성숙)_1.jpg',
+            title: '과학 1 (임성숙)',
+            url: '5753',
+            year: '2022'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-NN-NN-04-01.jpg',
+            title: '과학 1 (노태희)',
+            url: '1174',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-NN-NN-04-02.jpg',
+            title: '과학 2 (노태희)',
+            url: '1175',
+            year: '2015'
+        },
+        {
+            img: '//cdata2.tsherpa.co.kr/tsherpa//중학표지/A8-C2-NN-NN-04-03.jpg',
+            title: '과학 3 (노태희)',
+            url: '1176',
+            year: '2015'
+        }];
+
+    const highko = [
+        {
+            img:'//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_고등/표지/01_국어/표1 22개정 (고)공통국어1 김수학_1.jpg',
+            title:'공통국어 1 (김수학)',
+            url:'5758'
+        },
+        {
+            img:'//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_고등/표지/01_국어/표1 22개정 (고)공통국어1 김종철_1.jpg',
+            title:'공통국어 1 (김종철)',
+            url:'5759'
+        }];
+    const highen = [
+        {
+            img:'//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_고등/표지/02_영어/표1 22개정 (고)공통영어1 조수경_1.jpg',
+            title:'공통영어 1 (조수경)',
+            url:'5742'
+        },
+        {
+            img:'//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_고등/표지/02_영어/표1 22개정 (고)공통영어1 강상구_1.jpg',
+            title:'공통영어 1 (강상구)',
+            url:'5740'
+        }];
+    const highmath = [
+        {
+            img:'//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_고등/표지/03_수학/표1 22개정 (고)공통수학1 전인태_1.jpg',
+            title:'공통수학 1 (전인태)',
+            url:'5787'
+        },
+        {
+            img:'//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_고등/표지/03_수학/표1 22개정 (고)공통수학1 홍진곤_1.jpg',
+            title:'공통수학 1 (홍진곤)',
+            url:'5789'
+        }];
+    const highso = [
+        {
+          img:'//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_고등/표지/04_사회_역사_도덕/표1 22개정 (고)통합사회1 박윤경_1.jpg',
+          title:'공통사회 1 (박윤경)',
+          url:'5767'
+        }];
+    const highhistory = [
+        {
+            img:'//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_고등/표지/04_사회_역사_도덕/표1 22개정 (고)한국사1 정요근_1.jpg',
+            title:'한국사 1 (정요근)',
+            url:'5769'
+        }];
+    const highscience = [
+        {
+            img:'//cdata2.tsherpa.co.kr/tsherpa//00_교과서홍보관_고등/표지/05_과학/표1 22개정 (고)통합과학1 신영준_1.jpg',
+            title:'통합과학 1 (신영준)',
+            url:'5754'
+        }
+    ]
+
+        <!--과목별 페이지 -->
+        const dom2022 = document.getElementById("2022dom");
+        const dom2015 = document.getElementById("2015dom");
+
+        let midmain = [];
+        let highmain = [];
+
+    function cornfrim(level, subject) {
+        // 선택된 레벨과 과목을 저장하거나 다른 작업 수행
+        console.log("선택된 레벨:", level, "선택된 과목:", subject);
+        // 여기에 필요한 다른 로직 추가
+    }
+    <!-- 중등,고등별 과목별 클릭시 css적용 -->
+    function cssc(clickedEl, targetId) {
+        // 1. 상단 탭(중학/고등) 처리
+        var topTabs = document.querySelectorAll('.tabs__list--3 .tabs__link');
+        for (var i = 0; i < topTabs.length; i++) {
+            topTabs[i].classList.remove('tabs__link--on');
+        }
+
+        // 클릭된 요소가 상단 탭인 경우 해당 요소에 active 클래스 추가
+        if (clickedEl.closest('.tabs__list--3')) {
+            clickedEl.classList.add('tabs__link--on');
+        } else {
+            // 상단 탭이 아닌 경우, 연결된 상단 탭 찾아서 활성화
+            var levelTab = document.querySelector('.tabs__list--3 a[onclick*="' + targetId + '"]');
+            if (levelTab) {
+                levelTab.classList.add('tabs__link--on');
+            }
+        }
+
+        // 2. 탭 컨텐츠 표시 처리 (중학/고등 선택에 따라)
+        document.getElementById('mid').style.display = targetId === 'mid' ? 'flex' : 'none';
+        document.getElementById('high').style.display = targetId === 'high' ? 'flex' : 'none';
+
+        // 3. 과목 탭 처리
+        var subjectTabs = document.querySelectorAll('#' + targetId + ' .tabs__link');
+        for (var j = 0; j < subjectTabs.length; j++) {
+            subjectTabs[j].classList.remove('tabs__link--on');
+        }
+
+        // 클릭된 요소가 과목 탭인 경우 해당 요소에 active 클래스 추가
+        if (clickedEl.closest('#' + targetId)) {
+            clickedEl.classList.add('tabs__link--on');
+        } else {
+            // 기본 과목 탭 (첫 번째 과목) 활성화
+            var firstSubjectTab = document.querySelector('#' + targetId + ' .tabs__link');
+            if (firstSubjectTab) {
+                firstSubjectTab.classList.add('tabs__link--on');
+            }
+        }
+    }
+
+    function cornfrim(e="중학", d="국어") {
+            if (e == '중학') {
+                dom2022.innerHTML= '';
+                let midcategory = document.getElementById("mid");
+                midcategory.style.display = (midcategory.style.display === 'none') ? "flex" : "flex";
+
+                let highcategory = document.getElementById("high");
+                highcategory.style.display = (highcategory.style.display === 'none') ? "none" : "none";
+                if (d == '국어') {
+                    midmain = midko
+                    for (let i = 0; i < midmain.length; i++) {
+                        if (midmain[i].year == '2022') {
+                            console.log(midmain[i].img);
+                            dom2022.innerHTML += `
+
+    <div class="item">
+        <div class="item-mark">
+            <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305"
+               onClick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+            <a class="tooltip-mark" href="javascript:;" id="del_960305"
+               onClick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+            <mark>NEW</mark>
+        </div>
+        <div class="item-content">
+            <div class="item-image">
+                <figure class="image is-thumnail">
+                    <img alt="교과서 이미지"
+                         src="`+midmain[i].img+`">
+                    </img></figure>
+            </div>
+            <div class="item-info">
+                <p class="data_title">`+ midmain[i].title+`</p>
+                <div class="data_buttons">
+                    <a class="button" href="javascript:;" onClick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                        <i class="icon icon-memo-center"></i>시험지 만들기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+                        `
+
+                        }
+                        if(midmain[i].year == '2015') {
+                            dom2015.innerHTML += `
+                                 <div class="item">
+                                    <div class="item-mark">
+                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611500" onclick="delBookmark('M-testBank-ko_01_01', 611500);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+                                        <a class="tooltip-mark" href="javascript:;" id="del_611500" onclick="addBookmark('M-testBank-ko_01_01','Y', 611500);"><span class="ir_su">즐겨찾기 등록</span></a>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="item-image">
+                                            <figure class="image is-thumnail">
+                                                <img alt="교과서 이미지" src="`+ midmain[i].img+`">
+                                                </img></figure>
+                                        </div>
+                                        <div class="item-info">
+                                            <p class="data_title">`+midmain[i].title +`</p>
+                                            <div class="data_buttons">
+                                                <a class="button" href="javascript:;" onclick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                                                    <i class="icon icon-memo-center"></i>시험지 만들기
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> `
+                        }
+                    }
+                }
+
+            if(d == '영어') {
+                midmain = miden
+                dom2022.innerHTML = "";
+                dom2015.innerHTML = "";
+                for(let i=0; i < midmain.length; i++) {
+                    if(midmain[i].year == '2022') {
+                        dom2022.innerHTML += `
+                            <div class="item">
+        <div class="item-mark">
+            <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305"
+               onClick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+            <a class="tooltip-mark" href="javascript:;" id="del_960305"
+               onClick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+            <mark>NEW</mark>
+        </div>
+        <div class="item-content">
+            <div class="item-image">
+                <figure class="image is-thumnail">
+                    <img alt="교과서 이미지"
+                         src="`+midmain[i].img+`">
+                    </img></figure>
+            </div>
+            <div class="item-info">
+                <p class="data_title">`+ midmain[i].title+`</p>
+                <div class="data_buttons">
+                    <a class="button" href="javascript:;" onClick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                        <i class="icon icon-memo-center"></i>시험지 만들기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+                        `
+                    }
+                    if(midmain[i].year == '2015') {
+                        dom2015.innerHTML += `
+                            <div class="item">
+                                    <div class="item-mark">
+                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611500" onclick="delBookmark('M-testBank-ko_01_01', 611500);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+                                        <a class="tooltip-mark" href="javascript:;" id="del_611500" onclick="addBookmark('M-testBank-ko_01_01','Y', 611500);"><span class="ir_su">즐겨찾기 등록</span></a>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="item-image">
+                                            <figure class="image is-thumnail">
+                                                <img alt="교과서 이미지" src="`+ midmain[i].img+`">
+                                                </img></figure>
+                                        </div>
+                                        <div class="item-info">
+                                            <p class="data_title">`+midmain[i].title +`</p>
+                                            <div class="data_buttons">
+                                                <a class="button" href="javascript:;" onclick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                                                    <i class="icon icon-memo-center"></i>시험지 만들기
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> `
+                        }
+                    }
+                }
+            if(d == '수학') {
+                midmain = midmath
+                dom2022.innerHTML = "";
+                dom2015.innerHTML = "";
+                for(let i=0; i < midmain.length; i++) {
+                    if(midmain[i].year == '2022') {
+                        dom2022.innerHTML += `
+                            <div class="item">
+        <div class="item-mark">
+            <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305"
+               onClick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+            <a class="tooltip-mark" href="javascript:;" id="del_960305"
+               onClick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+            <mark>NEW</mark>
+        </div>
+        <div class="item-content">
+            <div class="item-image">
+                <figure class="image is-thumnail">
+                    <img alt="교과서 이미지"
+                         src="`+midmain[i].img+`">
+                    </img></figure>
+            </div>
+            <div class="item-info">
+                <p class="data_title">`+ midmain[i].title+`</p>
+                <div class="data_buttons">
+                    <a class="button" href="javascript:;" onClick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                        <i class="icon icon-memo-center"></i>시험지 만들기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+                        `
+                    }
+                    if(midmain[i].year == '2015') {
+                        dom2015.innerHTML += `
+                            <div class="item">
+                                    <div class="item-mark">
+                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611500" onclick="delBookmark('M-testBank-ko_01_01', 611500);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+                                        <a class="tooltip-mark" href="javascript:;" id="del_611500" onclick="addBookmark('M-testBank-ko_01_01','Y', 611500);"><span class="ir_su">즐겨찾기 등록</span></a>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="item-image">
+                                            <figure class="image is-thumnail">
+                                                <img alt="교과서 이미지" src="`+ midmain[i].img+`">
+                                                </img></figure>
+                                        </div>
+                                        <div class="item-info">
+                                            <p class="data_title">`+midmain[i].title +`</p>
+                                            <div class="data_buttons">
+                                                <a class="button" href="javascript:;" onclick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                                                    <i class="icon icon-memo-center"></i>시험지 만들기
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> `
+                    }
+                }
+            }
+                if(d == '사회') {
+                    midmain = midso
+                    dom2022.innerHTML = "";
+                    dom2015.innerHTML = "";
+                    for(let i=0; i < midmain.length; i++) {
+                        if(midmain[i].year == '2022') {
+                            dom2022.innerHTML += `
+                            <div class="item">
+        <div class="item-mark">
+            <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305"
+               onClick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+            <a class="tooltip-mark" href="javascript:;" id="del_960305"
+               onClick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+            <mark>NEW</mark>
+        </div>
+        <div class="item-content">
+            <div class="item-image">
+                <figure class="image is-thumnail">
+                    <img alt="교과서 이미지"
+                         src="`+midmain[i].img+`">
+                    </img></figure>
+            </div>
+            <div class="item-info">
+                <p class="data_title">`+ midmain[i].title+`</p>
+                <div class="data_buttons">
+                    <a class="button" href="javascript:;" onClick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                        <i class="icon icon-memo-center"></i>시험지 만들기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+                        `
+                        }
+                        if(midmain[i].year == '2015') {
+                            dom2015.innerHTML += `
+                            <div class="item">
+                                    <div class="item-mark">
+                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611500" onclick="delBookmark('M-testBank-ko_01_01', 611500);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+                                        <a class="tooltip-mark" href="javascript:;" id="del_611500" onclick="addBookmark('M-testBank-ko_01_01','Y', 611500);"><span class="ir_su">즐겨찾기 등록</span></a>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="item-image">
+                                            <figure class="image is-thumnail">
+                                                <img alt="교과서 이미지" src="`+ midmain[i].img+`">
+                                                </img></figure>
+                                        </div>
+                                        <div class="item-info">
+                                            <p class="data_title">`+midmain[i].title +`</p>
+                                            <div class="data_buttons">
+                                                <a class="button" href="javascript:;" onclick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                                                    <i class="icon icon-memo-center"></i>시험지 만들기
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> `
+                        }
+                    }
+                }
+                if(d == '역사') {
+                    midmain = midhistory
+                    dom2022.innerHTML = "";
+                    dom2015.innerHTML = "";
+                    for(let i=0; i < midmain.length; i++) {
+                        if(midmain[i].year == '2022') {
+                            dom2022.innerHTML += `
+                            <div class="item">
+        <div class="item-mark">
+            <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305"
+               onClick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+            <a class="tooltip-mark" href="javascript:;" id="del_960305"
+               onClick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+            <mark>NEW</mark>
+        </div>
+        <div class="item-content">
+            <div class="item-image">
+                <figure class="image is-thumnail">
+                    <img alt="교과서 이미지"
+                         src="`+midmain[i].img+`">
+                    </img></figure>
+            </div>
+            <div class="item-info">
+                <p class="data_title">`+ midmain[i].title+`</p>
+                <div class="data_buttons">
+                    <a class="button" href="javascript:;" onClick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                        <i class="icon icon-memo-center"></i>시험지 만들기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+                        `
+                        }
+                        if(midmain[i].year == '2015') {
+                            dom2015.innerHTML += `
+                            <div class="item">
+                                    <div class="item-mark">
+                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611500" onclick="delBookmark('M-testBank-ko_01_01', 611500);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+                                        <a class="tooltip-mark" href="javascript:;" id="del_611500" onclick="addBookmark('M-testBank-ko_01_01','Y', 611500);"><span class="ir_su">즐겨찾기 등록</span></a>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="item-image">
+                                            <figure class="image is-thumnail">
+                                                <img alt="교과서 이미지" src="`+ midmain[i].img+`">
+                                                </img></figure>
+                                        </div>
+                                        <div class="item-info">
+                                            <p class="data_title">`+midmain[i].title +`</p>
+                                            <div class="data_buttons">
+                                                <a class="button" href="javascript:;" onclick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                                                    <i class="icon icon-memo-center"></i>시험지 만들기
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> `
+                        }
+                    }
+                }
+                if(d == '도덕') {
+                    midmain = midmoral
+                    dom2022.innerHTML = "";
+                    dom2015.innerHTML = "";
+                    for(let i=0; i < midmain.length; i++) {
+                        if(midmain[i].year == '2022') {
+                            dom2022.innerHTML += `
+                            <div class="item">
+        <div class="item-mark">
+            <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305"
+               onClick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+            <a class="tooltip-mark" href="javascript:;" id="del_960305"
+               onClick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+            <mark>NEW</mark>
+        </div>
+        <div class="item-content">
+            <div class="item-image">
+                <figure class="image is-thumnail">
+                    <img alt="교과서 이미지"
+                         src="`+midmain[i].img+`">
+                    </img></figure>
+            </div>
+            <div class="item-info">
+                <p class="data_title">`+ midmain[i].title+`</p>
+                <div class="data_buttons">
+                    <a class="button" href="javascript:;" onClick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                        <i class="icon icon-memo-center"></i>시험지 만들기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+                        `
+                        }
+                        if(midmain[i].year == '2015') {
+                            dom2015.innerHTML += `
+                            <div class="item">
+                                    <div class="item-mark">
+                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611500" onclick="delBookmark('M-testBank-ko_01_01', 611500);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+                                        <a class="tooltip-mark" href="javascript:;" id="del_611500" onclick="addBookmark('M-testBank-ko_01_01','Y', 611500);"><span class="ir_su">즐겨찾기 등록</span></a>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="item-image">
+                                            <figure class="image is-thumnail">
+                                                <img alt="교과서 이미지" src="`+ midmain[i].img+`">
+                                                </img></figure>
+                                        </div>
+                                        <div class="item-info">
+                                            <p class="data_title">`+midmain[i].title +`</p>
+                                            <div class="data_buttons">
+                                                <a class="button" href="javascript:;" onclick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                                                    <i class="icon icon-memo-center"></i>시험지 만들기
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> `
+                        }
+                    }
+                }
+                if(d == '과학') {
+                    midmain = midscience
+                    dom2022.innerHTML = "";
+                    dom2015.innerHTML = "";
+                    for(let i=0; i < midmain.length; i++) {
+                        if(midmain[i].year == '2022') {
+                            dom2022.innerHTML += `
+                            <div class="item">
+        <div class="item-mark">
+            <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305"
+               onClick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+            <a class="tooltip-mark" href="javascript:;" id="del_960305"
+               onClick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+            <mark>NEW</mark>
+        </div>
+        <div class="item-content">
+            <div class="item-image">
+                <figure class="image is-thumnail">
+                    <img alt="교과서 이미지"
+                         src="`+midmain[i].img+`">
+                    </img></figure>
+            </div>
+            <div class="item-info">
+                <p class="data_title">`+ midmain[i].title+`</p>
+                <div class="data_buttons">
+                    <a class="button" href="javascript:;" onClick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                        <i class="icon icon-memo-center"></i>시험지 만들기
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+                        `
+                        }
+                        if(midmain[i].year == '2015') {
+                            dom2015.innerHTML += `
+                            <div class="item">
+                                    <div class="item-mark">
+                                        <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_611500" onclick="delBookmark('M-testBank-ko_01_01', 611500);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+                                        <a class="tooltip-mark" href="javascript:;" id="del_611500" onclick="addBookmark('M-testBank-ko_01_01','Y', 611500);"><span class="ir_su">즐겨찾기 등록</span></a>
+                                    </div>
+                                    <div class="item-content">
+                                        <div class="item-image">
+                                            <figure class="image is-thumnail">
+                                                <img alt="교과서 이미지" src="`+ midmain[i].img+`">
+                                                </img></figure>
+                                        </div>
+                                        <div class="item-info">
+                                            <p class="data_title">`+midmain[i].title +`</p>
+                                            <div class="data_buttons">
+                                                <a class="button" href="javascript:;" onclick="customExamPopup('`+midmain[i].url +`');" title="새창 열림">
+                                                    <i class="icon icon-memo-center"></i>시험지 만들기
+                                                </a>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div> `
+                        }
+                    }
+                }
+            }
+            if(e == '고등') {
+                let title2022 = document.getElementsByClassName("tb-container__header")[1];
+                title2022.innerText = '공통';
+                dom2022.innerHTML= '';
+                dom2015.innerHTML= '';
+                let highhidden = document.getElementById("highhidden");
+                highhidden.innerHTML='';
+
+                let midcategory = document.getElementById("mid");
+                midcategory.style.display = (midcategory.style.display === 'none') ? "none" : "none";
+
+                let highcategory = document.getElementById("high");
+                highcategory.style.display = (highcategory.style.display === 'none') ? "flex" : "flex";
+
+                if(d == '국어') {
+                    highmain = highko
+                    for (let i=0; i < highmain.length; i++) {
+                        dom2022.innerHTML += `
+                        <div class="item">
+        <div class="item-mark">
+            <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305"
+               onClick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+            <a class="tooltip-mark" href="javascript:;" id="del_960305"
+               onClick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+            <mark>NEW</mark>
+        </div>
+        <div class="item-content">
+            <div class="item-image">
+                <figure class="image is-thumnail">
+                    <img alt="교과서 이미지"
+                         src="`+highmain[i].img+`">
+                    </img></figure>
+            </div>
+            <div class="item-info">
+                <p class="data_title">`+ highmain[i].title+`</p>
+                <div class="data_buttons">
+                    <a class="button" href="javascript:;" onClick="customExamPopup('`+highmain[i].url +`');" title="새창 열림">
+                        <i class="icon icon-memo-center"></i>시험지 만들기
+                    </a>
+                </div>
+            </div>
+        </div>
+                        `
+                    }
+                }
+                if(d == '영어') {
+                    highmain = highen
+                    for (let i=0; i < highmain.length; i++) {
+                        dom2022.innerHTML += `
+                        <div class="item">
+        <div class="item-mark">
+            <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305"
+               onClick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+            <a class="tooltip-mark" href="javascript:;" id="del_960305"
+               onClick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+            <mark>NEW</mark>
+        </div>
+        <div class="item-content">
+            <div class="item-image">
+                <figure class="image is-thumnail">
+                    <img alt="교과서 이미지"
+                         src="`+highmain[i].img+`">
+                    </img></figure>
+            </div>
+            <div class="item-info">
+                <p class="data_title">`+ highmain[i].title+`</p>
+                <div class="data_buttons">
+                    <a class="button" href="javascript:;" onClick="customExamPopup('`+highmain[i].url +`');" title="새창 열림">
+                        <i class="icon icon-memo-center"></i>시험지 만들기
+                    </a>
+                </div>
+            </div>
+        </div>
+                        `
+                    }
+                }
+                if(d == '수학') {
+                    highmain = highmath
+                    for (let i=0; i < highmain.length; i++) {
+                        dom2022.innerHTML += `
+                        <div class="item">
+        <div class="item-mark">
+            <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305"
+               onClick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+            <a class="tooltip-mark" href="javascript:;" id="del_960305"
+               onClick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+            <mark>NEW</mark>
+        </div>
+        <div class="item-content">
+            <div class="item-image">
+                <figure class="image is-thumnail">
+                    <img alt="교과서 이미지"
+                         src="`+highmain[i].img+`">
+                    </img></figure>
+            </div>
+            <div class="item-info">
+                <p class="data_title">`+ highmain[i].title+`</p>
+                <div class="data_buttons">
+                    <a class="button" href="javascript:;" onClick="customExamPopup('`+highmain[i].url +`');" title="새창 열림">
+                        <i class="icon icon-memo-center"></i>시험지 만들기
+                    </a>
+                </div>
+            </div>
+        </div>
+                        `
+                    }
+                }
+                if(d == '사회') {
+                    highmain = highso
+                    for (let i=0; i < highmain.length; i++) {
+                        dom2022.innerHTML += `
+                        <div class="item">
+        <div class="item-mark">
+            <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305"
+               onClick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+            <a class="tooltip-mark" href="javascript:;" id="del_960305"
+               onClick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+            <mark>NEW</mark>
+        </div>
+        <div class="item-content">
+            <div class="item-image">
+                <figure class="image is-thumnail">
+                    <img alt="교과서 이미지"
+                         src="`+highmain[i].img+`">
+                    </img></figure>
+            </div>
+            <div class="item-info">
+                <p class="data_title">`+ highmain[i].title+`</p>
+                <div class="data_buttons">
+                    <a class="button" href="javascript:;" onClick="customExamPopup('`+highmain[i].url +`');" title="새창 열림">
+                        <i class="icon icon-memo-center"></i>시험지 만들기
+                    </a>
+                </div>
+            </div>
+        </div>
+                        `
+                    }
+                }
+                if(d == '역사') {
+                    highmain = highhistory
+                    for (let i=0; i < highmain.length; i++) {
+                        dom2022.innerHTML += `
+                        <div class="item">
+        <div class="item-mark">
+            <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305"
+               onClick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+            <a class="tooltip-mark" href="javascript:;" id="del_960305"
+               onClick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+            <mark>NEW</mark>
+        </div>
+        <div class="item-content">
+            <div class="item-image">
+                <figure class="image is-thumnail">
+                    <img alt="교과서 이미지"
+                         src="`+highmain[i].img+`">
+                    </img></figure>
+            </div>
+            <div class="item-info">
+                <p class="data_title">`+ highmain[i].title+`</p>
+                <div class="data_buttons">
+                    <a class="button" href="javascript:;" onClick="customExamPopup('`+highmain[i].url +`');" title="새창 열림">
+                        <i class="icon icon-memo-center"></i>시험지 만들기
+                    </a>
+                </div>
+            </div>
+        </div>
+                        `
+                    }
+                }
+                if(d == '과학') {
+                    highmain = highscience
+                    for (let i=0; i < highmain.length; i++) {
+                        dom2022.innerHTML += `
+                        <div class="item">
+        <div class="item-mark">
+            <a class="tooltip-mark add-bookmark" href="javascript:;" id="add_960305"
+               onClick="delBookmark('M-testBank-ko_03_11', 960305);" style="display: none;"><span class="ir_su">즐겨찾기 삭제</span></a>
+            <a class="tooltip-mark" href="javascript:;" id="del_960305"
+               onClick="addBookmark('M-testBank-ko_03_11','Y', 960305);"><span class="ir_su">즐겨찾기 등록</span></a>
+            <mark>NEW</mark>
+        </div>
+        <div class="item-content">
+            <div class="item-image">
+                <figure class="image is-thumnail">
+                    <img alt="교과서 이미지"
+                         src="`+highmain[i].img+`">
+                    </img></figure>
+            </div>
+            <div class="item-info">
+                <p class="data_title">`+ highmain[i].title+`</p>
+                <div class="data_buttons">
+                    <a class="button" href="javascript:;" onClick="customExamPopup('`+highmain[i].url +`');" title="새창 열림">
+                        <i class="icon icon-memo-center"></i>시험지 만들기
+                    </a>
+                </div>
+            </div>
+        </div>
+                        `
+                    }
+                }
+            }
+        };
+
+    (cornfrim())();
+</script>
 </body>
 </html>
