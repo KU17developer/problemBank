@@ -315,11 +315,11 @@
 			},
 			body:JSON.stringify(filterChap)
 		}).then(response=>{
-			console.log(response);
+			console.log("res", response);
 			return response.json()
 		})
 		.then(data=>{
-			console.log(data);
+			console.log("data",data);
 			return data;
 			// sessionStorage.setItem('itemIdList',JSON.stringify(data));
 		});

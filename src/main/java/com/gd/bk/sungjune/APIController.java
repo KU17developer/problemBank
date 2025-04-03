@@ -314,53 +314,53 @@ public class APIController {
 
         List<Map<String, Object>> minorClassification = new ArrayList<>();
         List<Long> itemIdList = new ArrayList<>();
-        String smallChapName = "";
+
         for (Chapter c : chapterList) {
             minorClassification.add(Map.of("subject", c.getSubjectId(), "topic", c.getTopicChapterId()));
-            try {
-                URL url = new URL("https://tsherpa.item-factory.com/item-img/chapters/item-list");
-                HttpsURLConnection connect = (HttpsURLConnection) url.openConnection();
+        }
+        try {
+            URL url = new URL("https://tsherpa.item-factory.com/item-img/chapters/item-list");
+            HttpsURLConnection connect = (HttpsURLConnection) url.openConnection();
 
-                connect.setRequestMethod("POST");
-                connect.setDoOutput(true);
-                connect.setRequestProperty("Content-Type", "application/json");
+            connect.setRequestMethod("POST");
+            connect.setDoOutput(true);
+            connect.setRequestProperty("Content-Type", "application/json");
 
-                Map<String, Object> params = Map.of("minorClassification", minorClassification, "levelCnt", List.of("30", "30", "30", "30", "30"), "questionForm", "multiple,subjective", "activityCategoryList", categoryList);    // 이거 바꿔야됨
+            Map<String, Object> params = Map.of("minorClassification", minorClassification, "levelCnt", List.of("30", "30", "30", "30", "30"), "questionForm", "multiple,subjective", "activityCategoryList", categoryList);    // 이거 바꿔야됨
 
-                ObjectMapper mapper = new ObjectMapper();
-                String json = mapper.writeValueAsString(params);
-                byte[] input = json.getBytes();
-                connect.getOutputStream().write(input);
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(params);
+            byte[] input = json.getBytes();
+            connect.getOutputStream().write(input);
 
-                InputStream is = connect.getInputStream();
-                InputStreamReader isr = new InputStreamReader(is);
-                int data = 0;
-                StringBuilder sb = new StringBuilder();
-                while ((data = isr.read()) != -1) {
-                    sb.append((char) data);
-                }
-                String jsonString = sb.toString();
+            InputStream is = connect.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            int data = 0;
+            StringBuilder sb = new StringBuilder();
+            while ((data = isr.read()) != -1) {
+                sb.append((char) data);
+            }
+            String jsonString = sb.toString();
 
-                ObjectMapper mapper2 = new ObjectMapper();
-                Map<String, Object> map = mapper.readValue(jsonString, Map.class);
+            ObjectMapper mapper2 = new ObjectMapper();
+            Map<String, Object> map = mapper.readValue(jsonString, Map.class);
 
-                List<Map<String, Object>> itemList = (List<Map<String, Object>>) map.get("itemList");
+            List<Map<String, Object>> itemList = (List<Map<String, Object>>) map.get("itemList");
 
 //                    List<Long> itemIdList = new ArrayList<>();
-                itemList.forEach(item -> {
-                    itemIdList.add(toLong(item.get("itemId")));
-                });
+            itemList.forEach(item -> {
+                itemIdList.add(toLong(item.get("itemId")));
+            });
 //                    itemIdMap.put(smallChapName,itemIdList);
 
-                System.out.println(itemIdList);
+            System.out.println(itemIdList);
 //                        System.out.println(itemIdMap);
-            } catch (MalformedURLException e) {
-                log.error("URL이 잘못되었습니다 : " + e.getMessage());
-            } catch (IOException e) {
-                log.error("Connection 에러 : " + e.getMessage());
-            } finally {
-                log.debug("해치웠나?");
-            }
+        } catch (MalformedURLException e) {
+            log.error("URL이 잘못되었습니다 : " + e.getMessage());
+        } catch (IOException e) {
+            log.error("Connection 에러 : " + e.getMessage());
+        } finally {
+            log.debug("해치웠나?");
         }
 
         return ResponseEntity.ok().body(itemIdList);
@@ -510,6 +510,47 @@ public class APIController {
         } catch (Exception e) {
             throw new RuntimeException("파일 제공 실패", e);
         }
+    }
+
+    @RequestMapping("/similarlist")
+    public ResponseEntity<Object> similarList(@RequestBody List<String> itemIdList){
+        System.out.println(itemIdList);
+        try{
+            URL url = new URL("https://tsherpa.item-factory.com/item-img/similar-list");
+            HttpsURLConnection connect = (HttpsURLConnection)url.openConnection();
+
+            connect.setRequestMethod("POST");
+            connect.setDoOutput(true);
+            connect.setRequestProperty("Content-Type", "application/json");
+
+            Map<String, Object> params = Map.of("itemIdList",itemIdList);
+            ObjectMapper mapper = new ObjectMapper();
+            String json = mapper.writeValueAsString(params);
+            byte[] input = json.getBytes();
+            connect.getOutputStream().write(input);
+
+            InputStream is = connect.getInputStream();
+            InputStreamReader isr = new InputStreamReader(is);
+            int data = 0;
+            StringBuilder sb = new StringBuilder();
+            while((data=isr.read())!=-1){
+                sb.append((char)data);
+            }
+            String jsonstring = sb.toString();
+
+            ObjectMapper mapper2 = new ObjectMapper();
+            Map<String, Object> map = mapper2.readValue(jsonstring, Map.class);
+
+            return ResponseEntity.ok().body(map.get("itemList"));
+        }catch(MalformedURLException e) {
+            log.error("URL이 잘못되었습니다 : " + e.getMessage());
+        }catch(IOException e){
+            log.error("Connection 에러 : " + e.getMessage());
+        }finally{
+            log.debug("해치웠나?");
+        }
+
+        return ResponseEntity.noContent().build();
     }
 
     private static Long toLong(Object value) {
