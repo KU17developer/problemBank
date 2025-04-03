@@ -127,8 +127,8 @@
 														<div class="paragraph" style="text-align: Justify"><span class="txt"> ①</span></div>
 														<!-- e: 정답 데이터 영역 -->
 													</div>
-												</div>
-												<button type="button" class="btn-similar-que btn-default"><i class="similar"></i> 유사 문제</button>
+												</div>													<!-- 이거 샘플데이터임 바꿔야 함!!!!!!!!!! -->
+												<button type="button" class="btn-similar-que btn-default" onclick="getSimilProb([5899365])"><i class="similar"></i> 유사 문제</button>
 											</div>
 										</div>
 
@@ -163,7 +163,7 @@
 										<a href="javascript:;">문제지 요약</a>
 									</li>
 									<li class="ui-tab-btn">
-										<a href="javascript:;">유사 문제</a>
+										<a href="javascript:;" onclick="noSimilProb()">유사 문제</a>
 									</li>
 									<li class="ui-tab-btn">
 										<a href="javascript:;">삭제 문항</a>
@@ -661,7 +661,11 @@
 									</div>
 								</div>
 								<div class="contents">
-									탭 컨텐츠 (2)
+									<div class="view-que-list no-data">
+										<p>
+											문제 목록에서 <i class="ic-no-data"></i> 유사문제 버튼을 선택해주세요.
+										</p>
+									</div>
 								</div>
 								<div class="contents">
 									탭 컨텐츠 (3)
@@ -861,6 +865,182 @@
 					})
 				}
 			})
+
+			// 파라미터에 itemIdList(Long[]) 넣어야 함!!
+			const getSimilProb = (itemIdList) => {
+				fetch('${path}/api/similarlist',{
+					method:'POST',
+					headers:{
+						'Content-Type':'application/json'
+					},
+					body:JSON.stringify(itemIdList)
+				}).then(response=>response.json())
+				.then(data=> {
+					$(".tab-wrap>.contents:nth-child(3)").html('');
+
+					console.log("얼마나 오래 걸릴까?");
+
+					const cnttop = $('<div>');
+					cnttop.addClass('cnt-top');
+					const cnttitle = $('<span>');
+					cnttitle.addClass('title');
+					const right = $('<div>');
+					right.addClass('right-area');
+					const selwrap = $('<div>');
+					selwrap.addClass('select-wrap');
+					const selbtn = $('<button>');
+					selbtn.addClass('select-btn');
+					const sellist = $('<ul>');
+					sellist.addClass('select-list');
+					const highli = $('<li>');
+					const higha = $('<a>');
+					higha.attr('href','javascript:');
+					const middleli = $('<li>');
+					const middlea = $('<a>');
+					middlea.attr('href','javascript:');
+					const lowli = $('<li>');
+					const lowa = $('<a>');
+					lowa.attr('href','javascript:');
+
+					highli.append(higha);
+					middleli.append(middlea);
+					lowli.append(lowa);
+
+					sellist.append(highli);
+					sellist.append(middleli);
+					sellist.append(lowli);
+
+					selwrap.append(selbtn);
+					selwrap.append(sellist);
+
+					right.append(selwrap);
+
+					cnttop.append(cnttitle);
+					cnttop.append(right);
+
+					$(".tab-wrap>.contents:nth-child(3)").append(cnttop);
+
+					const viewlist = $('<div>');
+					viewlist.addClass('view-que-list');
+					viewlist.addClass('scroll-inner');
+
+					data.forEach((prob,index)=>{
+						console.log("아무것도 안 보이니");
+						const sortgroup = $('<div>');
+						sortgroup.addClass('sort-group');
+						const viewbox = $('<div>');
+						viewbox.addClass('view-que-box');
+						const quetop = $('<div>');
+						quetop.addClass('que-top');
+						const title = $('<div>');
+						title.addClass('title');
+						const num = $('<span>');
+						num.addClass('num');
+						num.text((index*1+1*1));
+						const badgegroup = $('<div>');
+						badgegroup.addClass('que-badge-group');
+						const difficulty = $('<span>');
+						difficulty.addClass('que-badge');
+						if(prob.difficultyName=='상') {
+							difficulty.addClass('yello');
+						}else if(prob.difficultyName=='중') {
+							difficulty.addClass('green');
+						} else if(prob.difficultyName=='하') {
+							difficulty.addClass('purple');
+						}
+						difficulty.text(prob.difficultyName);
+
+						const questype = $('<span>');
+						questype.addClass('que-badge');
+						questype.addClass('gray');
+						if(prob.questionFormCode/10==5) questype.text('객관식');
+						else questype.text('주관식');
+
+						badgegroup.append(difficulty);
+						badgegroup.append(questype);
+						title.append(num);
+						title.append(badgegroup);
+
+						const btnwrap = $('<div>');
+						btnwrap.addClass('btn-wrap');
+						const btnwrap2 = $('<div>');
+						btnwrap2.addClass('btn-wrap');
+						const tooltip = $('<div>');
+						tooltip.addClass('tooltip-wrap');
+						const btnerror = $('<button>');
+						btnerror.addClass('btn-error');
+						btnerror.addClass('pop-btn');
+						btnerror.data('pop','error-report-pop');
+
+						tooltip.append(btnerror);
+						btnwrap2.append(tooltip);
+						btnwrap.append(btnwrap2);
+						quetop.append(title);
+						quetop.append(btnwrap);
+
+						const viewque = $('<div>');
+						viewque.addClass('view-que');
+						const quecontent = $('<div>');
+						quecontent.addClass('que-content');
+						const queimg = $('<img>');
+						queimg.attr('src',prob.questionUrl);
+
+						quecontent.append(queimg);
+
+						const quebottom = $('<div>');
+						quebottom.addClass('que-bottom');
+						const quebtnwrap = $('<div>');
+						quebtnwrap.addClass('btn-wrap');
+						const btndefault = $('<button>');
+						const add = $('<i>');
+						add.addClass('add-type02');
+						const btndefault2 = $('<button>');
+						const replace = $('<i>');
+						replace.addClass('replace');
+						btndefault.html(add.prop('outerHTML')+'추가');
+						btndefault2.html(replace.prop('outerHTML')+'교체');
+
+						quebtnwrap.append(btndefault);
+						quebtnwrap.append(btndefault2);
+						quebottom.append(quebtnwrap);
+						viewque.append(quecontent);
+						viewque.append(quebottom);
+						viewbox.append(quetop);
+						viewbox.append(viewque);
+
+						const quelast = $('<div>');
+						quelast.addClass('que-info-last');
+						const chapter = $('<p>');
+						chapter.addClass('chapter');
+						chapter.text(prob.largeChapterName + '>' + prob.mediumChapterName + '>' + prob.smallChapterName + '>' + prob.topicChapterName);
+
+						quelast.append(chapter);
+						viewbox.append(quelast);
+						sortgroup.append(viewbox);
+						viewlist.append(sortgroup);
+					})
+					$(".tab-wrap>.contents:nth-child(3)").append(viewlist);
+				});
+				console.log("이렇게 하는거지 뭐");
+
+				$(".tab-wrap li").removeClass('active');
+				$(".tab-wrap li:nth-child(2)").addClass('active');
+				$(".tab-wrap>.contents").removeClass('on');
+				$(".tab-wrap>.contents:nth-child(3)").addClass('on');
+			}
+
+			const noSimilProb = () => {
+				$(".tab-wrap>.contents:nth-child(3)").html('');
+				const nodata = $('<div>');
+				nodata.addClass('view-que-list');
+				nodata.addClass('no-data');
+				const p = $('<p>');
+				const i = $('<i>');
+				i.addClass('ic-no-data');
+				p.html('문제 목록에서 '+i.prop('outerHTML')+'유사문제 버튼을 선택해주세요.');
+				nodata.append(p);
+				$(".tab-wrap>.contents:nth-child(3)").append(nodata);
+			}
 		</script>
 		<script>
 			document.addEventListener("DOMContentLoaded",function (){
