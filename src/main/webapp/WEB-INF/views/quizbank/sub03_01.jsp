@@ -43,7 +43,7 @@
 						<div class="paper-info">
 <%--							<span>수학 1</span>--%>
 <%--							이준열(2015)--%>
-							<span id="id=subjectNameDisplay"></span>
+							<span id="subjectNameDisplay"></span>
 						</div>
 						<button class="btn-default btn-research" onclick="quizResearch()"><i class="research"></i>재검색</button>
 						<button class="btn-default pop-btn" data-pop="que-scope-pop">출제범위</button>
@@ -672,7 +672,11 @@
 									</div>
 								</div>
 								<div class="contents">
-									탭 컨텐츠 (3)
+									<div class="view-que-list scroll-inner">
+										<div class="sort-group">
+
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -885,10 +889,13 @@
 				})
 
 				$('.scope-type .pop-header').children('span').text(sessionStorage.getItem("subjectName"));
+				paperSummary();
 			})
 
 			// 파라미터에 itemIdList(Long[]) 넣어야 함!!
-			const getSimilProb = (itemIdList) => {
+			// Long 말고!!!!!!! 😵😵😵😵😵
+			const getSimilProb = (itemId) => {
+				const itemIdList = [itemId];
 				fetch('${path}/api/similarlist',{
 					method:'POST',
 					headers:{
@@ -1274,7 +1281,7 @@
 
 				container.insertAdjacentHTML("beforeend", passageHtml);
 
-				questions.forEach(function(q) {
+				questions.forEach(function(q, index) {
 					var questionUrlHtml = q.questionUrl
 							? '<div class="que-content"><img class="txt" src="' + q.questionUrl + '" alt="문제 이미지"></div>'
 							: '<div class="que-content"></div>';
@@ -1306,7 +1313,7 @@
 							'</div>' +
 							'<div class="btn-wrap">' +
 							'<button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>' +
-							'<button type="button" class="btn-delete"></button>' +
+							'<button type="button" class="btn-delete" onclick="deleteQuestion(' + (index+1) + ')"></button>' +
 							'</div>' +
 							'</div>' +
 							'<div class="view-que">' +
@@ -1332,6 +1339,7 @@
 					}
 
 					questionHTML +=
+							'<button type="button" class="btn-similar-que btn-default" onclick="getSimilProb(' + (q.id || 0) + ')"><i class="similar"></i> 유사 문제</button>' +
 							'</div>' +
 							'</div>' +
 							'<div class="que-info-last">' +
