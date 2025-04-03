@@ -1339,7 +1339,7 @@
 					}
 
 					questionHTML +=
-							'<button type="button" class="btn-similar-que btn-default" onclick="getSimilProb(' + (q.id || 0) + ')"><i class="similar"></i> 유사 문제</button>' +
+							'<button type="button" class="btn-similar-que btn-default" onclick="getSimilProb(' + (q.itemId || 0) + ')"><i class="similar"></i> 유사 문제</button>' +
 							'</div>' +
 							'</div>' +
 							'<div class="que-info-last">' +
