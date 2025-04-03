@@ -969,6 +969,7 @@
 				</div>
 			</div>
 		</div>
+	</div>
 
 		<script>
 			// // tooltip hover
@@ -1045,8 +1046,103 @@
 					})
 				}
 			})
-		</script>
+			</script>
+
 </body>
 
+<script>
+	console.log("test start");
+	alert("test start");
+	<%--document.addEventListener("DOMContentLoaded", function () {--%>
+	<%--	const container = document.querySelector(".view-que-list");--%>
+	<%--	console.log("Container element:", container);--%>
+
+	<%--	if (!container) {--%>
+	<%--		console.error("❌ .view-que-list 요소를 찾을 수 없습니다.");--%>
+	<%--		return;--%>
+	<%--	}--%>
+
+	<%--	const data = sessionStorage.getItem("questionList");--%>
+	<%--	console.log("sessionStorage에서 가져온 데이터:", data);--%>
+
+	<%--	let questionList = [];--%>
+	<%--	try {--%>
+	<%--		questionList = data ? JSON.parse(data) : [];--%>
+	<%--		console.log("Parsed data:", questionList);--%>
+	<%--	} catch (error) {--%>
+	<%--		console.error("❌ JSON 파싱 오류:", error);--%>
+	<%--		return;--%>
+	<%--	}--%>
+
+	<%--	container.innerHTML = ""; // 기존 데이터 초기화--%>
+
+	<%--	if (Array.isArray(questionList) && questionList.length > 0) {--%>
+	<%--		questionList.forEach((item) => {--%>
+	<%--			const questionBox = document.createElement("div");--%>
+	<%--			questionBox.classList.add("view-que-box");--%>
+
+	<%--			questionBox.innerHTML = `--%>
+	<%--    <div class="que-top">--%>
+	<%--        <div class="title">--%>
+	<%--            <span class="num">${item.itemNo}</span>--%>
+	<%--            <div class="que-badge-group">--%>
+	<%--                <span class="que-badge yellow">${getDifficultyText(item.difficultyCode)}</span>--%>
+	<%--                <span class="que-badge gray">${getQuestionTypeText(item.questionFormCode)}</span>--%>
+	<%--            </div>--%>
+	<%--        </div>--%>
+	<%--        <div class="btn-wrap">--%>
+	<%--            <button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>--%>
+	<%--            <button type="button" class="btn-delete"></button>--%>
+	<%--        </div>--%>
+	<%--    </div>--%>
+	<%--    <div class="view-que">--%>
+	<%--        <div class="que-content">--%>
+	<%--            <p class="txt">${item.questionText}</p>--%>
+	<%--        </div>--%>
+	<%--        <div class="que-bottom">--%>
+	<%--            <div class="data-area">--%>
+	<%--                <div class="que-info">--%>
+	<%--                    <p class="answer"><span class="label">해설</span></p>--%>
+	<%--                    <div class="data-answer-area">--%>
+	<%--                        <div class="paragraph"><span class="txt">${item.explanation}</span></div>--%>
+	<%--                    </div>--%>
+	<%--                </div>--%>
+	<%--            </div>--%>
+	<%--            <div class="data-area type01">--%>
+	<%--                <div class="que-info">--%>
+	<%--                    <p class="answer"><span class="label type01">정답</span></p>--%>
+	<%--                    <div class="data-answer-area">--%>
+	<%--                        <div class="paragraph"><span class="txt">${item.answer}</span></div>--%>
+	<%--                    </div>--%>
+	<%--                </div>--%>
+	<%--                <button type="button" class="btn-similar-que btn-default"><i class="similar"></i> 유사 문제</button>--%>
+	<%--            </div>--%>
+	<%--        </div>--%>
+	<%--    </div>--%>
+	<%--    <div class="que-info-last">--%>
+	<%--        <p class="chapter">${item.chapterInfo}</p>--%>
+	<%--    </div>--%>
+	<%--`;--%>
+
+	<%--			container.appendChild(questionBox);--%>
+	<%--		});--%>
+	<%--	} else {--%>
+	<%--		console.warn("⚠ 데이터가 없거나 올바르지 않습니다.");--%>
+	<%--		container.innerHTML = "<p style='text-align: center;'>데이터가 없습니다.</p>";--%>
+	<%--	}--%>
+	<%--});--%>
+
+	<%--// 난이도 코드 변환 함수--%>
+	<%--function getDifficultyText(code) {--%>
+	<%--	const difficultyMap = { "01": "하", "02": "중", "03": "상", "04": "최상" };--%>
+	<%--	return difficultyMap[code] || "알 수 없음";--%>
+	<%--}--%>
+
+	<%--// 문항 유형 코드 변환 함수--%>
+	<%--function getQuestionTypeText(code) {--%>
+	<%--	const typeMap = { "50": "객관식", "60": "주관식" };--%>
+	<%--	return typeMap[code] || "알 수 없음";--%>
+	<%--}--%>
+</script>
 
 </html>
