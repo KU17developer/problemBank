@@ -1095,9 +1095,9 @@
                             <li class="tabs__item">
                                 <a class="tabs__link" href="javascript:" onclick="cornfrim('고등','국어'); cssc(this, 'high')">고등</a>
                             </li>
-                            <li class="tabs__item">
-                                <a class="tabs__link" href="testbank.html?cateCode=TestBank-Storage">시험지 보관함</a>
-                            </li>
+<%--                            <li class="tabs__item">--%>
+<%--                                <a class="tabs__link" href="testbank.html?cateCode=TestBank-Storage">시험지 보관함</a>--%>
+<%--                            </li>--%>
                         </ul>
                         <!-- // 중등 고등, 수능, 시험지 보관함 탭 -->
                         <!-- 과목 카테고리 탭 -->
