@@ -229,7 +229,7 @@
 			num.innerText = quesForm[num.previousElementSibling.innerText];
 		})
 
-		$(".pop-wrap[data-pop='prev-pop']").show();	// 테스트용
+		// $(".pop-wrap[data-pop='prev-pop']").show();	// 테스트용
 
 		let count = 0;
 		let passageurl = '';
