@@ -38,7 +38,7 @@
 						<div class="paper-info">
 							<!--<span>국어 1-1</span>
 							노미숙(2015)-->
-							${chapterList[0].subjectName}
+							<span>${chapterList[0].subjectName}</span>
 						</div>
 					</div>
 					<div class="view-bottom">
@@ -139,15 +139,11 @@
 											<div class="right-area">
 											</div>
 										</div>
-										<c:forEach var="eval" items="${evaluation}" varStatus="status">
-											<c:if test="${status.index%3==0}">
-												<div class="btn-wrap multi">
-											</c:if>
-											<button type="button" id="${eval.domainId}" class="btn-line activity">${eval.domainName}</button>
-											<c:if test="${status.index%3==2} || ${status.index+1}==${evaluation}.length">
-												</div>
-											</c:if>
-										</c:forEach>
+										<div class="btn-wrap multi">
+											<c:forEach var="eval" items="${evaluation}">
+												<button type="button" id="${eval.domainId}" class="btn-line activity">${eval.domainName}</button>
+											</c:forEach>
+										</div>
 									</div>
 									<div class="box">
 										<div class="title-wrap">

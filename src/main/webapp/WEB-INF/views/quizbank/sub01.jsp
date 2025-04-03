@@ -36,7 +36,7 @@
 						<div class="paper-info">
 							<!--<span>수학 </span>
 							이준열(2015) 수정-->
-							${chapterList[0].subjectName}
+							<span>${chapterList[0].subjectName} 개정 교육과정</span>
 						</div>
 						<div class="btn-wrap">
 							<button class="btn-icon"><i class="edit"></i>선택한 시험지 편집하기</button>
@@ -150,42 +150,44 @@
 	</div>
 <script>
 	$(function(){
-		<%--console.log('${chapterList}');--%>
-		console.log('${chapterList[0].subjectId}')
-		if(sessionStorage.getItem('itemIdList')==null || sessionStorage.getItem('subjectId')!='${chapterList[0].subjectId}'){
-			fetch('${path}/api/getitemid',{
-				method:'POST',
-				headers:{
-					'Content-Type':'application/json'
-				},
-				body:'${jsonChapList}'
-			}).then(response=>{
-				console.log(response);
-				return response.json()
-			})
-			.then(data=>{
-				console.log(data);
-				sessionStorage.setItem('subjectId','${chapterList[0].subjectId}');
-				sessionStorage.setItem('itemIdList',JSON.stringify(data));
-			});
-		}
-		console.log(sessionStorage.getItem('itemIdList'));
-
+		sessionStorage.setItem('subjectId','${chapterList[0].subjectId}');
 		// sessionStorage에 과목명 추가
 		sessionStorage.setItem('subjectName','${chapterList[0].subjectName}');
+
+		<%--console.log('${chapterList}');--%>
+		<%--console.log('${chapterList[0].subjectId}')--%>
+		<%--if(sessionStorage.getItem('itemIdList')==null || sessionStorage.getItem('subjectId')!='${chapterList[0].subjectId}'){--%>
+		<%--	fetch('${path}/api/getitemid',{--%>
+		<%--		method:'POST',--%>
+		<%--		headers:{--%>
+		<%--			'Content-Type':'application/json'--%>
+		<%--		},--%>
+		<%--		body:'${jsonChapList}'--%>
+		<%--	}).then(response=>{--%>
+		<%--		console.log(response);--%>
+		<%--		return response.json()--%>
+		<%--	})--%>
+		<%--	.then(data=>{--%>
+		<%--		console.log(data);--%>
+		<%--		sessionStorage.setItem('subjectId','${chapterList[0].subjectId}');--%>
+		<%--		sessionStorage.setItem('itemIdList',JSON.stringify(data));--%>
+		<%--	});--%>
+		<%--}--%>
+		<%--console.log(sessionStorage.getItem('itemIdList'));--%>
 	})
 
-	const download = (type,scName) => {
+	const download = async (type,sChap) => {
 		<%--const itemIdList = JSON.parse('${itemIdList}');--%>
 		<%--console.log(type);--%>
 		<%--console.log(itemIdList);--%>
 		<%--console.log(scName);--%>
 		<%--console.log(itemIdList[scName]);--%>
 
-		const itemIdList = JSON.parse(sessionStorage.getItem('itemIdList'));
+		const itemIdList = await getItemId(sChap);
+		// const itemIdList = JSON.parse(sessionStorage.getItem('itemIdList'));
 
-		if(itemIdList[scName]!=null){
-			fetch('${path}/api/download',{
+		if(itemIdList!=null){
+			await fetch('${path}/api/download',{
 				method:'POST',
 				headers:{
 					'Content-Type':'application/json'
@@ -193,7 +195,7 @@
 				body:JSON.stringify({
 					"examId":"68",
 					"examName":"커비는 딸기케이크를 먹고싶어",
-					"itemIdList":itemIdList[scName]
+					"itemIdList":itemIdList
 				})
 			}).then(response=>response.json())
 			.then(data=>{
@@ -240,15 +242,17 @@
 		}
 	}
 
-	const previewPopup = (sChap) =>{
-		const itemIdList = JSON.parse(sessionStorage.getItem('itemIdList'));
-		if(itemIdList[sChap]!=null){
-			fetch('${path}/api/preview',{
+	const previewPopup = async (sChap) =>{
+		// const itemIdList = JSON.parse(sessionStorage.getItem('itemIdList'));
+		const itemIdList = await getItemId(sChap);
+
+		if(itemIdList!=null){
+			await fetch('${path}/api/preview',{
 				method:'POST',
 				headers:{
 					'Content-Type':'application/json'
 				},
-				body:JSON.stringify(itemIdList[sChap])
+				body:JSON.stringify(itemIdList)
 			}).then(response=>response.json())
 			.then(data=>{
 				$('.view-data').empty();
@@ -309,21 +313,48 @@
 		}
 	}
 
-	const editProblem = (sChap) => {
-		const itemIdList = JSON.parse(sessionStorage.getItem('itemIdList'));
-		if(itemIdList[sChap]!=null){
-			fetch('${path}/api/preview',{
+	const editProblem = async (sChap) => {
+		// const itemIdList = JSON.parse(sessionStorage.getItem('itemIdList'));
+		const itemIdList = await getItemId(sChap);
+
+		if(itemIdList!=null){
+			await fetch('${path}/api/preview',{
 				method:'POST',
 				headers:{
 					'Content-Type':'application/json'
 				},
-				body:JSON.stringify(itemIdList[sChap])
+				body:JSON.stringify(itemIdList)
 			}).then(response=>response.json())
 			.then(data=>{
 				sessionStorage.setItem("questionList",JSON.stringify(data));
 				location.assign('${path}/sub03_01');
 			})
 		}
+	}
+
+	const getItemId = (sChap) =>{
+		const chapList = '${jsonChapList}';
+		console.log(chapList);
+		const filterChap = JSON.parse(chapList).filter(chap=>chap.smallChapterName==sChap);
+		console.log(filterChap);
+
+		const itemIdList = fetch('${path}/api/getitemid',{
+			method:'POST',
+			headers:{
+				'Content-Type':'application/json'
+			},
+			body:JSON.stringify(filterChap)
+		}).then(response=>{
+			console.log(response);
+			return response.json()
+		})
+		.then(data=>{
+			console.log(data);
+			return data;
+			// sessionStorage.setItem('itemIdList',JSON.stringify(data));
+		});
+
+		return itemIdList;
 	}
 
 	// 바꿔야겠다 싶어서 만들려고 했는데 일단 보류
