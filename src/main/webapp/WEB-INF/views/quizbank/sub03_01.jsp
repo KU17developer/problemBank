@@ -173,7 +173,6 @@
 									<div class="table half-type no-passage">
 										<!--지문 없는 테이블 유형-->
 										<div class="fix-head">
-											<span>이동</span>
 											<span>번호</span>
 											<span>시험지명</span>
 											<!--문제 유형-->
@@ -668,7 +667,11 @@
 									</div>
 								</div>
 								<div class="contents">
-									탭 컨텐츠 (3)
+									<div class="view-que-list scroll-inner">
+										<div class="sort-group">
+
+										</div>
+									</div>
 								</div>
 							</div>
 						</div>
@@ -1094,14 +1097,6 @@
 					col.addClass('col');
 					const a = $('<a>');
 					a.attr('href','javascript:;');
-					const dragHandle = $('<span>');
-					dragHandle.addClass('dragHandle');
-					dragHandle.addClass('ui-sortable-handle');
-					const handleImg = $('<img>');
-					handleImg.attr('src','${path}/resources/images/common/ico_move_type01.png');
-
-					dragHandle.append(handleImg);
-
 					const num = $('<span>');
 					num.text(index*1+1*1);
 					const tit = $('<span>');
@@ -1139,7 +1134,6 @@
 					diffbadge.text(ques.difficultyName);
 
 					diff.append(diffbadge);
-					a.append(dragHandle);
 					a.append(num);
 					a.append(tit);
 					a.append(quesType);
@@ -1147,6 +1141,39 @@
 					col.append(a);
 					$('#table-1').append(col);
 				})
+			}
+
+			const deleteQuestion = (index) => {
+				let target;
+				$('.view-bottom>.cnt-box .view-que-list:nth-child(2) span.num').each((i,num)=>{
+					console.log(i);
+					console.log(num);
+					const targetSummary = $('.col>a>span:nth-child(1)').filter((index,numspan)=>{
+						console.log(numspan);
+						return numspan.innerText==(i+1);
+					})
+					console.log(targetSummary);
+					if(i+1==index){
+						target = num.parentNode.parentNode.parentNode;
+						console.log(target);
+						targetSummary.parent('.col').remove();
+						const delQuizInList = JSON.parse(sessionStorage.getItem('questionList'));
+						const delQuiz = delQuizInList.splice(i,1);
+						sessionStorage.setItem('questionList',JSON.stringify(delQuizInList));
+						if(!sessionStorage.getItem('delQuestionList')){
+							const delQuizList = [];
+							delQuizList.push(delQuiz);
+							sessionStorage.setItem('delQuestionList',JSON.stringify(delQuizList));
+						}else{
+							const delQuizList = JSON.parse(sessionStorage.getItem('delQuestionList'));
+							delQuizList.push(delQuiz);
+							sessionStorage.setItem('delQuestionList',JSON.stringify(delQuizList));
+						}
+					}
+				})
+				document.querySelector('.tab-wrap .contents:last-child .sort-group').appendChild(target);
+				renderQuestions(JSON.parse(sessionStorage.getItem("questionList")));
+				paperSummary();
 			}
 		</script>
 	<script>
@@ -1208,7 +1235,7 @@
 						'</div>' +
 						'<div class="btn-wrap">' +
 						'<button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>' +
-						'<button type="button" class="btn-delete"></button>' +
+						'<button type="button" class="btn-delete" onclick="deleteQuestion(' + (index+1) + ')"></button>' +
 						'</div>' +
 						'</div>' +
 						'<div class="view-que">' +
