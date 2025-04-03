@@ -881,10 +881,14 @@
 				})
 
 				$('.scope-type .pop-header').children('span').text(sessionStorage.getItem("subjectName"));
+
+				paperSummary();
 			})
 
 			// 파라미터에 itemIdList(Long[]) 넣어야 함!!
-			const getSimilProb = (itemIdList) => {
+			// Long이 아니라 Long[]인데!!!
+			const getSimilProb = (itemId) => {
+				const itemIdList = [itemId];
 				fetch('${path}/api/similarlist',{
 					method:'POST',
 					headers:{
@@ -1075,9 +1079,74 @@
 				})
 				.then(response => response.json())
 				.then(data => {
+					renderQuestions(data);
 					sessionStorage.setItem("questionList", JSON.stringify(data));
+					paperSummary();
 				})
 				.catch(error => console.error("문항 가져오기 실패", error));
+			}
+
+			const paperSummary = () => {
+				$('#table-1').html('');
+
+				JSON.parse(sessionStorage.getItem('questionList')).forEach((ques,index)=>{
+					const col = $('<div>');
+					col.addClass('col');
+					const a = $('<a>');
+					a.attr('href','javascript:;');
+					const dragHandle = $('<span>');
+					dragHandle.addClass('dragHandle');
+					dragHandle.addClass('ui-sortable-handle');
+					const handleImg = $('<img>');
+					handleImg.attr('src','${path}/resources/images/common/ico_move_type01.png');
+
+					dragHandle.append(handleImg);
+
+					const num = $('<span>');
+					num.text(index*1+1*1);
+					const tit = $('<span>');
+					tit.addClass('tit');
+					const chapTxt = $('<div>');
+					chapTxt.addClass('txt');
+					chapTxt.text(ques.largeChapterName + '>' + ques.mediumChapterName + '>' + ques.smallChapterName + '>' +ques.topicChapterName);
+					const tooltipwrap = $('<div>');
+					tooltipwrap.addClass('tooltip-wrap');
+					const tipbtn = $('<button>');
+					tipbtn.addClass('btn-tip');
+					const tooltip = $('<div>');
+					tooltip.addClass('tooltip');
+					tooltip.addClass('type01');
+					const tool = $('<div>');
+					tool.addClass('tool-type01');
+					tool.text(sessionStorage.getItem('subjectName') + ' - 만점의 비결(?)');	// ?
+
+					tooltip.append(tool);
+					tooltipwrap.append(tipbtn);
+					tooltipwrap.append(tooltip);
+					tit.append(chapTxt);
+					tit.append(tooltipwrap);
+
+					const quesType = $('<span>');
+					if(ques.questionFormCode/10==5){
+						quesType.text('객관식');
+					}else if(ques.questionFormCode/10==6){
+						quesType.text('주관식');
+					}else quesType.text('확인중...');
+
+					const diff = $('<span>');
+					const diffbadge = $('<span>');
+					diffbadge.addClass('que-badge');
+					diffbadge.text(ques.difficultyName);
+
+					diff.append(diffbadge);
+					a.append(dragHandle);
+					a.append(num);
+					a.append(tit);
+					a.append(quesType);
+					a.append(diff);
+					col.append(a);
+					$('#table-1').append(col);
+				})
 			}
 		</script>
 	<script>
@@ -1158,7 +1227,7 @@
 						'<p class="answer"><span class="label type01">정답</span></p>' +
 						'<div class="data-answer-area">' + answerHtml + '</div>' +
 						'</div>' +
-						'<button type="button" class="btn-similar-que btn-default" onclick="getSimilProb(' + (q.id || 0) + ')"><i class="similar"></i> 유사 문제</button>' +
+						'<button type="button" class="btn-similar-que btn-default" onclick="getSimilProb(' + (q.itemId || 0) + ')"><i class="similar"></i> 유사 문제</button>' +
 						'</div>' +
 						'</div>' +
 						'</div>' +
