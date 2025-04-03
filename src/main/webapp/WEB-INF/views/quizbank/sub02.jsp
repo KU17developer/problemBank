@@ -139,19 +139,11 @@
 											<div class="right-area">
 											</div>
 										</div>
-										<c:forEach var="eval" items="${evaluation}" varStatus="status">
-											${status.index}
-											${status.index%3==0}
-											${status.index%3==2}
-											${evaluation.size()}
-											<c:if test="${status.index%3==0}">
-												<div class="btn-wrap multi">
-											</c:if>
-											<button type="button" id="${eval.domainId}" class="btn-line activity">${eval.domainName}</button>
-											<c:if test="${status.index%3==2} || ${status.index+1==evaluation.size()}">
-												</div>
-											</c:if>
-										</c:forEach>
+										<div class="btn-wrap multi">
+											<c:forEach var="eval" items="${evaluation}">
+												<button type="button" id="${eval.domainId}" class="btn-line activity">${eval.domainName}</button>
+											</c:forEach>
+										</div>
 									</div>
 									<div class="box">
 										<div class="title-wrap">
