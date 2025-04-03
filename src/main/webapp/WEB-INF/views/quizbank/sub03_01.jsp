@@ -1079,9 +1079,98 @@
 				})
 				.then(response => response.json())
 				.then(data => {
+					renderQuestions(data);
 					sessionStorage.setItem("questionList", JSON.stringify(data));
+					paperSummary();
 				})
 				.catch(error => console.error("문항 가져오기 실패", error));
+			}
+
+			const paperSummary = () => {
+				$('#table-1').html('');
+
+				JSON.parse(sessionStorage.getItem('questionList')).forEach((ques,index)=>{
+					const col = $('<div>');
+					col.addClass('col');
+					const a = $('<a>');
+					a.attr('href','javascript:;');
+					const num = $('<span>');
+					num.text(index*1+1*1);
+					const tit = $('<span>');
+					tit.addClass('tit');
+					const chapTxt = $('<div>');
+					chapTxt.addClass('txt');
+					chapTxt.text(ques.largeChapterName + '>' + ques.mediumChapterName + '>' + ques.smallChapterName + '>' +ques.topicChapterName);
+					const tooltipwrap = $('<div>');
+					tooltipwrap.addClass('tooltip-wrap');
+					const tipbtn = $('<button>');
+					tipbtn.addClass('btn-tip');
+					const tooltip = $('<div>');
+					tooltip.addClass('tooltip');
+					tooltip.addClass('type01');
+					const tool = $('<div>');
+					tool.addClass('tool-type01');
+					tool.text(sessionStorage.getItem('subjectName') + ' - 만점의 비결(?)');	// ?
+
+					tooltip.append(tool);
+					tooltipwrap.append(tipbtn);
+					tooltipwrap.append(tooltip);
+					tit.append(chapTxt);
+					tit.append(tooltipwrap);
+
+					const quesType = $('<span>');
+					if(ques.questionFormCode/10==5){
+						quesType.text('객관식');
+					}else if(ques.questionFormCode/10==6){
+						quesType.text('주관식');
+					}else quesType.text('확인중...');
+
+					const diff = $('<span>');
+					const diffbadge = $('<span>');
+					diffbadge.addClass('que-badge');
+					diffbadge.text(ques.difficultyName);
+
+					diff.append(diffbadge);
+					a.append(num);
+					a.append(tit);
+					a.append(quesType);
+					a.append(diff);
+					col.append(a);
+					$('#table-1').append(col);
+				})
+			}
+
+			const deleteQuestion = (index) => {
+				let target;
+				$('.view-bottom>.cnt-box .view-que-list:nth-child(2) span.num').each((i,num)=>{
+					console.log(i);
+					console.log(num);
+					const targetSummary = $('.col>a>span:nth-child(1)').filter((index,numspan)=>{
+						console.log(numspan);
+						return numspan.innerText==(i+1);
+					})
+					console.log(targetSummary);
+					if(i+1==index){
+						target = num.parentNode.parentNode.parentNode;
+						console.log(target);
+						targetSummary.parent('.col').remove();
+						const delQuizInList = JSON.parse(sessionStorage.getItem('questionList'));
+						const delQuiz = delQuizInList.splice(i,1);
+						sessionStorage.setItem('questionList',JSON.stringify(delQuizInList));
+						if(!sessionStorage.getItem('delQuestionList')){
+							const delQuizList = [];
+							delQuizList.push(delQuiz);
+							sessionStorage.setItem('delQuestionList',JSON.stringify(delQuizList));
+						}else{
+							const delQuizList = JSON.parse(sessionStorage.getItem('delQuestionList'));
+							delQuizList.push(delQuiz);
+							sessionStorage.setItem('delQuestionList',JSON.stringify(delQuizList));
+						}
+					}
+				})
+				document.querySelector('.tab-wrap .contents:last-child .sort-group').appendChild(target);
+				renderQuestions(JSON.parse(sessionStorage.getItem("questionList")));
+				paperSummary();
 			}
 		</script>
 	<script>

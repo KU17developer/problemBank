@@ -2131,40 +2131,41 @@ input[type=checkbox]:checked + label::before {
 .full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage .fix-head {
   border-top: 1px solid #e0e0e0;
 }
+/* 여기부터 */
+/*.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage .fix-head span:nth-child(1) {*/
+/*  width: 8%;*/
+/*}*/
 .full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage .fix-head span:nth-child(1) {
   width: 8%;
 }
 .full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage .fix-head span:nth-child(2) {
-  width: 8%;
-}
-.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage .fix-head span:nth-child(3) {
   width: 60%;
   justify-content: center;
   padding: 13px 0;
   display: flex;
 }
-.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage .fix-head span:nth-child(4) {
+.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage .fix-head span:nth-child(3) {
   width: 12%;
   justify-content: center;
   padding: 13px 0;
 }
-.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage .fix-head span:nth-child(5) {
+.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage .fix-head span:nth-child(4) {
   width: 12%;
 }
+/*.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage span:nth-child(1) {*/
+/*  width: 10%;*/
+/*}*/
 .full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage span:nth-child(1) {
   width: 10%;
 }
 .full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage span:nth-child(2) {
-  width: 10%;
-}
-.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage span:nth-child(3) {
   width: 58%;
   padding: 13px;
   word-break: break-all;
   justify-content: flex-start;
   line-height: 20px;
 }
-.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage span:nth-child(3) .txt {
+.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage span:nth-child(2) .txt {
   width: 100%;
   min-width: 315px;
   overflow: hidden;
@@ -2175,17 +2176,18 @@ input[type=checkbox]:checked + label::before {
   display: block;
 }
 @media (max-width: 1280px) {
-  .full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage span:nth-child(3) .txt {
+  .full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage span:nth-child(2) .txt {
     min-width: 290px;
   }
 }
-.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage span:nth-child(4) {
+.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage span:nth-child(3) {
   width: 10%;
   justify-content: center;
 }
-.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage span:nth-child(5) {
+.full-pop-que .full-pop-wrap .view-box .table.half-type.no-passage span:nth-child(4) {
   width: 12%;
 }
+/* 여기까지 숫자 1씩 감소 */
 .full-pop-que .full-pop-wrap .view-box .table .dragHandle {
   cursor: move;
 }
