@@ -223,18 +223,30 @@
 		questionList.forEach((question,index)=>{
 			let viewdata;
 			let testdiv;
-
-			if(index%4==0){
-				viewdata = $('<div>');
-				viewdata.addClass('view-data');
-				viewdata.addClass('view'+Math.floor(index/4));
-			}else viewdata = $('.view-data.view'+Math.floor(index/4));
-
-			if(index%2==1) testdiv = $('.testdiv'+(index-1));
-			else{
-				testdiv = $('<div>');
-				testdiv.addClass('testdiv'+index);
+			const maxpageheight = 2970;
+			let pageheight = 0;
+			let count = 0;
+			// 문제의 height 가져오기(어떻게 할거임?)
+			const quesheight = 0;
+			if(maxpageheight<pageheight+quesheight){
+				testdiv = $('<div');
+				count++;
+			}else{
+				testdiv = $('.testdiv_'+count+'_'+(index-1));
 			}
+			testdiv.addClass('testdiv_'+count+'_'+index);
+
+			// if(index%4==0){
+			// 	viewdata = $('<div>');
+			// 	viewdata.addClass('view-data');
+			// 	viewdata.addClass('view'+Math.floor(index/4));
+			// }else viewdata = $('.view-data.view'+Math.floor(index/4));
+			//
+			// if(index%2==1) testdiv = $('.testdiv'+(index-1));
+			// else{
+			// 	testdiv = $('<div>');
+			// 	testdiv.addClass('testdiv'+index);
+			// }
 
 			const exarea = $('<div>');
 			exarea.addClass('example-area');
@@ -333,135 +345,133 @@
 			alert('시험지명을 입력해주세요.');
 		}else {
 			// 시험지에 들어갈 정보 찾기
-			if(confirm('시험지를 저장하시겠습니까?')){
-				const download = document.getElementById('q-preview');
-				const download2 = document.querySelector('.view-data');
+			const download = document.getElementById('q-preview');
+			const download2 = document.querySelector('.view-data');
 
-				// await html2canvas(document.querySelector('.view-data')).then((canvas) => {
-				// 	const imgData = canvas.toDataURL('image/png');
-				// 	const pdf = new jspdf.jsPDF();
-				// 	pdf.addImage(imgData, 'PNG', 10, 10);
-				// 	pdf.save('document.pdf');
+			// await html2canvas(document.querySelector('.view-data')).then((canvas) => {
+			// 	const imgData = canvas.toDataURL('image/png');
+			// 	const pdf = new jspdf.jsPDF();
+			// 	pdf.addImage(imgData, 'PNG', 10, 10);
+			// 	pdf.save('document.pdf');
+			// });
+
+			// await $(".pop-wrap[data-pop='prev-pop']").hide();
+
+			await $(".pop-wrap[data-pop='prev-pop']").show();
+
+			// 이미지 저장이 잘 될때까지 주석
+			// await $('.view-data').imagesLoaded()
+			// 	.done(function(instance){
+			// 		console.log("됨?");
+			// html2pdf()
+			// .from(download2)
+			// .set({
+			// 	margin: 1,
+			// 	filename: "example.pdf",
+			// 	html2canvas: { scale: 2 },
+			// 	jsPDF: { orientation: "portrait" },
+			// })
+			// .save()
+				// }).fail(function(){
+				// 	console.log("겟냐?");
 				// });
 
-				// await $(".pop-wrap[data-pop='prev-pop']").hide();
+			<%--// 그리고 저장하기--%>
+			<%--// 저장할 데이터 먼저 적어보자--%>
 
-				await $(".pop-wrap[data-pop='prev-pop']").show();
+			<%--const sendQuesData = [];--%>
 
-				// 이미지 저장이 잘 될때까지 주석
-				// await $('.view-data').imagesLoaded()
-				// 	.done(function(instance){
-				// 		console.log("됨?");
-				html2pdf()
-				.from(download2)
-				.set({
-					margin: 1,
-					filename: "example.pdf",
-					html2canvas: { scale: 2 },
-					jsPDF: { orientation: "portrait" },
-				})
-				.save()
-					// }).fail(function(){
-					// 	console.log("겟냐?");
-					// });
+			<%--let problemType;--%>
 
-				<%--// 그리고 저장하기--%>
-				<%--// 저장할 데이터 먼저 적어보자--%>
+			<%--let numArr = [];--%>
+			<%--$(".right-wrap>.que-badge-group span.num").each((i,num)=>{--%>
+			<%--	numArr.push(num.innerText);--%>
+			<%--})--%>
 
-				<%--const sendQuesData = [];--%>
+			<%--if(numArr[0]>0 && numArr[1]>0) problemType='multiple, subjective';--%>
+			<%--else if(numArr[0]>0) problemType='multiple';--%>
+			<%--else if(numArr[1]>0) problemType='subjective';--%>
 
-				<%--let problemType;--%>
+			<%--// 시험지 정보인데 시험지 문항을 저장하려고 함 😅 시험지 문항은 아래로--%>
+			<%--// examCode : sequence 사용--%>
+			<%--// title : $(".left-wrap .search-box>input.search").val()--%>
+			<%--// problemType : 객관식, 주관식 각각 1개 이상이면 영어로 문자열에 추가--%>
+			<%--// difficulty : questionList에서 가져오기--%>
+			<%--// problemForm : questionList에서 가져오기--%>
+			<%--// examImage : 뭐 가져와야 하지? 🤔--%>
+			<%--// questioncount : 문제 개수 세서 저장(근데 안세도 될수도 있음!)--%>
+			<%--// examregistday : sysdate로 설정--%>
+			<%--// subject : 이거... 어디에서 가져옴? 🤔--%>
+			<%--// teacode : 일단 회원이 없으니 임의의 값 설정--%>
+			<%--// midhighcode : 코드가 없어서 뭘 저장해야 할지 모르겠다 🤔--%>
+			<%--// subCode : sessionStorage에서 가져오기--%>
+			<%--const sendPaperData = {--%>
+			<%--	'title' : $(".left-wrap .search-box>input.search").val(),--%>
+			<%--	'problemType' : problemType,		// 객관식, 주관식에 따라 바꾸는 것으로 만들기--%>
+			<%--	'difficulty' : questionList[0].difficultyName,	// 근데 이거 뭐 저장하는 거임? 배열로 최대 5개까지 저장하는 건가?--%>
+			<%--	'problemForm' : questionList[0].questionFormName,--%>
+			<%--	'examImage' : '',			// 일단 이건 뭔지 모르겠어--%>
+			<%--	'questionCount' : questionList.length,	// 일단 문항번호로 저장--%>
+			<%--	'subject' : sessionStorage.getItem('subjectName'),--%>
+			<%--	'teaCode' : '6804',	// 임의의 번호(아님)으로 저장--%>
+			<%--	'midhighcode' : '',			// 어디서 가져오는지 모르겠어--%>
+			<%--	'subCode' : sessionStorage.getItem('subjectId')--%>
+			<%--}--%>
+			<%--// 그래서 2개의 항목은 비어있다...--%>
 
-				<%--let numArr = [];--%>
-				<%--$(".right-wrap>.que-badge-group span.num").each((i,num)=>{--%>
-				<%--	numArr.push(num.innerText);--%>
-				<%--})--%>
+			<%--let examCode;--%>
 
-				<%--if(numArr[0]>0 && numArr[1]>0) problemType='multiple, subjective';--%>
-				<%--else if(numArr[0]>0) problemType='multiple';--%>
-				<%--else if(numArr[1]>0) problemType='subjective';--%>
+			<%--// 페이지를 넘어가면서 저장하는 건 body에 넣을 방법을 못 찾아 fetch로 하기로 했다.--%>
+			<%--// 여기서 시험지를 DB에 저장하고 시험지 번호를 가져온다.--%>
+			<%--// teacode + subcode + max(examcode) 로 가져올 수 있겠다. teacode와 subcode가 일치하면서 examcode가 가장 큰 것으로.--%>
+			<%--// 그러면 가장 최신 시험지를 가져올 수 있겠지--%>
+			<%--await fetch('${path}/edit/saveexampaper',{--%>
+			<%--	method:'POST',--%>
+			<%--	headers:{--%>
+			<%--		'Content-Type':'application/json'--%>
+			<%--	},--%>
+			<%--	body:JSON.stringify(sendPaperData)--%>
+			<%--}).then(response=>{--%>
+			<%--	console.log(response);--%>
+			<%--	return response.json()--%>
+			<%--})--%>
+			<%--.then(data=>{--%>
+			<%--	console.log(data);--%>
+			<%--	examCode=data;		// 일단 여기서 시험지 번호를 가져올 생각이라 examCode=data란 코드를 친건데...--%>
+			<%--}).catch(error=>console.error(error))--%>
 
-				<%--// 시험지 정보인데 시험지 문항을 저장하려고 함 😅 시험지 문항은 아래로--%>
-				<%--// examCode : sequence 사용--%>
-				<%--// title : $(".left-wrap .search-box>input.search").val()--%>
-				<%--// problemType : 객관식, 주관식 각각 1개 이상이면 영어로 문자열에 추가--%>
-				<%--// difficulty : questionList에서 가져오기--%>
-				<%--// problemForm : questionList에서 가져오기--%>
-				<%--// examImage : 뭐 가져와야 하지? 🤔--%>
-				<%--// questioncount : 문제 개수 세서 저장(근데 안세도 될수도 있음!)--%>
-				<%--// examregistday : sysdate로 설정--%>
-				<%--// subject : 이거... 어디에서 가져옴? 🤔--%>
-				<%--// teacode : 일단 회원이 없으니 임의의 값 설정--%>
-				<%--// midhighcode : 코드가 없어서 뭘 저장해야 할지 모르겠다 🤔--%>
-				<%--// subCode : sessionStorage에서 가져오기--%>
-				<%--const sendPaperData = {--%>
-				<%--	'title' : $(".left-wrap .search-box>input.search").val(),--%>
-				<%--	'problemType' : problemType,		// 객관식, 주관식에 따라 바꾸는 것으로 만들기--%>
-				<%--	'difficulty' : questionList[0].difficultyName,	// 근데 이거 뭐 저장하는 거임? 배열로 최대 5개까지 저장하는 건가?--%>
-				<%--	'problemForm' : questionList[0].questionFormName,--%>
-				<%--	'examImage' : '',			// 일단 이건 뭔지 모르겠어--%>
-				<%--	'questionCount' : questionList.length,	// 일단 문항번호로 저장--%>
-				<%--	'subject' : sessionStorage.getItem('subjectName'),--%>
-				<%--	'teaCode' : '6804',	// 임의의 번호(아님)으로 저장--%>
-				<%--	'midhighcode' : '',			// 어디서 가져오는지 모르겠어--%>
-				<%--	'subCode' : sessionStorage.getItem('subjectId')--%>
-				<%--}--%>
-				<%--// 그래서 2개의 항목은 비어있다...--%>
+			<%--await questionList.forEach(question=>{--%>
+			<%--	// 시험지 문항 데이터--%>
+			<%--	// questionCode : sequence 사용하기--%>
+			<%--	// passageUrl : questionList에서 가져오기(근데 지문 없는게 많긴 해)--%>
+			<%--	// questionUrl : questionList에서 가져오기--%>
+			<%--	// answerUrl : questionList에서 가져오기--%>
+			<%--	// explainUrl : questionList에서 가져오기--%>
+			<%--	// examCode : 시험지 만들고 가져오기--%>
 
-				<%--let examCode;--%>
+			<%--	console.log("examCode",examCode);--%>
 
-				<%--// 페이지를 넘어가면서 저장하는 건 body에 넣을 방법을 못 찾아 fetch로 하기로 했다.--%>
-				<%--// 여기서 시험지를 DB에 저장하고 시험지 번호를 가져온다.--%>
-				<%--// teacode + subcode + max(examcode) 로 가져올 수 있겠다. teacode와 subcode가 일치하면서 examcode가 가장 큰 것으로.--%>
-				<%--// 그러면 가장 최신 시험지를 가져올 수 있겠지--%>
-				<%--await fetch('${path}/edit/saveexampaper',{--%>
-				<%--	method:'POST',--%>
-				<%--	headers:{--%>
-				<%--		'Content-Type':'application/json'--%>
-				<%--	},--%>
-				<%--	body:JSON.stringify(sendPaperData)--%>
-				<%--}).then(response=>{--%>
-				<%--	console.log(response);--%>
-				<%--	return response.json()--%>
-				<%--})--%>
-				<%--.then(data=>{--%>
-				<%--	console.log(data);--%>
-				<%--	examCode=data;		// 일단 여기서 시험지 번호를 가져올 생각이라 examCode=data란 코드를 친건데...--%>
-				<%--}).catch(error=>console.error(error))--%>
+			<%--	sendQuesData.push({--%>
+			<%--		'passageUrl':question.passageUrl,--%>
+			<%--		'questionUrl':question.questionUrl,--%>
+			<%--		'answerUrl':question.answerUrl,--%>
+			<%--		'explainUrl':question.explainUrl,--%>
+			<%--		'examCode':String(examCode)		// 시험지 저장하고 가져오기!!! 근데 어떻게? 😐--%>
+			<%--	})--%>
+			<%--})--%>
 
-				<%--await questionList.forEach(question=>{--%>
-				<%--	// 시험지 문항 데이터--%>
-				<%--	// questionCode : sequence 사용하기--%>
-				<%--	// passageUrl : questionList에서 가져오기(근데 지문 없는게 많긴 해)--%>
-				<%--	// questionUrl : questionList에서 가져오기--%>
-				<%--	// answerUrl : questionList에서 가져오기--%>
-				<%--	// explainUrl : questionList에서 가져오기--%>
-				<%--	// examCode : 시험지 만들고 가져오기--%>
-
-				<%--	console.log("examCode",examCode);--%>
-
-				<%--	sendQuesData.push({--%>
-				<%--		'passageUrl':question.passageUrl,--%>
-				<%--		'questionUrl':question.questionUrl,--%>
-				<%--		'answerUrl':question.answerUrl,--%>
-				<%--		'explainUrl':question.explainUrl,--%>
-				<%--		'examCode':String(examCode)		// 시험지 저장하고 가져오기!!! 근데 어떻게? 😐--%>
-				<%--	})--%>
-				<%--})--%>
-
-				<%--await fetch('${path}/edit/saveexamquestion',{--%>
-				<%--	method:'POST',--%>
-				<%--	headers:{--%>
-				<%--		'Content-Type':'application/json'--%>
-				<%--	},--%>
-				<%--	body:JSON.stringify(sendQuesData)--%>
-				<%--}).then(response=>{--%>
-				<%--	if(!response.ok) alert('저장이 되지 않았습니다. 다시 시도하세요');--%>
-				<%--	else location.assign('${path}/sub04_02');--%>
-				<%--})--%>
-			}
-			// await $(".pop-wrap[data-pop='prev-pop']").hide();
+			<%--await fetch('${path}/edit/saveexamquestion',{--%>
+			<%--	method:'POST',--%>
+			<%--	headers:{--%>
+			<%--		'Content-Type':'application/json'--%>
+			<%--	},--%>
+			<%--	body:JSON.stringify(sendQuesData)--%>
+			<%--}).then(response=>{--%>
+			<%--	if(!response.ok) alert('저장이 되지 않았습니다. 다시 시도하세요');--%>
+			<%--	else location.assign('${path}/sub04_02');--%>
+			<%--})--%>
 		}
+		// await $(".pop-wrap[data-pop='prev-pop']").hide();
 	}
 </script>
 </html>
