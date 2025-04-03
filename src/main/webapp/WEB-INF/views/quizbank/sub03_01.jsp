@@ -44,7 +44,7 @@
 							<span>수학 1</span>
 							이준열(2015)
 						</div>
-						<button class="btn-default btn-research"><i class="research"></i>재검색</button>
+						<button class="btn-default btn-research" onclick="quizResearch()"><i class="research"></i>재검색</button>
 						<button class="btn-default pop-btn" data-pop="que-scope-pop">출제범위</button>
 					</div>
 					<div class="view-bottom type01">
@@ -942,33 +942,33 @@
 				</div>
 				<div class="pop-content scroll-inner">
 					<div class="scope-wrap">
-						<ul>1. 새로운 시작
-							<li>(1)시의 아름다움
-								<span>[1] 포근한 봄</span>
-								<span>[2] 포근한 봄</span>
-							</li>
-							<li>(2)산문의 향기
-								<span>[1] 꿩</span>
-							</li>
-						</ul>
-						<ul>2. 세상과 함께 자라는 꿈
-							<li>(1) 자료 찾으며 책 읽기
-								<span>[1] 버터 플라이</span>
-							</li>
-							<li>(2) 통일성 있게 글 쓰기</li>
-						</ul>
-						<ul>3. 언어랑 국어랑 놀자
-							<li>(1) 언어의 본질과 국어 생활</li>
-							<li>(2) 우리말의 아홉 품사</li>
-						</ul>
-						<ul>4. 더불어 살아가기
-							<li>(1) 문학과 갈등</li>
-							<li>(2) 토의하기</li>
-						</ul>
-						<ul>1. 새로운 시작
-							<li>(1)시의 아름다움</li>
-							<li>(2)산문의 향기</li>
-						</ul>
+<%--						<ul>1. 새로운 시작--%>
+<%--							<li>(1)시의 아름다움--%>
+<%--								<span>[1] 포근한 봄</span>--%>
+<%--								<span>[2] 포근한 봄</span>--%>
+<%--							</li>--%>
+<%--							<li>(2)산문의 향기--%>
+<%--								<span>[1] 꿩</span>--%>
+<%--							</li>--%>
+<%--						</ul>--%>
+<%--						<ul>2. 세상과 함께 자라는 꿈--%>
+<%--							<li>(1) 자료 찾으며 책 읽기--%>
+<%--								<span>[1] 버터 플라이</span>--%>
+<%--							</li>--%>
+<%--							<li>(2) 통일성 있게 글 쓰기</li>--%>
+<%--						</ul>--%>
+<%--						<ul>3. 언어랑 국어랑 놀자--%>
+<%--							<li>(1) 언어의 본질과 국어 생활</li>--%>
+<%--							<li>(2) 우리말의 아홉 품사</li>--%>
+<%--						</ul>--%>
+<%--						<ul>4. 더불어 살아가기--%>
+<%--							<li>(1) 문학과 갈등</li>--%>
+<%--							<li>(2) 토의하기</li>--%>
+<%--						</ul>--%>
+<%--						<ul>1. 새로운 시작--%>
+<%--							<li>(1)시의 아름다움</li>--%>
+<%--							<li>(2)산문의 향기</li>--%>
+<%--						</ul>--%>
 					</div>
 				</div>
 			</div>
@@ -993,8 +993,6 @@
 			// 	});
 			// });
 			$(function () {
-
-
 				let _leg = $('.view-que').length;
 				let arr = [];
 
@@ -1044,10 +1042,29 @@
 							_this.addClass('active');
 							$('.view-que-box').removeClass('active');
 							$('.view-que-box').eq(_idx).addClass('active');
-						};
+						}
 
 					})
 				}
+
+				const chapMap = JSON.parse(sessionStorage.getItem("chapMap"));
+				Object.keys(chapMap).forEach(large=>{
+					const largeul = $('<ul>');
+					largeul.text(large);
+					Object.keys(chapMap[large]).forEach(medium=>{
+						const mediumli = $('<li>');
+						mediumli.text(medium);
+						Object.keys(chapMap[large][medium]).forEach(small=>{
+							const smallspan = $('<span>');
+							smallspan.text(small);
+							mediumli.append(smallspan);
+						})
+						largeul.append(mediumli);
+					})
+					$('.scope-wrap').append(largeul);
+				})
+
+				$('.scope-type .pop-header').children('span').text(sessionStorage.getItem("subjectName"));
 			})
 
 			// 파라미터에 itemIdList(Long[]) 넣어야 함!!
@@ -1224,6 +1241,27 @@
 				p.html('문제 목록에서 '+i.prop('outerHTML')+'유사문제 버튼을 선택해주세요.');
 				nodata.append(p);
 				$(".tab-wrap>.contents:nth-child(3)").append(nodata);
+			}
+
+			const quizResearch = () => {
+				fetch("${path}/edit/questionList", {
+					method: "POST",
+					headers: {
+						"Content-Type": "application/json"
+					},
+					body: JSON.stringify({
+						'minorClassification':JSON.parse(sessionStorage.getItem('minorClassification')),
+						'levelCnt':JSON.parse(sessionStorage.getItem('levelCnt')),
+						'questionForm':JSON.parse(sessionStorage.getItem('questionForm')),
+						'activityCategoryList':JSON.parse(sessionStorage.getItem('activityCategoryList'))
+					}),
+					credentials: "include"
+				})
+				.then(response => response.json())
+				.then(data => {
+					sessionStorage.setItem("questionList", JSON.stringify(data));
+				})
+				.catch(error => console.error("문항 가져오기 실패", error));
 			}
 		</script>
 </body>

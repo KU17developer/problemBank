@@ -195,7 +195,7 @@
 
 			</div>
 			<div class="step-btn-wrap">
-				<button type="button" class="btn-step" onclick="location.assign('${path}/sub01?subjedtId='+sessionStorage.getItem('subjectId'))">출제 방법 선택</button>
+				<button type="button" class="btn-step" onclick="location.assign('${path}/sub01?subjectId='+sessionStorage.getItem('subjectId'))">출제 방법 선택</button>
 				<button type="button" class="btn-step next" data-pop="que-pop" onclick="editQuiz()">STEP2 문항 편집</button><!-- 230629 pop-btn 추가-->
 			</div>
 
@@ -429,6 +429,10 @@
 				$(".btn-wrap.multi .btn-line").prop('disabled',true);
 				$(".step-wrap .btn-line").removeClass('active');
 				$(".step-wrap .btn-line").prop('disabled',true);
+
+				const chapMap = '${chapterMap}';
+				const chap = JSON.parse(chapMap);
+				console.log(chap);
 			});
 
 			const quizNumChange = (event) => {
@@ -471,6 +475,7 @@
 					// 상균씨가 한 부분
 					const chapterList = JSON.parse('${sb}').chapterList;
 
+					const chapMap = {};
 					const minorClassification = [];
 					$(".depth04 input[type=checkbox]:checked").each(function () {
 						const topicName = $(this).next("label").children("span").text();
@@ -483,7 +488,28 @@
 								small: topic.smallChapterId.toString(),
 								topic: topic.topicChapterId.toString()
 							});
+
+							if(chapMap[topic.largeChapterName.toString()]!=null){
+								if(chapMap[topic.largeChapterName.toString()][topic.mediumChapterName.toString()]!=null){
+									if(chapMap[topic.largeChapterName.toString()][topic.mediumChapterName.toString()][topic.smallChapterName.toString()]!=null){
+										chapMap[topic.largeChapterName.toString()][topic.mediumChapterName.toString()][topic.smallChapterName.toString()].push(topic.topicChapterName.toString());
+									}else{
+										chapMap[topic.largeChapterName.toString()][topic.mediumChapterName.toString()][topic.smallChapterName.toString()]=[];
+										chapMap[topic.largeChapterName.toString()][topic.mediumChapterName.toString()][topic.smallChapterName.toString()].push(topic.topicChapterName.toString());
+									}
+								}else{
+									chapMap[topic.largeChapterName.toString()][topic.mediumChapterName.toString()]={};
+									chapMap[topic.largeChapterName.toString()][topic.mediumChapterName.toString()][topic.smallChapterName.toString()]=[];
+									chapMap[topic.largeChapterName.toString()][topic.mediumChapterName.toString()][topic.smallChapterName.toString()].push(topic.topicChapterName.toString());
+								}
+							}else{
+								chapMap[topic.largeChapterName.toString()]={};
+								chapMap[topic.largeChapterName.toString()][topic.mediumChapterName.toString()]={};
+								chapMap[topic.largeChapterName.toString()][topic.mediumChapterName.toString()][topic.smallChapterName.toString()]=[];
+								chapMap[topic.largeChapterName.toString()][topic.mediumChapterName.toString()][topic.smallChapterName.toString()].push(topic.topicChapterName.toString());
+							}
 						}
+						sessionStorage.setItem("chapMap",JSON.stringify(chapMap));
 					});
 
 					const levelCnt = []; // 일단 난이도 부분은 주석해 둘게욤~~~~~~~~
@@ -550,6 +576,11 @@
 			// 따로 빼두는 fetch 함수
 			const submitEditQuiz = (minorClassification, levelCnt, questionForm, activityCategoryList) => {
 				const contextPath = "${path}";
+
+				sessionStorage.setItem("minorClassification",JSON.stringify(minorClassification));
+				sessionStorage.setItem("levelCnt",JSON.stringify(levelCnt));
+				sessionStorage.setItem("questionForm",JSON.stringify(questionForm));
+				sessionStorage.setItem("activityCategoryList",JSON.stringify(activityCategoryList));
 
 				fetch("${path}/edit/questionList", {
 					method: "POST",
