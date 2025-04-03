@@ -234,6 +234,7 @@
 		let count = 0;
 		let passageurl = '';
 
+		// 이거 이미지 불러오는 게 느리면 시험지 문항이 한 쪽으로 쏠리네
 		questionList.forEach((question,index)=>{
 			let viewdata;
 			let testdiv;
