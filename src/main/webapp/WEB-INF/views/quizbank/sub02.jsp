@@ -38,7 +38,7 @@
 						<div class="paper-info">
 							<!--<span>국어 1-1</span>
 							노미숙(2015)-->
-							${chapterList[0].subjectName}
+							<span>${chapterList[0].subjectName}</span>
 						</div>
 					</div>
 					<div class="view-bottom">
