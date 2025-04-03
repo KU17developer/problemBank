@@ -308,6 +308,40 @@
 		const filterChap = JSON.parse(chapList).filter(chap=>chap.smallChapterName==sChap);
 		console.log(filterChap);
 
+		const chapMap = {};
+		const minorClassification = [];
+
+		filterChap.forEach(function (chap) {
+			minorClassification.push({
+				subject: chap.subjectId.toString(),
+				large: chap.largeChapterId.toString(),
+				medium: chap.mediumChapterId.toString(),
+				small: chap.smallChapterId.toString(),
+				topic: chap.topicChapterId.toString()
+			});
+
+			if(chapMap[chap.largeChapterName.toString()]!=null){
+				if(chapMap[chap.largeChapterName.toString()][chap.mediumChapterName.toString()]!=null){
+					if(chapMap[chap.largeChapterName.toString()][chap.mediumChapterName.toString()][chap.smallChapterName.toString()]!=null){
+						chapMap[chap.largeChapterName.toString()][chap.mediumChapterName.toString()][chap.smallChapterName.toString()].push(chap.topicChapterName.toString());
+					}else{
+						chapMap[chap.largeChapterName.toString()][chap.mediumChapterName.toString()][chap.smallChapterName.toString()]=[];
+						chapMap[chap.largeChapterName.toString()][chap.mediumChapterName.toString()][chap.smallChapterName.toString()].push(chap.topicChapterName.toString());
+					}
+				}else{
+					chapMap[chap.largeChapterName.toString()][chap.mediumChapterName.toString()]={};
+					chapMap[chap.largeChapterName.toString()][chap.mediumChapterName.toString()][chap.smallChapterName.toString()]=[];
+					chapMap[chap.largeChapterName.toString()][chap.mediumChapterName.toString()][chap.smallChapterName.toString()].push(chap.topicChapterName.toString());
+				}
+			}else{
+				chapMap[chap.largeChapterName.toString()]={};
+				chapMap[chap.largeChapterName.toString()][chap.mediumChapterName.toString()]={};
+				chapMap[chap.largeChapterName.toString()][chap.mediumChapterName.toString()][chap.smallChapterName.toString()]=[];
+				chapMap[chap.largeChapterName.toString()][chap.mediumChapterName.toString()][chap.smallChapterName.toString()].push(chap.topicChapterName.toString());
+			}
+			sessionStorage.setItem("chapMap",JSON.stringify(chapMap));
+		});
+
 		const itemIdList = fetch('${path}/api/getitemid',{
 			method:'POST',
 			headers:{
