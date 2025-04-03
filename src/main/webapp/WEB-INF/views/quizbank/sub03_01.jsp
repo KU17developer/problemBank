@@ -41,8 +41,9 @@
 				<div class="view-box">
 					<div class="view-top">
 						<div class="paper-info">
-							<span>수학 1</span>
-							이준열(2015)
+<%--							<span>수학 1</span>--%>
+<%--							이준열(2015)--%>
+							<span id="id=subjectNameDisplay"></span>
 						</div>
 						<button class="btn-default btn-research" onclick="quizResearch()"><i class="research"></i>재검색</button>
 						<button class="btn-default pop-btn" data-pop="que-scope-pop">출제범위</button>
@@ -55,6 +56,9 @@
 									<div class="select-wrap">
 										<button type="button" class="select-btn">문제만 보기</button>
 										<ul class="select-list" style="display: none;">
+											<li>
+												<a href="javascript:;">문제만 보기</a>
+											</li>
 											<li>
 												<a href="javascript:;">문제+정답 보기</a>
 											</li>
@@ -1083,12 +1087,34 @@
 	<script>
 		document.addEventListener("DOMContentLoaded", function () {
 			let questionList = sessionStorage.getItem("questionList");
+			let viewOption = sessionStorage.getItem("viewOption") || "문제만 보기"; // 기본값 설정
+
+			// 드롭다운 메뉴 관련 요소
+			const selectBtn = document.querySelector(".select-btn");
+			const selectList = document.querySelector(".select-list");
+
+			// 드롭다운 메뉴 토글 기능 추가
+			selectBtn.addEventListener("click", function() {
+				// 드롭다운 메뉴 표시/숨김 토글
+				if (selectList.style.display === "none" || !selectList.style.display) {
+					selectList.style.display = "block";
+				} else {
+					selectList.style.display = "none";
+				}
+			});
+
+			// 드롭다운 외부 클릭 시 메뉴 닫기
+			document.addEventListener("click", function(event) {
+				if (!event.target.closest('.select-wrap')) {
+					selectList.style.display = "none";
+				}
+			});
+
 			if (questionList) {
 				try {
-					console.log(questionList);
 					questionList = JSON.parse(questionList);
 					if (Array.isArray(questionList)) {
-						renderQuestions(questionList);
+						renderQuestions(questionList, viewOption);
 					} else {
 						console.error("questionList가 배열이 아닙니다.", questionList);
 					}
@@ -1098,78 +1124,142 @@
 			} else {
 				console.warn("sessionStorage에 questionList가 없습니다.");
 			}
+
+			// 선택한 보기 옵션을 버튼에 반영
+			selectBtn.innerText = viewOption;
+
+			// 보기 옵션 변경 이벤트 추가
+			document.querySelectorAll(".select-list a").forEach(option => {
+				option.addEventListener("click", function (e) {
+					// disabled 클래스가 있는 부모 li 요소는 클릭 무시
+					if (this.closest('li').classList.contains('disabled')) {
+						e.preventDefault();
+						return;
+					}
+
+					let selectedOption = this.innerText.trim();
+					sessionStorage.setItem("viewOption", selectedOption);
+					selectBtn.innerText = selectedOption; // 버튼 텍스트 변경
+					selectList.style.display = "none"; // 선택 후 드롭다운 닫기
+
+					if (questionList && Array.isArray(questionList)) {
+						renderQuestions(questionList, selectedOption);
+					}
+				});
+			});
 		});
 
-		function renderQuestions(questions) {
+		function renderQuestions(questions, viewOption) {
 			let container = document.querySelector(".view-que-list");
+			if (!container) {
+				console.error(".view-que-list 요소를 찾을 수 없습니다.");
+				return;
+			}
+
 			container.innerHTML = ""; // 기존 내용 초기화
 
-			questions.forEach((q, index) => {
-				// explanation과 answers가 없으면 빈 배열로 초기화
-				let explanations = Array.isArray(q.explanation) ? q.explanation : [];
-				let answers = Array.isArray(q.answers) ? q.answers : [];
+			let groupedQuestions = new Map();
+			let questionNumber = 1; // 문제 번호 증가
 
-				let explanationHtml = "";
-				explanations.forEach(exp => {
-					explanationHtml += '<div class="paragraph"><span class="txt">' + exp + '</span></div>';
-				});
+			questions.forEach(q => {
+				if (!groupedQuestions.has(q.passageUrl)) {
+					groupedQuestions.set(q.passageUrl, { startNum: questionNumber, questions: [] });
+				}
+				console.log(q);
+				groupedQuestions.get(q.passageUrl).questions.push({ ...q, number: questionNumber++ });
+			});
 
-				let answerHtml = "";
-				answers.forEach(ans => {
-					answerHtml += '<div class="paragraph"><span class="txt">' + ans + '</span></div>';
-				});
+			groupedQuestions.forEach(function(group, passageUrl) {
+				var startNum = group.startNum;
+				var questions = group.questions;
+				var endNum = questions[questions.length - 1].number;
+				var passageHtml = "";
 
-				let badgeType = ""; // 문제 유형을 담을 변수
-
-				if (q.questionFormName == "5지 선택") {
-					badgeType = '<span class="que-badge gray">객관식</span>';
-				} else if (q.questionFormName == "단답 유순") {
-					badgeType = '<span class="que-badge gray">주관식</span>';
+				if (passageUrl) {
+					passageHtml =
+							'<div class="passage-area">' +
+							'<p class="passage-info">공통 문제 (' + startNum + '번 ~ ' + endNum + '번)</p>' +
+							'<img class="txt" src="' + passageUrl + '" alt="문제 이미지">' +
+							'</div>';
 				}
 
-				let questionHTML =
-						'<div class="view-que-box">' +
-						'<div class="que-top">' +
-						'<div class="title">' +
-						'<span class="num">' + (index + 1) + '</span>' +
-						'<div class="que-badge-group">' +
-						'<span class="que-badge yellow">' + (q.difficultyName || "난이도 없음") + '</span>' +
-						badgeType + // if문에서 생성한 HTML을 삽입
-						'</div>' +
-						'</div>' +
-						'<div class="btn-wrap">' +
-						'<button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>' +
-						'<button type="button" class="btn-delete"></button>' +
-						'</div>' +
-						'</div>' +
-						'<div class="view-que">' +
-						'<div class="que-content">' +
-						'<p class="txt">' + (q.question || "문제 내용 없음") + '</p>' +
-						'</div>' +
-						'<div class="que-bottom">' +
-						'<div class="data-area">' +
-						'<div class="que-info">' +
-						'<p class="answer"><span class="label">해설</span></p>' +
-						'<div class="data-answer-area">' + explanationHtml + '</div>' +
-						'</div>' +
-						'</div>' +
-						'<div class="data-area type01">' +
-						'<div class="que-info">' +
-						'<p class="answer"><span class="label type01">정답</span></p>' +
-						'<div class="data-answer-area">' + answerHtml + '</div>' +
-						'</div>' +
-						'<button type="button" class="btn-similar-que btn-default" onclick="getSimilProb(' + (q.id || 0) + ')"><i class="similar"></i> 유사 문제</button>' +
-						'</div>' +
-						'</div>' +
-						'</div>' +
-						'<div class="que-info-last">' +
-						'<p class="chapter">' + (q.chapter || "챕터 정보 없음") + '</p>' +
-						'</div>' +
-						'</div>';
+				container.insertAdjacentHTML("beforeend", passageHtml);
 
-				container.innerHTML += questionHTML;
+				questions.forEach(function(q) {
+					var questionUrlHtml = q.questionUrl
+							? '<div class="que-content"><img class="txt" src="' + q.questionUrl + '" alt="문제 이미지"></div>'
+							: '<div class="que-content"></div>';
+
+					var answerHtml = q.answerUrl
+							? '<div class="data-answer-area"><img src="' + q.answerUrl + '" alt="정답 이미지"></div>'
+							: "";
+
+					var explainHtml = q.explainUrl
+							? '<div class="data-answer-area"><img src="' + q.explainUrl + '" alt="해설 이미지"></div>'
+							: "";
+
+					var badgeType = "";
+					if (q.questionFormName == "5지 선택") {
+						badgeType = '<span class="que-badge gray">객관식</span>';
+					} else if (q.questionFormName == "단답 유순") {
+						badgeType = '<span class="que-badge gray">주관식</span>';
+					}
+
+					var questionHTML =
+							'<div class="view-que-box">' +
+							'<div class="que-top">' +
+							'<div class="title">' +
+							'<span class="num">' + q.number + '</span>' +
+							'<div class="que-badge-group">' +
+							'<span class="que-badge yellow">' + (q.difficultyName || "난이도 없음") + '</span>' +
+							badgeType +
+							'</div>' +
+							'</div>' +
+							'<div class="btn-wrap">' +
+							'<button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>' +
+							'<button type="button" class="btn-delete"></button>' +
+							'</div>' +
+							'</div>' +
+							'<div class="view-que">' +
+							questionUrlHtml +
+							'<div class="que-bottom">';
+
+					// 문제 + 정답 보기 또는 문제 + 해설 + 정답 보기일 경우 정답 추가
+					if (viewOption === "문제+정답 보기" || viewOption === "문제+해설+정답 보기") {
+						questionHTML +=
+								'<div class="data-area">' +
+								'<p class="answer"><span class="label">정답</span></p>' +
+								answerHtml +
+								'</div>';
+					}
+
+					// 문제 + 해설 + 정답 보기일 경우 해설 추가
+					if (viewOption === "문제+해설+정답 보기") {
+						questionHTML +=
+								'<div class="data-area type01">' +
+								'<p class="answer"><span class="label type01">해설</span></p>' +
+								explainHtml +
+								'</div>';
+					}
+
+					questionHTML +=
+							'</div>' +
+							'</div>' +
+							'<div class="que-info-last">' +
+							'<p class="chapter">' + (q.chapter || "챕터 정보 없음") + '</p>' +
+							'</div>' +
+							'</div>';
+
+					container.insertAdjacentHTML("beforeend", questionHTML);
+				});
 			});
 		}
+		window.onload = function () {
+			let subjectName = sessionStorage.getItem("subjectName");
+			if (subjectName) {
+				document.getElementById("subjectNameDisplay").innerText = "과목 이름: " + subjectName;
+			}
+		};
 	</script>
 </body>
 
