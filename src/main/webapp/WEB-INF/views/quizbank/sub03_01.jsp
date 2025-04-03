@@ -1042,12 +1042,97 @@
 				$(".tab-wrap>.contents:nth-child(3)").append(nodata);
 			}
 		</script>
-		<script>
-			document.addEventListener("DOMContentLoaded",function (){
-				const container = document.querySelector(".view-que-list");
-				alert(container);
-			})
-		</script>
+	<script>
+		document.addEventListener("DOMContentLoaded", function () {
+			let questionList = sessionStorage.getItem("questionList");
+			if (questionList) {
+				try {
+					console.log(questionList);
+					questionList = JSON.parse(questionList);
+					if (Array.isArray(questionList)) {
+						renderQuestions(questionList);
+					} else {
+						console.error("questionList가 배열이 아닙니다.", questionList);
+					}
+				} catch (error) {
+					console.error("JSON 파싱 오류:", error);
+				}
+			} else {
+				console.warn("sessionStorage에 questionList가 없습니다.");
+			}
+		});
+
+		function renderQuestions(questions) {
+			let container = document.querySelector(".view-que-list");
+			container.innerHTML = ""; // 기존 내용 초기화
+
+			questions.forEach((q, index) => {
+				// explanation과 answers가 없으면 빈 배열로 초기화
+				let explanations = Array.isArray(q.explanation) ? q.explanation : [];
+				let answers = Array.isArray(q.answers) ? q.answers : [];
+
+				let explanationHtml = "";
+				explanations.forEach(exp => {
+					explanationHtml += '<div class="paragraph"><span class="txt">' + exp + '</span></div>';
+				});
+
+				let answerHtml = "";
+				answers.forEach(ans => {
+					answerHtml += '<div class="paragraph"><span class="txt">' + ans + '</span></div>';
+				});
+
+				let badgeType = ""; // 문제 유형을 담을 변수
+
+				if (q.questionFormName == "5지 선택") {
+					badgeType = '<span class="que-badge gray">객관식</span>';
+				} else if (q.questionFormName == "단답 유순") {
+					badgeType = '<span class="que-badge gray">주관식</span>';
+				}
+
+				let questionHTML =
+						'<div class="view-que-box">' +
+						'<div class="que-top">' +
+						'<div class="title">' +
+						'<span class="num">' + (index + 1) + '</span>' +
+						'<div class="que-badge-group">' +
+						'<span class="que-badge yellow">' + (q.difficultyName || "난이도 없음") + '</span>' +
+						badgeType + // if문에서 생성한 HTML을 삽입
+						'</div>' +
+						'</div>' +
+						'<div class="btn-wrap">' +
+						'<button type="button" class="btn-error pop-btn" data-pop="error-report-pop"></button>' +
+						'<button type="button" class="btn-delete"></button>' +
+						'</div>' +
+						'</div>' +
+						'<div class="view-que">' +
+						'<div class="que-content">' +
+						'<p class="txt">' + (q.question || "문제 내용 없음") + '</p>' +
+						'</div>' +
+						'<div class="que-bottom">' +
+						'<div class="data-area">' +
+						'<div class="que-info">' +
+						'<p class="answer"><span class="label">해설</span></p>' +
+						'<div class="data-answer-area">' + explanationHtml + '</div>' +
+						'</div>' +
+						'</div>' +
+						'<div class="data-area type01">' +
+						'<div class="que-info">' +
+						'<p class="answer"><span class="label type01">정답</span></p>' +
+						'<div class="data-answer-area">' + answerHtml + '</div>' +
+						'</div>' +
+						'<button type="button" class="btn-similar-que btn-default" onclick="getSimilProb(' + (q.id || 0) + ')"><i class="similar"></i> 유사 문제</button>' +
+						'</div>' +
+						'</div>' +
+						'</div>' +
+						'<div class="que-info-last">' +
+						'<p class="chapter">' + (q.chapter || "챕터 정보 없음") + '</p>' +
+						'</div>' +
+						'</div>';
+
+				container.innerHTML += questionHTML;
+			});
+		}
+	</script>
 </body>
 
 
