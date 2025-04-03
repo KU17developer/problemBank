@@ -190,7 +190,7 @@
 				});
 			}).then(response=>response.blob())
 			.then(blob=>{
-				const filename = "커비는 딸기케이크를 먹고싶어.hwp"; // 저장할 파일 이름 지정
+				const filename = "시험지.hwp"; // 저장할 파일 이름 지정
 				saveBlobToDisk(blob, filename);
 			})
 		}
